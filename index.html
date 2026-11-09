@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avito AI Genius — Генератор продающих объявлений для Авито по фото и тексту</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            900: '#4c1d95',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center shadow-lg shadow-brand-500/30">
+                    <i class="fa-solid fa-robot text-white text-lg"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-white">Avito<span class="text-brand-500">AI</span></span>
+            </div>
+            
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#demo" class="hover:text-white transition">Демо чата</a>
+                <a href="#features" class="hover:text-white transition">Преимущества</a>
+                <a href="#pricing" class="hover:text-white transition">Тарифы</a>
+                <a href="#faq" class="hover:text-white transition">FAQ</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="#pricing" class="bg-brand-600 hover:bg-brand-500 text-white px-5 py-2.5 rounded-xl font-medium text-sm transition shadow-lg shadow-brand-600/20">
+                    Попробовать бесплатно
+                </a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <button id="menu-btn" class="md:hidden text-slate-300 hover:text-white focus:outline-none">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#demo" class="block text-slate-300 hover:text-white py-2">Демо чата</a>
+            <a href="#features" class="block text-slate-300 hover:text-white py-2">Преимущества</a>
+            <a href="#pricing" class="block text-slate-300 hover:text-white py-2">Тарифы</a>
+            <a href="#faq" class="block text-slate-300 hover:text-white py-2">FAQ</a>
+            <div class="pt-2">
+                <a href="#pricing" class="w-full block text-center bg-brand-600 text-white py-2.5 rounded-xl font-medium">Попробовать бесплатно</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden">
+        <!-- Glow background effects -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-600/20 blur-[120px] rounded-full pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-950/80 border border-brand-800/50 text-brand-400 text-xs font-semibold mb-6 uppercase tracking-wider">
+                    <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                    <span>Работает на мощных ИИ-агентах</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
+                    Идеальные объявления для Авито <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-300">по фото или описанию за 5 секунд</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-slate-400 mb-10 leading-relaxed">
+                    Забудьте про рутину. Умный ИИ-агент проанализирует товар, напишет цепляющий заголовок, продающий текст и расставит ключи для алгоритмов Авито без блоков и банов.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="#demo" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-xl font-semibold text-base transition shadow-xl shadow-brand-600/30 flex items-center justify-center space-x-2">
+                        <span>Создать объявление</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#pricing" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-8 py-4 rounded-xl font-semibold text-base transition flex items-center justify-center">
+                        Узнать тарифы
+                    </a>
+                </div>
+            </div>
+
+            <!-- Interactive Widget / Demo Section -->
+            <div id="demo" class="mt-16 max-w-4xl mx-auto bg-slate-900/90 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-xl">
+                <div class="bg-slate-950 px-6 py-4 border-b border-slate-800 flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <div class="text-xs font-mono text-slate-400">ИИ-Помощник Авито (Демо-режим)</div>
+                    <div class="text-xs text-brand-400 bg-brand-950/60 px-2.5 py-1 rounded border border-brand-800/40">
+                        Бесплатно генераций: <span id="generations-left">2</span>/2
+                    </div>
+                </div>
+
+                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Input Form -->
+                    <div class="space-y-4">
+                        <label class="block text-sm font-medium text-slate-300">1. Загрузите фото или опишите товар</label>
+                        <div id="dropzone" class="border-2 border-dashed border-slate-700 hover:border-brand-500 rounded-xl p-6 text-center cursor-pointer transition bg-slate-950/40">
+                            <i class="fa-solid fa-cloud-arrow-up text-3xl text-brand-500 mb-2"></i>
+                            <p class="text-sm text-slate-400">Перетащите фото сюда или <span class="text-brand-400 underline">выберите файл</span></p>
+                            <input type="file" id="file-input" class="hidden" accept="image/*">
+                            <div id="file-name" class="mt-2 text-xs text-brand-300 font-mono hidden"></div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-1">Короткое описание товара:</label>
+                            <textarea id="item-description" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-brand-500 transition" placeholder="Например: iPhone 13 128gb, цвет синий, состояние отличное, батарея 88%..."></textarea>
+                        </div>
+
+                        <button id="generate-btn" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 px-4 rounded-xl transition flex items-center justify-center space-x-2 shadow-lg shadow-brand-600/20">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Сгенерировать объявление</span>
+                        </button>
+                    </div>
+
+                    <!-- Output Result -->
+                    <div class="flex flex-col">
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="block text-sm font-medium text-slate-300">2. Готовый текст для Авито:</label>
+                            <button id="copy-btn" class="text-xs text-brand-400 hover:text-brand-300 flex items-center space-x-1 hidden">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>Скопировать</span>
+                            </button>
+                        </div>
+                        <div id="result-box" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-300 font-mono overflow-y-auto max-h-[280px] select-all flex items-center justify-center text-center text-slate-500">
+                            Здесь появится сгенерированное объявление...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-slate-900/40 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">Почему продавцы выбирают Avito AI</h2>
+                <p class="text-slate-400">Инструмент разработан с учетом алгоритмов ранжирования и строгой модерации Авито.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
+                    <div class="w-12 h-12 rounded-xl bg-brand-950 border border-brand-800 text-brand-400 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Генерация за 5 секунд</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Загружайте фото со смартфона и получайте готовый продающий текст мгновенно без долгого заполнения полей.</p>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
+                    <div class="w-12 h-12 rounded-xl bg-brand-950 border border-brand-800 text-brand-400 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Обход модерации</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">ИИ знает, какие триггер-слова триггерят баны Авито, и грамотно заменяет их на безопасные синонимы.</p>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
+                    <div class="w-12 h-12 rounded-xl bg-brand-950 border border-brand-800 text-brand-400 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Рост просмотров на 300%</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Правильная структура с ключевыми словами поднимает ваше объявление выше в поисковой выдаче платформы.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">Простые и прозрачные тарифы</h2>
+                <p class="text-slate-400">Выберите подходящий пакет генераций и подключитесь через ЮKassa за пару кликов.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Tariff 1 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Стартовый</h3>
+                        <p class="text-slate-400 text-sm mb-6">Для частных продавцов и редких объявлений</p>
+                        <div class="text-4xl font-extrabold text-white mb-6">490 ₽ <span class="text-sm font-normal text-slate-400">/ месяц</span></div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-brand-500"></i><span>50 генераций объявлений в месяц</span></li>
+                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-brand-500"></i><span>Распознавание товаров по фото</span></li>
+                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-brand-500"></i><span>Базовая защита от модерации</span></li>
+                        </ul>
+                    </div>
+                    <button onclick="openPaywall()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-3 rounded-xl transition">
+                        Выбрать тариф
+                    </button>
+                </div>
+
+                <!-- Tariff 2 (Featured) -->
+                <div class="bg-gradient-to-b from-brand-950/60 to-slate-900 border-2 border-brand-600 rounded-3xl p-8 flex flex-col justify-between relative shadow-xl shadow-brand-950">
+                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-600 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Хит продаж
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Профессиональный</h3>
+                        <p class="text-slate-400 text-sm mb-6">Для селлеров, риелторов и автодилеров</p>
+                        <div class="text-4xl font-extrabold text-white mb-6">990 ₽ <span class="text-sm font-normal text-slate-400">/ месяц</span></div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-brand-500"></i><span>Безлимитные генерации объявлений</span></li>
+                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-brand-500"></i><span>Приоритетная обработка фото ИИ</span></li>
+                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-brand-500"></i><span>Генерация пакетных описаний</span></li>
+                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-brand-500"></i><span>Прямая интеграция с Авито чатом</span></li>
+                        </ul>
+                    </div>
+                    <button onclick="openPaywall()" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 rounded-xl transition shadow-lg shadow-brand-600/30">
+                        Оформить подписку
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-slate-900/40 border-t border-slate-900">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">Часто задаваемые вопросы</h2>
+            <div class="space-y-4">
+                <details class="group bg-slate-900 border border-slate-800 rounded-2xl p-6 cursor-pointer">
+                    <summary class="flex justify-between items-center font-semibold text-white list-none">
+                        <span>Как происходят списания по подписке?</span>
+                        <i class="fa-solid fa-chevron-down group-open:rotate-180 transition"></i>
+                    </summary>
+                    <p class="mt-4 text-slate-400 text-sm leading-relaxed">Оплата принимается через защищенный шлюз ЮKassa. Подписка продлевается автоматически каждый месяц, отменить её можно в любой момент в личном кабинете.</p>
+                </details>
+                <details class="group bg-slate-900 border border-slate-800 rounded-2xl p-6 cursor-pointer">
+                    <summary class="flex justify-between items-center font-semibold text-white list-none">
+                        <span>Заблокирует ли Авито за тексты от ИИ?</span>
+                        <i class="fa-solid fa-chevron-down group-open:rotate-180 transition"></i>
+                    </summary>
+                    <p class="mt-4 text-slate-400 text-sm leading-relaxed">Нет. Наши промпты настроены таким образом, чтобы тексты выглядели естественно, человечно и полностью проходили автоматическую модерацию Авито.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paywall Modal -->
+    <div id="paywall-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-6 sm:p-8 relative text-center">
+            <button onclick="closePaywall()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="w-14 h-14 rounded-2xl bg-brand-950 border border-brand-800 text-brand-400 flex items-center justify-center text-2xl mx-auto mb-4">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">Лимит бесплатных генераций исчерпан</h3>
+            <p class="text-slate-400 text-sm mb-6">Оформите профессиональную подписку, чтобы получить неограниченный доступ к генератору объявлений.</p>
+            <a href="#pricing" onclick="closePaywall()" class="block w-full bg-brand-600 hover:bg-brand-500 text-white font-medium py-3.5 rounded-xl transition shadow-lg shadow-brand-600/30 mb-3">
+                Перейти к тарифам (ЮKassa)
+            </a>
+            <button onclick="closePaywall()" class="text-sm text-slate-500 hover:text-slate-300">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-12 text-center text-sm text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p>&copy; 2026 Avito AI Genius. Все права защищены. Безопасные платежи через ЮKassa.</p>
+        </div>
+    </footer>
+
+    <!-- Frontend Script Logic -->
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Demo interactive logic
+        let freeGenerations = 2;
+        const generateBtn = document.getElementById('generate-btn');
+        const descInput = document.getElementById('item-description');
+        const resultBox = document.getElementById('result-box');
+        const genLeftSpan = document.getElementById('generations-left');
+        const copyBtn = document.getElementById('copy-btn');
+        const paywallModal = document.getElementById('paywall-modal');
+
+        function openPaywall() {
+            paywallModal.classList.remove('hidden');
+        }
+        function closePaywall() {
+            paywallModal.classList.add('hidden');
+        }
+
+        generateBtn.addEventListener('click', () => {
+            if (freeGenerations <= 0) {
+                openPaywall();
+                return;
+            }
+
+            const text = descInput.value.trim();
+            if (!text) {
+                alert('Пожалуйста, введите описание товара или выберите фото');
+                return;
+            }
+
+            // Simulating AI generation loading state
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i><span>ИИ генерирует текст...</span>';
+            resultBox.innerHTML = '<span class="text-brand-400 animate-pulse">Анализ параметров и составление структуры для Авито...</span>';
+            resultBox.classList.remove('text-slate-500');
+
+            setTimeout(() => {
+                freeGenerations--;
+                genLeftSpan.innerText = freeGenerations;
+                
+                const generatedText = `🔥 СУПЕР ПРЕДЛОЖЕНИЕ: ${text.toUpperCase()} 🔥\n\nЗдравствуйте! Продаю отличный товар в идеальном рабочем состоянии. Прошел полную проверку перед продажей.\n\n✅ Главные преимущества:\n- Гарантия качества\n- Идеальный внешний вид\n- Полная комплектация\n\n📦 Условия покупки:\nСамовывоз или быстрая доставка курьером. Пишите в чат Авито в любое время, отвечаю быстро!\n\n#авито #продажа #москва #товар`;
+
+                resultBox.innerText = generatedText;
+                copyBtn.classList.remove('hidden');
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i><span>Сгенерировать еще</span>';
+            }, 1500);
+        });
+
+        copyBtn.addEventListener('click', () => {
+            const textToCopy = resultBox.innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                copyBtn.innerHTML = '<i class="fa-solid fa-check text-green-400"></i><span class="text-green-400">Скопировано!</span>';
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i><span>Скопировать</span>';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

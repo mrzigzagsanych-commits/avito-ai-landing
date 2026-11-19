@@ -3,163 +3,631 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Avito AI Genius — Генератор объявлений для Авито</title>
+  <title>Avito AI Genius — ИИ-генератор продающих объявлений</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f4f5f7;
-      --card: #ffffff;
-      --text: #111827;
-      --muted: #6b7280;
-      --accent: #00aaff;
-      --accent-hover: #0095e0;
-      --border: #e5e7eb;
-      --success-bg: #ecfdf5;
-      --success-text: #065f46;
-    }
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { margin: 0; background: var(--bg); color: var(--text); padding: 16px; }
-    .container { max-width: 640px; margin: 0 auto; }
-
-    .header {
-      display: flex; justify-content: space-between; align-items: center; gap: 10px;
-      margin-bottom: 16px; flex-wrap: wrap;
-    }
-    .header h1 { font-size: 21px; margin: 0; }
-    .badge {
-      background: #e0f4ff; color: #0077b6; padding: 7px 12px;
-      border-radius: 999px; font-size: 13px; font-weight: 600; cursor: pointer; border: none;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-secondary: #64748b;
+      --primary: #00aaff;
+      --primary-dark: #0284c7;
+      --violet: #7c3aed;
+      --border: #e2e8f0;
+      --radius: 20px;
+      --shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
     }
 
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top right, #e0f2fe 0%, transparent 45%),
+                  radial-gradient(circle at top left, #ede9fe 0%, transparent 40%),
+                  var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 16px 16px 40px;
+    }
+
+    .container {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* Шапка */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #00aaff 0%, #7c3aed 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(0, 170, 255, 0.3);
+    }
+
+    .pro-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+      transition: transform 0.15s ease;
+    }
+
+    .pro-pill:active { transform: scale(0.96); }
+
+    /* Hero заголовок */
+    .hero {
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin: 0 0 6px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* Основная карточка */
     .card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 20px;
-      padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: var(--shadow);
     }
 
-    .mode-switch {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-      background: #f1f5f9; padding: 5px; border-radius: 12px; margin-bottom: 16px;
-    }
-    .mode-btn {
-      padding: 10px; border: none; border-radius: 9px; font-size: 14px; font-weight: 600;
-      cursor: pointer; background: transparent; color: var(--muted); transition: 0.15s;
-    }
-    .mode-btn.active {
-      background: var(--card); color: var(--text); box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    /* Переключатель режимов */
+    .segmented {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 14px;
+      margin-bottom: 18px;
     }
 
-    label { display: block; font-size: 14px; font-weight: 600; margin: 14px 0 6px; }
-    input[type="file"], textarea {
-      width: 100%; padding: 12px; border: 1px solid var(--border);
-      border-radius: 12px; font-size: 14px; background: #fafafa;
+    .seg-btn {
+      border: none;
+      background: transparent;
+      padding: 11px 10px;
+      border-radius: 11px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
-    textarea { min-height: 110px; resize: vertical; }
 
-    .preview-wrap { margin-top: 10px; display: none; }
-    .preview-wrap img {
-      max-width: 220px; max-height: 220px; border-radius: 12px;
-      border: 1px solid var(--border); object-fit: cover;
+    .seg-btn.active {
+      background: #fff;
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
     }
 
-    .status-line { margin-top: 12px; font-size: 13px; color: var(--muted); min-height: 18px; }
+    /* Красивая зона загрузки фото */
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
 
-    .btn {
-      width: 100%; margin-top: 10px; padding: 15px; border: none; border-radius: 12px;
-      background: var(--accent); color: #fff; font-size: 16px; font-weight: 700; cursor: pointer;
+    .field-hint {
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-size: 12px;
     }
-    .btn:hover { background: var(--accent-hover); }
-    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-    .result-box {
-      margin-top: 18px; padding: 16px; background: #f8fafc; border: 1px solid var(--border);
-      border-radius: 12px; white-space: pre-wrap; font-size: 14px; line-height: 1.55; display: none;
+    .upload-zone {
+      position: relative;
+      border: 2px dashed #cbd5e1;
+      border-radius: 16px;
+      background: #f8fafc;
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 18px;
     }
-    .copy-btn {
-      margin-top: 10px; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--border);
-      background: #fff; cursor: pointer; font-size: 13px; font-weight: 600; display: none;
+
+    .upload-zone:hover, .upload-zone.has-file {
+      border-color: var(--primary);
+      background: #f0f9ff;
     }
-    .copied-toast {
-      display: none; margin-left: 8px; padding: 5px 10px; border-radius: 8px;
-      background: var(--success-bg); color: var(--success-text); font-size: 12px; font-weight: 600;
+
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-icon {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 8px;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .upload-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .upload-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* Превью фото */
+    .preview-box {
+      display: none;
+      position: relative;
+      margin-bottom: 18px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #0f172a;
+    }
+
+    .preview-box img {
+      width: 100%;
+      max-height: 240px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .remove-photo {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Текстовое поле */
+    textarea {
+      width: 100%;
+      min-height: 112px;
+      padding: 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text);
+      background: #fff;
+      resize: vertical;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(0, 170, 255, 0.12);
+    }
+
+    /* Быстрые чипсы-примеры */
+    .chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+      margin-bottom: 18px;
+    }
+
+    .chip {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #475569;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .chip:hover {
+      background: #e0f2fe;
+      border-color: #bae6fd;
+      color: #0369a1;
+    }
+
+    /* Главная кнопка */
+    .cta-btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #00aaff 0%, #2563eb 100%);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.45);
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .cta-btn:hover {
+      box-shadow: 0 10px 24px -4px rgba(37, 99, 235, 0.55);
+    }
+
+    .cta-btn:active {
+      transform: scale(0.98);
+    }
+
+    .cta-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Статус и скелетон */
+    .status-msg {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      min-height: 18px;
+    }
+
+    .skeleton {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+
+    .sk-line {
+      height: 12px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Блок результата */
+    .result-wrapper {
+      display: none;
+      margin-top: 20px;
+      border-radius: 16px;
+      border: 1px solid #bae6fd;
+      background: #f0f9ff;
+      overflow: hidden;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: #e0f2fe;
+      font-size: 12px;
+      font-weight: 700;
+      color: #0369a1;
+    }
+
+    .copy-action {
+      background: #fff;
+      border: 1px solid #bae6fd;
+      color: #0284c7;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .result-content {
+      padding: 16px;
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+      background: #fff;
     }
 
     /* Экран тарифов */
     #paywall { display: none; }
-    .back-link {
-      background: none; border: none; color: #0077b6; font-weight: 600;
-      cursor: pointer; padding: 0; margin-bottom: 12px; font-size: 14px;
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      border: none;
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 16px;
     }
-    .tariffs { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 14px; }
-    @media (min-width: 520px) { .tariffs { grid-template-columns: 1fr 1fr; } }
-    .tariff-card {
-      border: 1px solid var(--border); border-radius: 16px; padding: 16px; background: #fafafa;
+
+    .benefits {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 20px;
+      display: grid;
+      gap: 8px;
     }
-    .tariff-card.featured { border-color: var(--accent); background: #f0f9ff; }
-    .price { font-size: 24px; font-weight: 800; margin: 6px 0; }
-    .pay-btn {
-      display: block; text-align: center; text-decoration: none; margin-top: 12px;
-      padding: 12px; border-radius: 10px; background: var(--accent); color: #fff; font-weight: 700;
+
+    .benefits li {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #334155;
+    }
+
+    .plan-card {
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 12px;
+      position: relative;
+      background: #fff;
+    }
+
+    .plan-card.popular {
+      border-color: var(--primary);
+      background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
+      box-shadow: 0 8px 20px -6px rgba(0, 170, 255, 0.25);
+    }
+
+    .popular-tag {
+      position: absolute;
+      top: -11px;
+      right: 16px;
+      background: linear-gradient(135deg, #00aaff 0%, #7c3aed 100%);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .plan-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .plan-name { font-size: 17px; font-weight: 700; }
+    .plan-price { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+    .plan-old { font-size: 14px; color: #94a3b8; text-decoration: line-through; margin-right: 6px; font-weight: 500; }
+    .plan-sub { font-size: 13px; color: var(--text-secondary); margin: 4px 0 14px; }
+
+    .pay-link {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      padding: 13px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .plan-card.popular .pay-link {
+      background: linear-gradient(135deg, #00aaff 0%, #2563eb 100%);
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 18px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <h1>Avito AI Genius</h1>
-      <button class="badge" id="limitBadge" onclick="togglePaywall(true)">Тарифы</button>
+    <!-- Верхняя панель -->
+    <div class="navbar">
+      <div class="brand">
+        <div class="brand-logo">⚡</div>
+        <span>Avito AI Genius</span>
+      </div>
+      <button type="button" class="pro-pill" id="limitBadge" onclick="togglePaywall(true)">
+        <span>💎</span> <span id="badgeText">Тарифы PRO</span>
+      </button>
     </div>
 
-    <!-- Основной экран генерации объявления -->
+    <!-- Заголовок -->
+    <div class="hero" id="heroBlock">
+      <h1>Продающее объявление за 15 секунд</h1>
+      <p>Загрузите фото или опишите товар — нейросеть составит SEO-заголовок, структуру текста и триггеры для Авито.</p>
+    </div>
+
+    <!-- Карточка генератора -->
     <div id="generatorCard" class="card">
-      <div class="mode-switch">
-        <button type="button" class="mode-btn active" id="modeGoods" onclick="setMode('goods')">Продать товар</button>
-        <button type="button" class="mode-btn" id="modeService" onclick="setMode('service')">Упаковать услугу</button>
+      <div class="segmented">
+        <button type="button" class="seg-btn active" id="modeGoods" onclick="setMode('goods')">
+          <span>📦</span> Продать товар
+        </button>
+        <button type="button" class="seg-btn" id="modeService" onclick="setMode('service')">
+          <span>🛠️</span> Упаковать услугу
+        </button>
       </div>
 
-      <label for="photoInput" id="photoLabel">Фото товара (можно без фото)</label>
-      <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoPreview()" />
-      <div id="previewWrap" class="preview-wrap">
-        <img id="previewImg" alt="Превью фото" />
+      <div class="field-label">
+        <span id="photoLabel">Фотография товара</span>
+        <span class="field-hint">Необязательно</span>
       </div>
 
-      <label for="descInput" id="descLabel">Кратко опишите товар, состояние и цену</label>
-      <textarea id="descInput" placeholder="Например: Перфоратор Bosch GBH 2-26, б/у полгода, в кейсе, работает без нареканий, хочу 5500 руб."></textarea>
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoPreview()" />
+        <div class="upload-icon">📷</div>
+        <div class="upload-title">Нажмите, чтобы выбрать фото</div>
+        <div class="upload-sub">ИИ сам определит модель, цвет и состояние</div>
+      </div>
 
-      <div id="statusLine" class="status-line"></div>
-      <button type="button" class="btn" id="genBtn" onclick="generateAd()">Сделать объявление для Авито</button>
+      <div class="preview-box" id="previewBox">
+        <img id="previewImg" alt="Превью" />
+        <button type="button" class="remove-photo" onclick="clearPhoto()">✕ Удалить</button>
+      </div>
 
-      <div id="resultBox" class="result-box"></div>
-      <div>
-        <button type="button" id="copyBtn" class="copy-btn" onclick="copyResult()">Скопировать объявление</button>
-        <span id="copiedToast" class="copied-toast">Скопировано</span>
+      <div class="field-label">
+        <span id="descLabel">Детали, состояние и цена</span>
+        <span class="field-hint">Чем точнее — тем выше конверсия</span>
+      </div>
+
+      <textarea id="descInput" placeholder="Например: Перфоратор Bosch GBH 2-26, б/у полгода, в кейсе, работает отлично, цена 5500 ₽"></textarea>
+
+      <div class="chips" id="chipsContainer">
+        <button type="button" class="chip" onclick="fillExample('iPhone 13 128GB, состояние отличное, АКБ 89%, полный комплект с коробкой, 34 000 ₽')">📱 Пример: iPhone</button>
+        <button type="button" class="chip" onclick="fillExample('Зимняя куртка мужская, размер 50 (L), надевал пару раз, без дефектов, 4 500 ₽')">🧥 Пример: Куртка</button>
+        <button type="button" class="chip" onclick="fillExample('Диван угловой раскладной, после химчистки, самовывоз, 14 000 ₽')">🛋️ Пример: Мебель</button>
+      </div>
+
+      <button type="button" class="cta-btn" id="genBtn" onclick="generateAd()">
+        <span>✨</span> <span>Сгенерировать объявление</span>
+      </button>
+
+      <div id="statusLine" class="status-msg"></div>
+
+      <!-- Анимация загрузки -->
+      <div class="skeleton" id="skeletonBox">
+        <div class="sk-line" style="width: 60%;"></div>
+        <div class="sk-line" style="width: 95%;"></div>
+        <div class="sk-line" style="width: 88%;"></div>
+        <div class="sk-line" style="width: 75%; margin-bottom: 0;"></div>
+      </div>
+
+      <!-- Результат -->
+      <div class="result-wrapper" id="resultWrapper">
+        <div class="result-header">
+          <span>ГОТОВОЕ ОБЪЯВЛЕНИЕ</span>
+          <button type="button" class="copy-action" id="copyBtn" onclick="copyResult()">Скопировать текст</button>
+        </div>
+        <div class="result-content" id="resultBox"></div>
       </div>
     </div>
 
     <!-- Экран оплаты тарифов -->
     <div id="paywall" class="card">
-      <button type="button" class="back-link" onclick="togglePaywall(false)">← Вернуться к генератору</button>
-      <h2 style="margin:0 0 6px;">Продолжить без лимитов</h2>
-      <p style="margin:0; color:var(--muted); font-size:14px;">Генерация заголовков, продающих описаний и характеристик для Авито.</p>
+      <button type="button" class="back-btn" onclick="togglePaywall(false)">← Назад в генератор</button>
+      <h2 style="margin: 0 0 6px; font-size: 22px; font-weight: 800;">Безлимитные объявления</h2>
+      <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">Окупается с первой же продажи на Авито.</p>
 
-      <div class="tariffs">
-        <div class="tariff-card">
-          <div><strong>Неделя</strong></div>
-          <div class="price">790 ₽</div>
-          <div style="font-size:13px; color:var(--muted);">7 дней активной работы</div>
-          <a class="pay-btn" href="https://yookassa.ru/" target="_blank" rel="noopener">Оплатить 790 ₽</a>
-        </div>
+      <ul class="benefits">
+        <li>✅ Распознавание товаров по фото без ограничений</li>
+        <li>✅ SEO-заголовки и ключи под алгоритмы Авито</li>
+        <li>✅ Упаковка как товаров, так и любых услуг</li>
+      </ul>
 
-        <div class="tariff-card featured">
-          <div><strong>Месяц</strong></div>
-          <div class="price">1 490 ₽</div>
-          <div style="font-size:13px; color:var(--muted);">30 дней, выгодно для постоянных продаж</div>
-          <a class="pay-btn" href="https://yookassa.ru/" target="_blank" rel="noopener">Оплатить 1 490 ₽</a>
+      <div class="plan-card popular">
+        <div class="popular-tag">Выгоднее на 50%</div>
+        <div class="plan-top">
+          <span class="plan-name">Месяц PRO</span>
+          <div><span class="plan-old">2 990 ₽</span><span class="plan-price">1 490 ₽</span></div>
         </div>
+        <div class="plan-sub">Всего ~49 ₽ в день • 30 дней полного доступа</div>
+        <a class="pay-link" href="https://yookassa.ru/" target="_blank" rel="noopener">Подключить на месяц за 1 490 ₽</a>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-top">
+          <span class="plan-name">Неделя</span>
+          <div><span class="plan-old">1 290 ₽</span><span class="plan-price">790 ₽</span></div>
+        </div>
+        <div class="plan-sub">7 дней активных продаж и тестов</div>
+        <a class="pay-link" href="https://yookassa.ru/" target="_blank" rel="noopener">Оплатить неделю за 790 ₽</a>
       </div>
     </div>
+
+    <div class="footer-note">Работает прямо в браузере без VPN и установки приложений</div>
   </div>
 
   <script>
-    // Вставьте сюда URL вебхука из Nodul
+    // Вставьте сюда URL вашего Webhook-триггера из Nodul
     const NODUL_WEBHOOK_URL = "https://ВАШ_ВЕБХУК_ИЗ_NODUL";
 
     let mode = "goods";
@@ -174,38 +642,61 @@
       document.getElementById("modeGoods").classList.toggle("active", mode === "goods");
       document.getElementById("modeService").classList.toggle("active", mode === "service");
 
+      const chips = document.getElementById("chipsContainer");
       if (mode === "goods") {
-        document.getElementById("photoLabel").innerText = "Фото товара (можно без фото)";
-        document.getElementById("descLabel").innerText = "Кратко опишите товар, состояние и цену";
-        document.getElementById("descInput").placeholder = "Например: Перфоратор Bosch GBH 2-26, б/у полгода, в кейсе, работает без нареканий, хочу 5500 руб.";
+        document.getElementById("photoLabel").innerText = "Фотография товара";
+        document.getElementById("descLabel").innerText = "Детали, состояние и цена";
+        document.getElementById("descInput").placeholder = "Например: Перфоратор Bosch GBH 2-26, б/у полгода, в кейсе, работает отлично, цена 5500 ₽";
+        chips.innerHTML = `
+          <button type="button" class="chip" onclick="fillExample('iPhone 13 128GB, состояние отличное, АКБ 89%, полный комплект с коробкой, 34 000 ₽')">📱 Пример: iPhone</button>
+          <button type="button" class="chip" onclick="fillExample('Зимняя куртка мужская, размер 50 (L), надевал пару раз, без дефектов, 4 500 ₽')">🧥 Пример: Куртка</button>
+          <button type="button" class="chip" onclick="fillExample('Диван угловой раскладной, после химчистки, самовывоз, 14 000 ₽')">🛋️ Пример: Мебель</button>
+        `;
       } else {
-        document.getElementById("photoLabel").innerText = "Фото примера работы или обложки (необязательно)";
-        document.getElementById("descLabel").innerText = "Опишите услугу, город, сроки и преимущества";
-        document.getElementById("descInput").placeholder = "Например: Ремонт квартир под ключ в СПб, опыт 8 лет, договор и гарантия, выезд на замер бесплатно.";
+        document.getElementById("photoLabel").innerText = "Фото примера работы или обложки";
+        document.getElementById("descLabel").innerText = "Суть услуги, город, опыт и выгоды";
+        document.getElementById("descInput").placeholder = "Например: Ремонт квартир под ключ в Санкт-Петербурге, опыт 8 лет, работа по договору, бесплатный замер.";
+        chips.innerHTML = `
+          <button type="button" class="chip" onclick="fillExample('Грузоперевозки на Газели по городу и области, аккуратные грузчики, подача за 30 минут, от 1200 ₽/час')">🚚 Пример: Перевозки</button>
+          <button type="button" class="chip" onclick="fillExample('Ремонт стиральных машин на дому, выезд и диагностика бесплатно при ремонте, гарантия 1 год')">🔧 Пример: Ремонт техники</button>
+          <button type="button" class="chip" onclick="fillExample('Маникюр с покрытием гель-лак, стерильный инструмент, центр города, 1 800 ₽')">💅 Пример: Бьюти</button>
+        `;
       }
+    }
+
+    function fillExample(text) {
+      document.getElementById("descInput").value = text;
     }
 
     function togglePaywall(show) {
       document.getElementById("generatorCard").style.display = show ? "none" : "block";
+      document.getElementById("heroBlock").style.display = show ? "none" : "block";
       document.getElementById("paywall").style.display = show ? "block" : "none";
     }
 
     function handlePhotoPreview() {
       const fileInput = document.getElementById("photoInput");
-      const wrap = document.getElementById("previewWrap");
+      const uploadZone = document.getElementById("uploadZone");
+      const previewBox = document.getElementById("previewBox");
       const img = document.getElementById("previewImg");
 
       if (fileInput.files && fileInput.files[0]) {
         const reader = new FileReader();
         reader.onload = (e) => {
           img.src = e.target.result;
-          wrap.style.display = "block";
+          uploadZone.style.display = "none";
+          previewBox.style.display = "block";
         };
         reader.readAsDataURL(fileInput.files[0]);
-      } else {
-        wrap.style.display = "none";
-        img.src = "";
       }
+    }
+
+    function clearPhoto() {
+      const fileInput = document.getElementById("photoInput");
+      fileInput.value = "";
+      document.getElementById("previewImg").src = "";
+      document.getElementById("previewBox").style.display = "none";
+      document.getElementById("uploadZone").style.display = "block";
     }
 
     function fileToBase64(file) {
@@ -222,32 +713,30 @@
       const fileInput = document.getElementById("photoInput");
       const btn = document.getElementById("genBtn");
       const statusLine = document.getElementById("statusLine");
+      const skeleton = document.getElementById("skeletonBox");
+      const resultWrapper = document.getElementById("resultWrapper");
       const resultBox = document.getElementById("resultBox");
-      const copyBtn = document.getElementById("copyBtn");
 
       if (!text && fileInput.files.length === 0) {
-        statusLine.innerText = "Загрузите фото или напишите описание.";
+        statusLine.innerText = "⚠️ Загрузите фото или выберите один из примеров выше.";
         return;
       }
 
       if (NODUL_WEBHOOK_URL.includes("ВАШ_ВЕБХУК_ИЗ_NODUL")) {
-        statusLine.innerText = "Укажите реальный URL вебхука Nodul в коде.";
+        statusLine.innerText = "⚠️ Вставьте ссылку на ваш вебхук Nodul в настройках файла.";
         return;
       }
 
       btn.disabled = true;
-      btn.innerText = "Формируем объявление...";
-      resultBox.style.display = "none";
-      copyBtn.style.display = "none";
-      document.getElementById("copiedToast").style.display = "none";
+      btn.innerHTML = "<span>⏳</span> <span>Нейросеть пишет текст...</span>";
+      resultWrapper.style.display = "none";
+      skeleton.style.display = "block";
+      statusLine.innerText = "Анализируем данные и подбираем ключевые слова для Авито...";
 
       try {
         let imageBase64 = null;
         if (fileInput.files.length > 0) {
-          statusLine.innerText = "Загружаем фото...";
           imageBase64 = await fileToBase64(fileInput.files[0]);
-        } else {
-          statusLine.innerText = "Отправляем данные...";
         }
 
         const response = await fetch(NODUL_WEBHOOK_URL, {
@@ -262,8 +751,8 @@
           })
         });
 
-        statusLine.innerText = "Пишем объявление...";
         const data = await response.json();
+        skeleton.style.display = "none";
 
         if (data.paywall === true) {
           statusLine.innerText = "";
@@ -272,34 +761,33 @@
         }
 
         if (typeof data.remaining === "number") {
-          document.getElementById("limitBadge").innerText = `Осталось: ${data.remaining}`;
+          document.getElementById("badgeText").innerText = `Осталось: ${data.remaining}`;
         }
 
         const adText = data.result || data.text || "";
         if (adText) {
           resultBox.innerText = adText;
-          resultBox.style.display = "block";
-          copyBtn.style.display = "inline-block";
-          statusLine.innerText = "Готово — можно копировать и выкладывать на Авито";
-        } else {
-          resultBox.innerText = "Ответ получен, но текст пустой. Проверьте финальный узел ответа в Nodul.";
-          resultBox.style.display = "block";
+          resultWrapper.style.display = "block";
           statusLine.innerText = "";
+          resultWrapper.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } else {
+          statusLine.innerText = "Сервер ответил пустым текстом. Проверьте узел ответа в Nodul.";
         }
       } catch (err) {
-        statusLine.innerText = "";
-        resultBox.innerText = "Ошибка связи с сервером: " + err.message;
-        resultBox.style.display = "block";
+        skeleton.style.display = "none";
+        statusLine.innerText = "Ошибка соединения: " + err.message;
       } finally {
         btn.disabled = false;
-        btn.innerText = "Сделать объявление для Авито";
+        btn.innerHTML = "<span>✨</span> <span>Сгенерировать объявление</span>";
       }
     }
 
     function copyResult() {
       const text = document.getElementById("resultBox").innerText;
       navigator.clipboard.writeText(text);
-      document.getElementById("copiedToast").style.display = "inline-block";
+      const copyBtn = document.getElementById("copyBtn");
+      copyBtn.innerText = "✓ Скопировано!";
+      setTimeout(() => { copyBtn.innerText = "Скопировать текст"; }, 2000);
     }
   </script>
 </body>

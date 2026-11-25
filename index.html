@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Avito AI Genius — ИИ-генератор продающих объявлений</title>
+  <title>Avito AI Genius — ИИ-генератор объявлений для Авито</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -42,12 +42,12 @@
       margin: 0 auto;
     }
 
-    /* Шапка */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 6px 0 18px;
+      gap: 10px;
     }
 
     .brand {
@@ -72,25 +72,29 @@
       box-shadow: 0 4px 12px rgba(0, 170, 255, 0.3);
     }
 
-    .pro-pill {
+    .trial-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: #fff;
-      border: none;
-      padding: 8px 14px;
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+      padding: 8px 13px;
       border-radius: 999px;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
       transition: transform 0.15s ease;
     }
 
-    .pro-pill:active { transform: scale(0.96); }
+    .trial-pill.exhausted {
+      background: #0f172a;
+      color: #fff;
+      border-color: #0f172a;
+    }
 
-    /* Hero заголовок */
+    .trial-pill:active { transform: scale(0.96); }
+
     .hero {
       margin-bottom: 18px;
     }
@@ -110,7 +114,6 @@
       line-height: 1.45;
     }
 
-    /* Основная карточка */
     .card {
       background: var(--surface);
       border-radius: var(--radius);
@@ -119,7 +122,6 @@
       box-shadow: var(--shadow);
     }
 
-    /* Переключатель режимов */
     .segmented {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -151,7 +153,6 @@
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
     }
 
-    /* Красивая зона загрузки фото */
     .field-label {
       display: flex;
       justify-content: space-between;
@@ -180,7 +181,7 @@
       margin-bottom: 18px;
     }
 
-    .upload-zone:hover, .upload-zone.has-file {
+    .upload-zone:hover {
       border-color: var(--primary);
       background: #f0f9ff;
     }
@@ -220,7 +221,6 @@
       color: var(--text-secondary);
     }
 
-    /* Превью фото */
     .preview-box {
       display: none;
       position: relative;
@@ -254,7 +254,6 @@
       cursor: pointer;
     }
 
-    /* Текстовое поле */
     textarea {
       width: 100%;
       min-height: 112px;
@@ -275,7 +274,6 @@
       box-shadow: 0 0 0 4px rgba(0, 170, 255, 0.12);
     }
 
-    /* Быстрые чипсы-примеры */
     .chips {
       display: flex;
       gap: 6px;
@@ -302,7 +300,6 @@
       color: #0369a1;
     }
 
-    /* Главная кнопка */
     .cta-btn {
       width: 100%;
       padding: 16px;
@@ -321,21 +318,9 @@
       gap: 8px;
     }
 
-    .cta-btn:hover {
-      box-shadow: 0 10px 24px -4px rgba(37, 99, 235, 0.55);
-    }
+    .cta-btn:active { transform: scale(0.98); }
+    .cta-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
 
-    .cta-btn:active {
-      transform: scale(0.98);
-    }
-
-    .cta-btn:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* Статус и скелетон */
     .status-msg {
       margin-top: 12px;
       text-align: center;
@@ -368,7 +353,6 @@
       100% { background-position: -200% 0; }
     }
 
-    /* Блок результата */
     .result-wrapper {
       display: none;
       margin-top: 20px;
@@ -409,7 +393,7 @@
       background: #fff;
     }
 
-    /* Экран тарифов */
+    /* Экран оплаты через ЮKassa (появляется после 3 пробных генераций) */
     #paywall { display: none; }
 
     .back-btn {
@@ -480,22 +464,22 @@
 
     .plan-name { font-size: 17px; font-weight: 700; }
     .plan-price { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
-    .plan-old { font-size: 14px; color: #94a3b8; text-decoration: line-through; margin-right: 6px; font-weight: 500; }
     .plan-sub { font-size: 13px; color: var(--text-secondary); margin: 4px 0 14px; }
 
-    .pay-link {
-      display: block;
+    .pay-btn {
+      width: 100%;
       text-align: center;
-      text-decoration: none;
+      border: none;
       padding: 13px;
       border-radius: 12px;
       font-weight: 700;
       font-size: 15px;
       background: #0f172a;
       color: #fff;
+      cursor: pointer;
     }
 
-    .plan-card.popular .pay-link {
+    .plan-card.popular .pay-btn {
       background: linear-gradient(135deg, #00aaff 0%, #2563eb 100%);
     }
 
@@ -509,24 +493,21 @@
 </head>
 <body>
   <div class="container">
-    <!-- Верхняя панель -->
     <div class="navbar">
       <div class="brand">
         <div class="brand-logo">⚡</div>
         <span>Avito AI Genius</span>
       </div>
-      <button type="button" class="pro-pill" id="limitBadge" onclick="togglePaywall(true)">
-        <span>💎</span> <span id="badgeText">Тарифы PRO</span>
+      <button type="button" class="trial-pill" id="trialPill" onclick="togglePaywall(true)">
+        <span id="trialText">Бесплатно: 3 из 3</span>
       </button>
     </div>
 
-    <!-- Заголовок -->
     <div class="hero" id="heroBlock">
-      <h1>Продающее объявление за 15 секунд</h1>
-      <p>Загрузите фото или опишите товар — нейросеть составит SEO-заголовок, структуру текста и триггеры для Авито.</p>
+      <h1>Объявление для Авито за 15 секунд</h1>
+      <p>Попробуйте 3 раза бесплатно — загрузите фото или опишите товар/услугу, а ИИ соберет текст под поиск Авито.</p>
     </div>
 
-    <!-- Карточка генератора -->
     <div id="generatorCard" class="card">
       <div class="segmented">
         <button type="button" class="seg-btn active" id="modeGoods" onclick="setMode('goods')">
@@ -546,7 +527,7 @@
         <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoPreview()" />
         <div class="upload-icon">📷</div>
         <div class="upload-title">Нажмите, чтобы выбрать фото</div>
-        <div class="upload-sub">ИИ сам определит модель, цвет и состояние</div>
+        <div class="upload-sub">ИИ определит товар и характеристики по снимку</div>
       </div>
 
       <div class="preview-box" id="previewBox">
@@ -556,7 +537,7 @@
 
       <div class="field-label">
         <span id="descLabel">Детали, состояние и цена</span>
-        <span class="field-hint">Чем точнее — тем выше конверсия</span>
+        <span class="field-hint">Чем точнее — тем лучше текст</span>
       </div>
 
       <textarea id="descInput" placeholder="Например: Перфоратор Bosch GBH 2-26, б/у полгода, в кейсе, работает отлично, цена 5500 ₽"></textarea>
@@ -568,12 +549,11 @@
       </div>
 
       <button type="button" class="cta-btn" id="genBtn" onclick="generateAd()">
-        <span>✨</span> <span>Сгенерировать объявление</span>
+        <span>✨</span> <span>Сгенерировать бесплатно</span>
       </button>
 
       <div id="statusLine" class="status-msg"></div>
 
-      <!-- Анимация загрузки -->
       <div class="skeleton" id="skeletonBox">
         <div class="sk-line" style="width: 60%;"></div>
         <div class="sk-line" style="width: 95%;"></div>
@@ -581,7 +561,6 @@
         <div class="sk-line" style="width: 75%; margin-bottom: 0;"></div>
       </div>
 
-      <!-- Результат -->
       <div class="result-wrapper" id="resultWrapper">
         <div class="result-header">
           <span>ГОТОВОЕ ОБЪЯВЛЕНИЕ</span>
@@ -591,51 +570,90 @@
       </div>
     </div>
 
-    <!-- Экран оплаты тарифов -->
+    <!-- Экран оплаты через ЮKassa после исчерпания 3 бесплатных попыток -->
     <div id="paywall" class="card">
-      <button type="button" class="back-btn" onclick="togglePaywall(false)">← Назад в генератор</button>
-      <h2 style="margin: 0 0 6px; font-size: 22px; font-weight: 800;">Безлимитные объявления</h2>
-      <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">Окупается с первой же продажи на Авито.</p>
+      <button type="button" class="back-btn" onclick="togglePaywall(false)">← Назад</button>
+      <h2 style="margin: 0 0 6px; font-size: 22px; font-weight: 800;">3 бесплатные генерации использованы</h2>
+      <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">Оплатите доступ через ЮKassa, чтобы продолжить создавать объявления без ограничений.</p>
 
       <ul class="benefits">
-        <li>✅ Распознавание товаров по фото без ограничений</li>
-        <li>✅ SEO-заголовки и ключи под алгоритмы Авито</li>
-        <li>✅ Упаковка как товаров, так и любых услуг</li>
+        <li>✅ Безлимитная генерация объявлений для товаров и услуг</li>
+        <li>✅ Распознавание товаров и деталей по фото</li>
+        <li>✅ Быстрый переход на безопасную оплату ЮKassa</li>
       </ul>
 
       <div class="plan-card popular">
-        <div class="popular-tag">Выгоднее на 50%</div>
+        <div class="popular-tag">Популярный</div>
         <div class="plan-top">
-          <span class="plan-name">Месяц PRO</span>
-          <div><span class="plan-old">2 990 ₽</span><span class="plan-price">1 490 ₽</span></div>
+          <span class="plan-name">Месяц</span>
+          <span class="plan-price">1 490 ₽</span>
         </div>
-        <div class="plan-sub">Всего ~49 ₽ в день • 30 дней полного доступа</div>
-        <a class="pay-link" href="https://yookassa.ru/" target="_blank" rel="noopener">Подключить на месяц за 1 490 ₽</a>
+        <div class="plan-sub">30 дней безлимитных генераций</div>
+        <button type="button" class="pay-btn" onclick="startPayment('month', this)">Оплатить 1 490 ₽ в ЮKassa</button>
       </div>
 
       <div class="plan-card">
         <div class="plan-top">
           <span class="plan-name">Неделя</span>
-          <div><span class="plan-old">1 290 ₽</span><span class="plan-price">790 ₽</span></div>
+          <span class="plan-price">790 ₽</span>
         </div>
-        <div class="plan-sub">7 дней активных продаж и тестов</div>
-        <a class="pay-link" href="https://yookassa.ru/" target="_blank" rel="noopener">Оплатить неделю за 790 ₽</a>
+        <div class="plan-sub">7 дней активной работы</div>
+        <button type="button" class="pay-btn" onclick="startPayment('week', this)">Оплатить 790 ₽ в ЮKassa</button>
       </div>
     </div>
 
-    <div class="footer-note">Работает прямо в браузере без VPN и установки приложений</div>
+    <div class="footer-note">3 бесплатных пробных генерации • Оплата через ЮKassa</div>
   </div>
 
   <script>
-    // Вставьте сюда URL вашего Webhook-триггера из Nodul
-    const NODUL_WEBHOOK_URL = "https://ВАШ_ВЕБХУК_ИЗ_NODUL";
+    // 1. URL вебхука генерации в Nodul
+    const NODUL_WEBHOOK_URL = "https://ВАШ_ВЕБХУК_ГЕНЕРАЦИИ_В_NODUL";
+    // 2. URL вебхука создания платежа в Nodul (опционально, если создаете ссылку динамически)
+    const NODUL_PAY_URL = "https://ВАШ_ВЕБХУК_ОПЛАТЫ_В_NODUL";
 
+    const FREE_TRIAL_TOTAL = 3;
     let mode = "goods";
+
     let userId = localStorage.getItem("avito_ai_user_id");
     if (!userId) {
       userId = "web_" + Math.random().toString(36).substring(2, 12);
       localStorage.setItem("avito_ai_user_id", userId);
     }
+
+    let localRemaining = Number(localStorage.getItem("avito_ai_remaining"));
+    if (Number.isNaN(localRemaining) || localStorage.getItem("avito_ai_remaining") === null) {
+      localRemaining = FREE_TRIAL_TOTAL;
+      localStorage.setItem("avito_ai_remaining", String(localRemaining));
+    }
+
+    function updateTrialUI(remaining, hasPaid = false) {
+      const pill = document.getElementById("trialPill");
+      const textEl = document.getElementById("trialText");
+      const genBtn = document.getElementById("genBtn");
+
+      if (hasPaid) {
+        pill.classList.remove("exhausted");
+        textEl.innerText = "PRO активен";
+        genBtn.innerHTML = "<span>✨</span> <span>Сгенерировать объявление</span>";
+        return;
+      }
+
+      const safeRem = Math.max(0, Number(remaining) || 0);
+      localRemaining = safeRem;
+      localStorage.setItem("avito_ai_remaining", String(safeRem));
+
+      if (safeRem > 0) {
+        pill.classList.remove("exhausted");
+        textEl.innerText = `Бесплатно: ${safeRem} из ${FREE_TRIAL_TOTAL}`;
+        genBtn.innerHTML = "<span>✨</span> <span>Сгенерировать бесплатно</span>";
+      } else {
+        pill.classList.add("exhausted");
+        textEl.innerText = "Лимит исчерпан • Оплатить";
+        genBtn.innerHTML = "<span>🔓</span> <span>Открыть доступ в ЮKassa</span>";
+      }
+    }
+
+    updateTrialUI(localRemaining);
 
     function setMode(newMode) {
       mode = newMode;
@@ -709,6 +727,11 @@
     }
 
     async function generateAd() {
+      if (localRemaining <= 0 && localStorage.getItem("avito_ai_paid") !== "1") {
+        togglePaywall(true);
+        return;
+      }
+
       const text = document.getElementById("descInput").value.trim();
       const fileInput = document.getElementById("photoInput");
       const btn = document.getElementById("genBtn");
@@ -722,8 +745,8 @@
         return;
       }
 
-      if (NODUL_WEBHOOK_URL.includes("ВАШ_ВЕБХУК_ИЗ_NODUL")) {
-        statusLine.innerText = "⚠️ Вставьте ссылку на ваш вебхук Nodul в настройках файла.";
+      if (NODUL_WEBHOOK_URL.includes("ВАШ_ВЕБХУК_ГЕНЕРАЦИИ_В_NODUL")) {
+        statusLine.innerText = "⚠️ Укажите URL вебхука Nodul в коде.";
         return;
       }
 
@@ -731,7 +754,7 @@
       btn.innerHTML = "<span>⏳</span> <span>Нейросеть пишет текст...</span>";
       resultWrapper.style.display = "none";
       skeleton.style.display = "block";
-      statusLine.innerText = "Анализируем данные и подбираем ключевые слова для Авито...";
+      statusLine.innerText = "Формируем объявление для Авито...";
 
       try {
         let imageBase64 = null;
@@ -754,14 +777,21 @@
         const data = await response.json();
         skeleton.style.display = "none";
 
-        if (data.paywall === true) {
+        if (data.paywall === true || response.status === 402) {
+          updateTrialUI(0, false);
           statusLine.innerText = "";
           togglePaywall(true);
           return;
         }
 
-        if (typeof data.remaining === "number") {
-          document.getElementById("badgeText").innerText = `Осталось: ${data.remaining}`;
+        const isPaid = Boolean(data.paid);
+        if (isPaid) {
+          localStorage.setItem("avito_ai_paid", "1");
+          updateTrialUI(0, true);
+        } else if (typeof data.remaining === "number") {
+          updateTrialUI(data.remaining, false);
+        } else {
+          updateTrialUI(localRemaining - 1, false);
         }
 
         const adText = data.result || data.text || "";
@@ -771,14 +801,44 @@
           statusLine.innerText = "";
           resultWrapper.scrollIntoView({ behavior: "smooth", block: "nearest" });
         } else {
-          statusLine.innerText = "Сервер ответил пустым текстом. Проверьте узел ответа в Nodul.";
+          statusLine.innerText = "Сервер вернул пустой ответ. Проверьте узел ответа в Nodul.";
         }
       } catch (err) {
         skeleton.style.display = "none";
         statusLine.innerText = "Ошибка соединения: " + err.message;
       } finally {
         btn.disabled = false;
-        btn.innerHTML = "<span>✨</span> <span>Сгенерировать объявление</span>";
+        updateTrialUI(localRemaining, localStorage.getItem("avito_ai_paid") === "1");
+      }
+    }
+
+    async function startPayment(plan, btnEl) {
+      if (NODUL_PAY_URL.includes("ВАШ_ВЕБХУК_ОПЛАТЫ_В_NODUL")) {
+        alert("Укажите URL вебхука создания платежа в переменной NODUL_PAY_URL.");
+        return;
+      }
+
+      const originalText = btnEl.innerText;
+      btnEl.disabled = true;
+      btnEl.innerText = "Создаем счет в ЮKassa...";
+
+      try {
+        const res = await fetch(NODUL_PAY_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id: userId, plan: plan })
+        });
+        const data = await res.json();
+        if (data.confirmation_url) {
+          window.location.href = data.confirmation_url;
+        } else {
+          alert("Не удалось получить ссылку на оплату от ЮKassa.");
+        }
+      } catch (e) {
+        alert("Ошибка соединения: " + e.message);
+      } finally {
+        btnEl.disabled = false;
+        btnEl.innerText = originalText;
       }
     }
 

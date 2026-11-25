@@ -393,7 +393,7 @@
       background: #fff;
     }
 
-    /* Экран оплаты через ЮKassa (появляется после 3 пробных генераций) */
+    /* Экран оплаты 490 ₽ через ЮKassa */
     #paywall { display: none; }
 
     .back-btn {
@@ -427,60 +427,36 @@
       color: #334155;
     }
 
-    .plan-card {
-      border: 1.5px solid var(--border);
+    .offer-box {
+      border: 1.5px solid var(--primary);
       border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 12px;
-      position: relative;
-      background: #fff;
-    }
-
-    .plan-card.popular {
-      border-color: var(--primary);
+      padding: 20px;
       background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
       box-shadow: 0 8px 20px -6px rgba(0, 170, 255, 0.25);
     }
 
-    .popular-tag {
-      position: absolute;
-      top: -11px;
-      right: 16px;
-      background: linear-gradient(135deg, #00aaff 0%, #7c3aed 100%);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .plan-top {
+    .offer-row {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
+      margin-bottom: 6px;
     }
 
-    .plan-name { font-size: 17px; font-weight: 700; }
-    .plan-price { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
-    .plan-sub { font-size: 13px; color: var(--text-secondary); margin: 4px 0 14px; }
+    .offer-title { font-size: 17px; font-weight: 700; }
+    .offer-price { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+    .offer-desc { font-size: 13px; color: var(--text-secondary); margin: 0 0 16px; }
 
     .pay-btn {
       width: 100%;
       text-align: center;
       border: none;
-      padding: 13px;
+      padding: 15px;
       border-radius: 12px;
       font-weight: 700;
-      font-size: 15px;
-      background: #0f172a;
+      font-size: 16px;
+      background: linear-gradient(135deg, #00aaff 0%, #2563eb 100%);
       color: #fff;
       cursor: pointer;
-    }
-
-    .plan-card.popular .pay-btn {
-      background: linear-gradient(135deg, #00aaff 0%, #2563eb 100%);
     }
 
     .footer-note {
@@ -505,7 +481,7 @@
 
     <div class="hero" id="heroBlock">
       <h1>Объявление для Авито за 15 секунд</h1>
-      <p>Попробуйте 3 раза бесплатно — загрузите фото или опишите товар/услугу, а ИИ соберет текст под поиск Авито.</p>
+      <p>3 бесплатных пробных раза — загрузите фото или опишите товар/услугу, а ИИ соберет текст под поиск Авито.</p>
     </div>
 
     <div id="generatorCard" class="card">
@@ -570,46 +546,37 @@
       </div>
     </div>
 
-    <!-- Экран оплаты через ЮKassa после исчерпания 3 бесплатных попыток -->
+    <!-- Экран оплаты 490 ₽ через ЮKassa после 3 бесплатных попыток -->
     <div id="paywall" class="card">
       <button type="button" class="back-btn" onclick="togglePaywall(false)">← Назад</button>
-      <h2 style="margin: 0 0 6px; font-size: 22px; font-weight: 800;">3 бесплатные генерации использованы</h2>
-      <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">Оплатите доступ через ЮKassa, чтобы продолжить создавать объявления без ограничений.</p>
+      <h2 style="margin: 0 0 6px; font-size: 22px; font-weight: 800;">3 бесплатные попытки закончились</h2>
+      <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">Оплатите доступ через ЮKassa, чтобы продолжить создавать объявления для Авито.</p>
 
       <ul class="benefits">
-        <li>✅ Безлимитная генерация объявлений для товаров и услуг</li>
+        <li>✅ Генерация объявлений для товаров и услуг</li>
         <li>✅ Распознавание товаров и деталей по фото</li>
-        <li>✅ Быстрый переход на безопасную оплату ЮKassa</li>
+        <li>✅ Безопасная оплата через ЮKassa</li>
       </ul>
 
-      <div class="plan-card popular">
-        <div class="popular-tag">Популярный</div>
-        <div class="plan-top">
-          <span class="plan-name">Месяц</span>
-          <span class="plan-price">1 490 ₽</span>
+      <div class="offer-box">
+        <div class="offer-row">
+          <span class="offer-title">Доступ к генератору</span>
+          <span class="offer-price">490 ₽</span>
         </div>
-        <div class="plan-sub">30 дней безлимитных генераций</div>
-        <button type="button" class="pay-btn" onclick="startPayment('month', this)">Оплатить 1 490 ₽ в ЮKassa</button>
-      </div>
-
-      <div class="plan-card">
-        <div class="plan-top">
-          <span class="plan-name">Неделя</span>
-          <span class="plan-price">790 ₽</span>
-        </div>
-        <div class="plan-sub">7 дней активной работы</div>
-        <button type="button" class="pay-btn" onclick="startPayment('week', this)">Оплатить 790 ₽ в ЮKassa</button>
+        <p class="offer-desc">Оплата в один клик через ЮKassa</p>
+        <button type="button" class="pay-btn" onclick="startPayment(this)">Оплатить 490 ₽ в ЮKassa</button>
       </div>
     </div>
 
-    <div class="footer-note">3 бесплатных пробных генерации • Оплата через ЮKassa</div>
+    <div class="footer-note">3 бесплатных пробных генерации • Далее 490 ₽ через ЮKassa</div>
   </div>
 
   <script>
     // 1. URL вебхука генерации в Nodul
     const NODUL_WEBHOOK_URL = "https://ВАШ_ВЕБХУК_ГЕНЕРАЦИИ_В_NODUL";
-    // 2. URL вебхука создания платежа в Nodul (опционально, если создаете ссылку динамически)
+    // 2. URL вебхука создания платежа в Nodul (или прямая ссылка ЮKassa, если используете статическую)
     const NODUL_PAY_URL = "https://ВАШ_ВЕБХУК_ОПЛАТЫ_В_NODUL";
+    const AMOUNT_RUB = "490.00";
 
     const FREE_TRIAL_TOTAL = 3;
     let mode = "goods";
@@ -633,7 +600,7 @@
 
       if (hasPaid) {
         pill.classList.remove("exhausted");
-        textEl.innerText = "PRO активен";
+        textEl.innerText = "Доступ активен";
         genBtn.innerHTML = "<span>✨</span> <span>Сгенерировать объявление</span>";
         return;
       }
@@ -648,12 +615,12 @@
         genBtn.innerHTML = "<span>✨</span> <span>Сгенерировать бесплатно</span>";
       } else {
         pill.classList.add("exhausted");
-        textEl.innerText = "Лимит исчерпан • Оплатить";
-        genBtn.innerHTML = "<span>🔓</span> <span>Открыть доступ в ЮKassa</span>";
+        textEl.innerText = "490 ₽ • Оплатить";
+        genBtn.innerHTML = "<span>🔓</span> <span>Оплатить 490 ₽ в ЮKassa</span>";
       }
     }
 
-    updateTrialUI(localRemaining);
+    updateTrialUI(localRemaining, localStorage.getItem("avito_ai_paid") === "1");
 
     function setMode(newMode) {
       mode = newMode;
@@ -812,7 +779,7 @@
       }
     }
 
-    async function startPayment(plan, btnEl) {
+    async function startPayment(btnEl) {
       if (NODUL_PAY_URL.includes("ВАШ_ВЕБХУК_ОПЛАТЫ_В_NODUL")) {
         alert("Укажите URL вебхука создания платежа в переменной NODUL_PAY_URL.");
         return;
@@ -826,7 +793,10 @@
         const res = await fetch(NODUL_PAY_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user_id: userId, plan: plan })
+          body: JSON.stringify({
+            user_id: userId,
+            amount: AMOUNT_RUB
+          })
         });
         const data = await res.json();
         if (data.confirmation_url) {

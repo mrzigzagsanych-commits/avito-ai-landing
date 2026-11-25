@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>КарточкаPRO — генератор объявлений для Авито на базе Nero AI (neroai.ru)</title>
-  <meta name="description" content="КарточкаPRO на neroai.ru: создавайте продающие заголовки, описания и характеристики для товаров и услуг на Авито. 3 бесплатные генерации, полный доступ — 490 ₽." />
+  <title>КарточкаPRO — подписка на генератор карточек для Авито (neroai.ru)</title>
+  <meta name="description" content="КарточкаPRO на neroai.ru — умный помощник для продавцов и мастеров на Авито. 3 бесплатные генерации, полный безлимит по подписке за 490 ₽/мес." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
@@ -21,7 +21,7 @@
       --primary-hover: #1d4ed8;
       --primary-soft: rgba(37, 99, 235, 0.09);
       --accent: #0d9488;
-      --accent-soft: rgba(13, 148, 136, 0.1);
+      --accent-soft: rgba(13, 148, 136, 0.11);
       --warn-bg: #fffbeb;
       --warn-line: #fde68a;
       --warn-ink: #92400e;
@@ -29,8 +29,8 @@
       --radius-lg: 18px;
       --radius-md: 12px;
       --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
-      --shadow-md: 0 12px 32px -12px rgba(15, 23, 42, 0.1);
-      --shadow-lg: 0 24px 60px -15px rgba(15, 23, 42, 0.16);
+      --shadow-md: 0 14px 34px -14px rgba(15, 23, 42, 0.11);
+      --shadow-lg: 0 24px 60px -15px rgba(15, 23, 42, 0.18);
     }
 
     * {
@@ -51,6 +51,7 @@
       color: var(--ink);
       line-height: 1.55;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     h1, h2, h3, .brand-font {
@@ -75,7 +76,7 @@
       width: 100%;
       max-width: 1140px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 18px;
     }
 
     /* Header */
@@ -84,65 +85,78 @@
       top: 0;
       z-index: 30;
       backdrop-filter: blur(14px);
-      background: rgba(246, 248, 252, 0.84);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      background: rgba(246, 248, 252, 0.88);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.85);
     }
 
     .header-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      min-height: 70px;
+      gap: 10px;
+      min-height: 68px;
     }
 
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
     }
 
     .brand-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
       background: linear-gradient(135deg, var(--primary), var(--accent));
       display: grid;
       place-items: center;
       color: #fff;
       font-weight: 800;
-      font-size: 17px;
+      font-size: 16px;
+      flex-shrink: 0;
       box-shadow: 0 8px 20px -6px rgba(37, 99, 235, 0.45);
+    }
+
+    .brand-text {
+      min-width: 0;
     }
 
     .brand-title {
       display: flex;
       align-items: center;
-      gap: 8px;
+      flex-wrap: wrap;
+      gap: 6px;
       font-weight: 800;
-      font-size: 18px;
+      font-size: 17px;
+      line-height: 1.2;
     }
 
     .domain-pill {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       color: var(--primary);
       background: var(--primary-soft);
       border: 1px solid rgba(37, 99, 235, 0.18);
-      padding: 2px 9px;
+      padding: 2px 8px;
       border-radius: 999px;
+      white-space: nowrap;
     }
 
     .brand-sub {
       font-size: 12px;
       color: var(--ink-subtle);
       display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 22px;
       font-size: 14px;
       font-weight: 500;
       color: var(--ink-muted);
@@ -155,19 +169,21 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-shrink: 0;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       border-radius: var(--radius-md);
       font-weight: 600;
       font-size: 14px;
-      padding: 11px 18px;
+      padding: 11px 16px;
       border: 1px solid transparent;
+      white-space: nowrap;
       transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
@@ -208,15 +224,20 @@
       color: var(--ink);
     }
 
+    .header-pay-btn {
+      padding: 9px 13px;
+      font-size: 13px;
+    }
+
     /* Hero */
     .hero {
-      padding: 52px 0 36px;
+      padding: 40px 0 28px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 28px;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 26px;
       align-items: center;
     }
 
@@ -224,13 +245,14 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       color: var(--accent);
       background: var(--accent-soft);
       padding: 6px 12px;
       border-radius: 999px;
       margin-bottom: 16px;
+      max-width: 100%;
     }
 
     .dot-live {
@@ -238,12 +260,13 @@
       height: 8px;
       border-radius: 50%;
       background: var(--accent);
+      flex-shrink: 0;
     }
 
     h1 {
-      margin: 0 0 16px;
-      font-size: clamp(32px, 4.4vw, 48px);
-      line-height: 1.12;
+      margin: 0 0 14px;
+      font-size: clamp(29px, 4.3vw, 46px);
+      line-height: 1.13;
       font-weight: 800;
     }
 
@@ -252,8 +275,8 @@
     }
 
     .hero-lead {
-      margin: 0 0 24px;
-      font-size: 17px;
+      margin: 0 0 22px;
+      font-size: 16.5px;
       color: var(--ink-muted);
       max-width: 580px;
     }
@@ -261,14 +284,14 @@
     .hero-cta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 24px;
+      gap: 10px;
+      margin-bottom: 20px;
     }
 
     .hero-trust {
       display: flex;
       flex-wrap: wrap;
-      gap: 18px;
+      gap: 14px 20px;
       font-size: 13px;
       color: var(--ink-subtle);
     }
@@ -279,34 +302,62 @@
       gap: 6px;
     }
 
+    /* Subscription Card */
     .offer-card {
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
-      padding: 26px;
+      padding: 24px;
       box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .offer-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
     }
 
     .offer-top {
       display: flex;
-      align-items: baseline;
+      flex-wrap: wrap;
+      align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding-bottom: 18px;
+      gap: 10px 12px;
+      padding-bottom: 16px;
       border-bottom: 1px solid var(--line);
     }
 
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
     .price-tag {
-      font-size: 36px;
+      font-size: 34px;
       font-weight: 800;
       color: var(--ink);
       line-height: 1;
+      white-space: nowrap;
+    }
+
+    .price-period {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      white-space: nowrap;
     }
 
     .price-note {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--ink-subtle);
-      margin-top: 4px;
+      margin-top: 5px;
     }
 
     .trial-badge {
@@ -314,17 +365,18 @@
       color: var(--primary);
       font-size: 12px;
       font-weight: 700;
-      padding: 6px 12px;
+      padding: 6px 11px;
       border-radius: 999px;
       white-space: nowrap;
+      font-variant-numeric: tabular-nums;
     }
 
     .feature-list {
       list-style: none;
       padding: 0;
-      margin: 18px 0 22px;
+      margin: 18px 0 20px;
       display: grid;
-      gap: 10px;
+      gap: 11px;
       font-size: 14px;
       color: var(--ink-muted);
     }
@@ -346,19 +398,77 @@
       font-size: 12px;
       font-weight: 700;
       flex-shrink: 0;
-      margin-top: 1px;
+      margin-top: 2px;
+    }
+
+    /* Benefits Strip */
+    .benefits-section {
+      padding: 12px 0 26px;
+    }
+
+    .section-title-row {
+      margin-bottom: 16px;
+    }
+
+    .section-title-row h2 {
+      margin: 0 0 4px;
+      font-size: 24px;
+    }
+
+    .section-title-row p {
+      margin: 0;
+      font-size: 14.5px;
+      color: var(--ink-subtle);
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .benefit-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .benefit-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .benefit-card h3 {
+      margin: 0 0 6px;
+      font-size: 15.5px;
+    }
+
+    .benefit-card p {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--ink-muted);
     }
 
     /* Main Workspace */
     .workspace {
-      padding: 20px 0 56px;
+      padding: 12px 0 46px;
     }
 
     .workspace-card {
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
-      padding: 28px;
+      padding: 26px;
       box-shadow: var(--shadow-md);
     }
 
@@ -367,15 +477,15 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      padding-bottom: 20px;
-      margin-bottom: 24px;
+      gap: 14px;
+      padding-bottom: 18px;
+      margin-bottom: 22px;
       border-bottom: 1px solid var(--line);
     }
 
     .workspace-head h2 {
       margin: 0 0 4px;
-      font-size: 24px;
+      font-size: 23px;
     }
 
     .workspace-head p {
@@ -387,7 +497,8 @@
     .quota-box {
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
+      gap: 14px;
       background: var(--surface-soft);
       border: 1px solid var(--line);
       padding: 10px 14px;
@@ -399,6 +510,8 @@
       font-weight: 800;
       font-size: 16px;
       color: var(--primary);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
     }
 
     .generator-grid {
@@ -409,7 +522,7 @@
     }
 
     .field {
-      margin-bottom: 16px;
+      margin-bottom: 15px;
     }
 
     .field label {
@@ -421,6 +534,7 @@
     }
 
     .field input[type="text"],
+    .field input[type="email"],
     .field select,
     .field textarea {
       width: 100%;
@@ -434,7 +548,7 @@
     }
 
     .field textarea {
-      min-height: 112px;
+      min-height: 110px;
       resize: vertical;
     }
 
@@ -453,11 +567,13 @@
     }
 
     .upload-box {
+      display: block;
       border: 1.5px dashed #cbd5e1;
       border-radius: var(--radius-md);
       padding: 16px;
       text-align: center;
       background: #f8fafc;
+      cursor: pointer;
       transition: border-color 0.15s ease, background-color 0.15s ease;
     }
 
@@ -471,11 +587,11 @@
     }
 
     .photo-preview-wrap {
-      margin-top: 12px;
+      margin-top: 10px;
       display: none;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       background: #fff;
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
@@ -487,10 +603,11 @@
     }
 
     .photo-preview-wrap img {
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
       object-fit: cover;
       border-radius: 8px;
+      flex-shrink: 0;
     }
 
     .photo-meta {
@@ -531,14 +648,15 @@
       background: #f8fafc;
       border: 1px solid var(--line);
       border-radius: var(--radius-lg);
-      padding: 20px;
+      padding: 18px;
     }
 
     .output-top {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 14px;
     }
 
@@ -551,7 +669,7 @@
       background: #fff;
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
-      padding: 14px;
+      padding: 13px 14px;
       margin-bottom: 12px;
     }
 
@@ -568,6 +686,7 @@
       font-size: 14px;
       color: var(--ink);
       white-space: pre-line;
+      word-break: break-word;
     }
 
     .output-actions {
@@ -579,28 +698,26 @@
 
     /* Info Sections */
     .sections {
-      padding: 12px 0 64px;
-      display: grid;
-      gap: 24px;
+      padding: 8px 0 52px;
     }
 
     .info-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 16px;
     }
 
     .info-card {
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius-lg);
-      padding: 22px;
+      padding: 20px;
       box-shadow: var(--shadow-sm);
     }
 
     .info-card h3 {
       margin: 0 0 8px;
-      font-size: 17px;
+      font-size: 16.5px;
     }
 
     .info-card p {
@@ -613,7 +730,7 @@
     footer {
       background: var(--surface);
       border-top: 1px solid var(--line);
-      padding: 32px 0;
+      padding: 30px 0;
       font-size: 13px;
       color: var(--ink-muted);
     }
@@ -623,13 +740,13 @@
       flex-wrap: wrap;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 24px;
+      gap: 20px;
     }
 
     .footer-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 18px;
+      gap: 16px;
     }
 
     .footer-links button {
@@ -651,7 +768,7 @@
       position: fixed;
       inset: 0;
       z-index: 60;
-      background: rgba(15, 23, 42, 0.52);
+      background: rgba(15, 23, 42, 0.54);
       backdrop-filter: blur(4px);
       display: none;
       align-items: center;
@@ -670,7 +787,7 @@
       overflow-y: auto;
       background: #fff;
       border-radius: var(--radius-xl);
-      padding: 24px;
+      padding: 22px;
       box-shadow: var(--shadow-lg);
       border: 1px solid var(--line);
     }
@@ -680,14 +797,14 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding-bottom: 14px;
+      padding-bottom: 12px;
       margin-bottom: 16px;
       border-bottom: 1px solid var(--line);
     }
 
     .modal-head h3 {
       margin: 0;
-      font-size: 19px;
+      font-size: 18px;
     }
 
     .pay-summary {
@@ -709,13 +826,15 @@
     .pay-sum-sub {
       font-size: 12px;
       color: var(--ink-subtle);
+      margin-top: 2px;
     }
 
     .pay-sum-price {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
       color: var(--primary);
       white-space: nowrap;
+      font-variant-numeric: tabular-nums;
     }
 
     .legal-copy {
@@ -730,11 +849,15 @@
       font-size: 14px;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .hero-grid,
       .generator-grid,
       .info-grid {
         grid-template-columns: 1fr;
+      }
+
+      .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .nav-links {
@@ -743,17 +866,31 @@
     }
 
     @media (max-width: 560px) {
-      .row-2 {
+      .row-2,
+      .benefits-grid {
         grid-template-columns: 1fr;
       }
 
       .workspace-card,
       .offer-card {
-        padding: 20px;
+        padding: 18px;
       }
 
       .header-actions .btn-secondary {
         display: none;
+      }
+
+      .brand-sub {
+        display: none;
+      }
+
+      .header-pay-btn {
+        padding: 8px 11px;
+        font-size: 12.5px;
+      }
+
+      .hero-cta-row .btn {
+        width: 100%;
       }
     }
   </style>
@@ -763,24 +900,24 @@
     <div class="container header-inner">
       <a href="#top" class="brand">
         <div class="brand-mark" aria-hidden="true">КП</div>
-        <div>
+        <div class="brand-text">
           <span class="brand-title">
             КарточкаPRO
             <span class="domain-pill">neroai.ru</span>
           </span>
-          <span class="brand-sub">Генератор карточек для Авито от Nero AI</span>
+          <span class="brand-sub">Умный конструктор объявлений от Nero AI</span>
         </div>
       </a>
 
       <nav class="nav-links" aria-label="Навигация по странице">
+        <a href="#benefits">Преимущества</a>
         <a href="#generator">Генератор</a>
-        <a href="#how-it-works">Как работает</a>
-        <a href="#faq">Условия и оплата</a>
+        <a href="#faq">Условия подписки</a>
       </nav>
 
       <div class="header-actions">
         <button type="button" class="btn btn-secondary" id="openDemoBtn">Пример карточки</button>
-        <button type="button" class="btn btn-primary" id="openPayHeaderBtn">Купить за 490 ₽</button>
+        <button type="button" class="btn btn-primary header-pay-btn" id="openPayHeaderBtn">490 ₽/мес</button>
       </div>
     </div>
   </header>
@@ -791,49 +928,84 @@
         <div>
           <div class="eyebrow">
             <span class="dot-live"></span>
-            Сервис на домене neroai.ru • Без подписок и скрытых списаний
+            Платформа neroai.ru • 3 бесплатных теста для старта
           </div>
-          <h1>Продающие карточки для Авито за минуты на <span>neroai.ru</span></h1>
+          <h1>Объявления для Авито, которые <span>приводят заявки</span> — на neroai.ru</h1>
           <p class="hero-lead">
-            <strong>КарточкаPRO</strong> — веб-сервис проекта <strong>Nero AI</strong>. Загрузите фото и краткие вводные по товару или услуге: получите структурированный заголовок, живое описание под поиск Авито и блок характеристик.
+            <strong>КарточкаPRO</strong> превращает пару строк о товаре или услуге в готовую к публикации карточку: кликабельный заголовок под поиск Авито, убедительное описание без «воды» и структуру характеристик.
           </p>
           <div class="hero-cta-row">
-            <a href="#generator" class="btn btn-primary" id="scrollToGenBtn">Попробовать бесплатно (3 генерации)</a>
-            <button type="button" class="btn btn-secondary" id="openPayHeroBtn">Оформить доступ — 490 ₽</button>
+            <a href="#generator" class="btn btn-primary">Попробовать бесплатно (3 попытки)</a>
+            <button type="button" class="btn btn-secondary" id="openPayHeroBtn">Подключить безлимит — 490 ₽/мес</button>
           </div>
           <div class="hero-trust">
-            <span>✓ 3 бесплатных генерации в этом браузере</span>
-            <span>✓ Единоразовый платёж 490 ₽</span>
+            <span>✓ 3 бесплатные генерации без карты</span>
+            <span>✓ Подписка 490 ₽/мес — отмена в 1 клик</span>
             <span>✓ Оплата через ЮKassa</span>
           </div>
         </div>
 
-        <aside class="offer-card" aria-label="Тариф и условия доступа">
+        <aside class="offer-card" aria-label="Условия подписки КарточкаPRO">
           <div class="offer-top">
             <div>
-              <div class="price-tag">490 ₽</div>
-              <div class="price-note">Единоразовый платёж за расширенный доступ</div>
+              <div class="price-row">
+                <span class="price-tag">490 ₽</span>
+                <span class="price-period">/ месяц</span>
+              </div>
+              <div class="price-note">Ежемесячная подписка • Продление каждые 30 дней</div>
             </div>
-            <div class="trial-badge" id="heroTrialBadge">3 бесплатных генерации</div>
+            <div class="trial-badge" id="heroTrialBadge">3 из 3 бесплатно</div>
           </div>
           <ul class="feature-list">
             <li>
               <span class="check">✓</span>
-              <span><strong>Стартовый тест:</strong> 3 бесплатные генерации карточек без привязки карты в текущем браузере.</span>
+              <span><strong>Безлимитные генерации на 30 дней:</strong> оформляйте сколько угодно товаров и услуг для Авито в рамках активной подписки.</span>
             </li>
             <li>
               <span class="check">✓</span>
-              <span><strong>Единый пакет 490 ₽:</strong> снятие лимита бесплатных попыток и сохранение доступа в этом браузере.</span>
+              <span><strong>Заголовки под алгоритмы поиска:</strong> естественные ключевые запросы, по которым покупатели находят объявления быстрее.</span>
             </li>
             <li>
               <span class="check">✓</span>
-              <span><strong>Готовая структура под Авито:</strong> заголовок, описание с выгодами, ключевые параметры и чек-лист фото.</span>
+              <span><strong>Честные условия подписки:</strong> списание 490 ₽ раз в месяц через ЮKassa, отключение автопродления в любой момент до даты списания.</span>
             </li>
           </ul>
           <button type="button" class="btn btn-primary" style="width: 100%;" id="openPayCardBtn">
-            Подключить доступ за 490 ₽
+            Оформить подписку за 490 ₽/мес
           </button>
         </aside>
+      </div>
+    </section>
+
+    <section class="benefits-section" id="benefits">
+      <div class="container">
+        <div class="section-title-row">
+          <h2>Почему продавцы и мастера выбирают КарточкаPRO</h2>
+          <p>Сервис создан специально под формат Авито — от частных продаж до регулярного потока услуг.</p>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">⚡</div>
+            <h3>Готово за 30 секунд</h3>
+            <p>Не нужно сидеть над пустым экраном — введите модель или суть услуги и сразу получите структурированный текст.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">🎯</div>
+            <h3>Акцент на выгодах</h3>
+            <p>Текст отвечает на главные вопросы покупателя: состояние, комплектация, сроки, гарантия и условия доставки.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">📦</div>
+            <h3>Для товаров и услуг</h3>
+            <p>Отдельные сценарии подачи: для продажи вещей и техники — упор на характеристики, для мастеров — на опыт и этапы работы.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">🔓</div>
+            <h3>Окупается с 1 сделки</h3>
+            <p>Стоимость подписки 490 ₽/мес ниже цены одного платного продвижения на Авито, при этом усиливает каждое ваше объявление.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -843,11 +1015,11 @@
           <div class="workspace-head">
             <div>
               <h2>Конструктор карточки объявления</h2>
-              <p>Заполните поля ниже и нажмите «Сгенерировать карточку». Доступно 3 бесплатных запуска в браузере.</p>
+              <p>Проверьте качество генерации бесплатно — первые 3 запуска доступны сразу в этом браузере.</p>
             </div>
             <div class="quota-box">
               <div>
-                <div style="color: var(--ink-subtle); font-size: 11px;">Статус в браузере</div>
+                <div style="color: var(--ink-subtle); font-size: 11px;">Текущий тариф</div>
                 <div id="quotaStatusLabel" style="font-weight: 600;">Бесплатный тест</div>
               </div>
               <div class="quota-num" id="remainingCount">3 / 3</div>
@@ -872,7 +1044,7 @@
 
               <div class="field">
                 <label for="titleInput">Название товара или услуги</label>
-                <input type="text" id="titleInput" placeholder="Например: Беспроводной пылесос Dyson V8 или Ремонт розеток и проводки" required />
+                <input type="text" id="titleInput" placeholder="Например: Беспроводной пылесос Dyson V8 или Электромонтаж" required />
               </div>
 
               <div class="field">
@@ -882,7 +1054,7 @@
 
               <div class="field">
                 <label for="photoInput">Фотография товара или примера работы (необязательно)</label>
-                <label class="upload-box" for="photoInput" id="uploadDropzone">
+                <label class="upload-box" for="photoInput">
                   <div style="font-weight: 600; font-size: 14px; color: var(--ink);">Нажмите, чтобы выбрать фото</div>
                   <div style="font-size: 12px; color: var(--ink-subtle); margin-top: 4px;">JPG, PNG или WEBP до 10 МБ • Предпросмотр в браузере</div>
                   <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" />
@@ -907,7 +1079,7 @@
             <div class="output-panel" aria-live="polite">
               <div class="output-top">
                 <h3>Готовая карточка для Авито</h3>
-                <span class="domain-pill" id="modeBadge">Демо-движок neroai.ru</span>
+                <span class="domain-pill" id="modeBadge">Режим предпросмотра • neroai.ru</span>
               </div>
 
               <div class="result-block">
@@ -929,28 +1101,9 @@
 
               <div class="output-actions">
                 <button type="button" class="btn btn-secondary" id="copyAllBtn">Скопировать текст</button>
-                <button type="button" class="btn btn-primary" id="payFromOutputBtn">Разблокировать безлимит — 490 ₽</button>
+                <button type="button" class="btn btn-primary" id="payFromOutputBtn">Подключить безлимит — 490 ₽/мес</button>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="sections" id="how-it-works">
-      <div class="container">
-        <div class="info-grid">
-          <div class="info-card">
-            <h3>1. Три бесплатные попытки</h3>
-            <p>Проверьте формат карточек на реальных товарах или услугах без оплаты: в браузере доступно 3 бесплатные генерации.</p>
-          </div>
-          <div class="info-card">
-            <h3>2. Единый доступ за 490 ₽</h3>
-            <p>После исчерпания бесплатных генераций или в любой момент вы можете оплатить единоразовый доступ за 490 ₽ через ЮKassa.</p>
-          </div>
-          <div class="info-card">
-            <h3>3. Работает на neroai.ru</h3>
-            <p>Сервис развивается на домене neroai.ru в рамках экосистемы Nero AI — с прозрачными правилами, офертой и поддержкой.</p>
           </div>
         </div>
       </div>
@@ -959,19 +1112,19 @@
     <section class="sections" id="faq">
       <div class="container">
         <div class="workspace-card">
-          <h2 style="margin: 0 0 16px; font-size: 22px;">Вопросы об оплате и работе сервиса</h2>
+          <h2 style="margin: 0 0 16px; font-size: 22px;">Прозрачные условия подписки на neroai.ru</h2>
           <div class="info-grid">
             <div class="info-card">
-              <h3>Сколько стоит доступ?</h3>
-              <p>Первые 3 генерации в браузере предоставляются бесплатно. Полный доступ к сервису стоит единоразово <strong>490 ₽</strong>.</p>
+              <h3>Как устроена подписка 490 ₽/мес?</h3>
+              <p>Первые 3 генерации предоставляются бесплатно для проверки качества. Далее оформляется ежемесячная подписка <strong>490 ₽/мес</strong> (период — 30 календарных дней) с безлимитным доступом к конструктору.</p>
             </div>
             <div class="info-card">
-              <h3>Как проходит оплата?</h3>
-              <p>Оплата осуществляется в рублях (₽) через платёжный сервис <strong>ЮKassa</strong>. Рекуррентные автосписания без явного согласия не применяются.</p>
+              <h3>Продление и отмена подписки</h3>
+              <p>Оплата проходит в рублях через <strong>ЮKassa</strong>. Продление происходит автоматически раз в 30 дней только при вашем согласии при оплате; отменить подписку можно в любой момент до следующего списания.</p>
             </div>
             <div class="info-card">
-              <h3>Куда обратиться по вопросам?</h3>
-              <p>По вопросам работы сервиса на <strong>neroai.ru</strong> и возвратов можно написать в поддержку через форму контактов в подвале сайта.</p>
+              <h3>Поддержка и документы</h3>
+              <p>На сайте <strong>neroai.ru</strong> опубликованы публичная оферта, политика обработки персональных данных и контакты поддержки для оперативного решения вопросов по подписке.</p>
             </div>
           </div>
         </div>
@@ -984,13 +1137,13 @@
       <div>
         <div style="font-weight: 700; color: var(--ink); margin-bottom: 4px;">КарточкаPRO • neroai.ru</div>
         <div>Сервис формирования текстов объявлений для Авито (проект Nero AI).</div>
-        <div style="margin-top: 4px; color: var(--ink-subtle);">Стоимость расширенного доступа: 490 ₽ (единоразово).</div>
+        <div style="margin-top: 4px; color: var(--ink-subtle);">Тариф «Безлимит»: 490 ₽/мес (ежемесячная подписка, отмена в любой момент).</div>
       </div>
 
       <div class="footer-links">
-        <button type="button" data-legal="offer">Публичная оферта</button>
+        <button type="button" data-legal="offer">Публичная оферта и правила подписки</button>
         <button type="button" data-legal="privacy">Политика конфиденциальности</button>
-        <button type="button" data-legal="contacts">Контакты и реквизиты</button>
+        <button type="button" data-legal="contacts">Контакты и поддержка</button>
       </div>
     </div>
   </footer>
@@ -999,35 +1152,35 @@
   <div class="modal-backdrop" id="payModal" role="dialog" aria-modal="true" aria-labelledby="payModalTitle">
     <div class="modal-card">
       <div class="modal-head">
-        <h3 id="payModalTitle">Оплата доступа к КарточкаPRO</h3>
+        <h3 id="payModalTitle">Оформление подписки КарточкаPRO</h3>
         <button type="button" class="btn btn-ghost" id="closePayModalBtn" aria-label="Закрыть окно оплаты">✕</button>
       </div>
 
       <div class="pay-summary">
         <div>
-          <div class="pay-sum-title">Доступ к генератору «КарточкаPRO» (neroai.ru)</div>
-          <div class="pay-sum-sub">Снятие лимита бесплатных генераций в текущем браузере</div>
+          <div class="pay-sum-title">Подписка «КарточкаPRO Безлимит» (neroai.ru)</div>
+          <div class="pay-sum-sub">Доступ на 30 дней, далее 490 ₽/мес • Отмена в любой момент</div>
         </div>
-        <div class="pay-sum-price">490 ₽</div>
+        <div class="pay-sum-price">490 ₽/мес</div>
       </div>
 
       <form id="payForm">
         <div class="field">
-          <label for="payerEmail">E-mail для чека и подтверждения оплаты</label>
+          <label for="payerEmail">E-mail для чека и управления подпиской</label>
           <input type="email" id="payerEmail" placeholder="name@example.ru" required />
         </div>
 
         <div class="field">
           <label style="display: flex; align-items: flex-start; gap: 8px; font-weight: 400; color: var(--ink-muted); cursor: pointer;">
             <input type="checkbox" id="agreeTerms" checked required style="margin-top: 3px;" />
-            <span>Соглашаюсь с условиями <a href="#faq" id="modalOfferLink" style="color: var(--primary); text-decoration: underline;">публичной оферты</a> и <a href="#faq" id="modalPrivacyLink" style="color: var(--primary); text-decoration: underline;">политикой обработки персональных данных</a> на neroai.ru.</span>
+            <span>Соглашаюсь с условиями <a href="#faq" id="modalOfferLink" style="color: var(--primary); text-decoration: underline;">публичной оферты</a>, ежемесячной подписки 490 ₽/мес и <a href="#faq" id="modalPrivacyLink" style="color: var(--primary); text-decoration: underline;">политикой обработки персональных данных</a> на neroai.ru.</span>
           </label>
         </div>
 
         <div class="status-banner" id="payStatusBanner"></div>
 
         <div style="display: flex; gap: 10px; margin-top: 16px;">
-          <button type="submit" class="btn btn-primary" style="flex: 1;" id="submitPayBtn">Перейти к оплате 490 ₽</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;" id="submitPayBtn">Оплатить 490 ₽/мес</button>
           <button type="button" class="btn btn-secondary" id="cancelPayBtn">Отмена</button>
         </div>
       </form>
@@ -1050,13 +1203,11 @@
 
   <script>
     (function () {
-      // Настройка вебхука Nodul (оставьте пустым '', пока сценарий не подключён — будет работать встроенный режим предпросмотра)
       const NODUL_WEBHOOK_URL = '';
-      // Ссылка на платёж ЮKassa (если появится прямая ссылка оплаты, можно подставить сюда)
       const YOOKASSA_PAYMENT_URL = '';
 
-      const STORAGE_USED_KEY = 'kartochkapro_neroai_used_v1';
-      const STORAGE_PAID_KEY = 'kartochkapro_neroai_paid_v1';
+      const STORAGE_USED_KEY = 'kartochkapro_neroai_used_v2';
+      const STORAGE_PAID_KEY = 'kartochkapro_neroai_sub_active_v2';
       const FREE_LIMIT = 3;
 
       const els = {
@@ -1108,7 +1259,7 @@
         return Number.isNaN(val) ? 0 : Math.max(0, val);
       }
 
-      function isPaid() {
+      function isSubscribed() {
         return localStorage.getItem(STORAGE_PAID_KEY) === 'true';
       }
 
@@ -1123,20 +1274,20 @@
       }
 
       function syncQuotaUI() {
-        const paid = isPaid();
+        const active = isSubscribed();
         const used = getUsedCount();
         const left = Math.max(0, FREE_LIMIT - used);
 
         els.modeBadge.textContent = NODUL_WEBHOOK_URL ? 'Подключён сценарий • neroai.ru' : 'Режим предпросмотра • neroai.ru';
 
-        if (paid) {
+        if (active) {
           els.remainingCount.textContent = '∞';
-          els.quotaStatusLabel.textContent = 'Доступ 490 ₽ активирован';
-          els.heroTrialBadge.textContent = 'Полный доступ активен';
+          els.quotaStatusLabel.textContent = 'Подписка 490 ₽/мес активна';
+          els.heroTrialBadge.textContent = 'Подписка активна';
         } else {
           els.remainingCount.textContent = left + ' / ' + FREE_LIMIT;
           els.quotaStatusLabel.textContent = left > 0 ? 'Бесплатные генерации' : 'Лимит 3/3 исчерпан';
-          els.heroTrialBadge.textContent = left > 0 ? ('Осталось ' + left + ' из ' + FREE_LIMIT + ' бесплатно') : 'Доступ — 490 ₽';
+          els.heroTrialBadge.textContent = left > 0 ? (left + ' из ' + FREE_LIMIT + ' бесплатно') : 'Подписка 490 ₽/мес';
         }
       }
 
@@ -1146,24 +1297,24 @@
         const isService = data.type === 'Услуга';
         const heading = isService
           ? `${cleanTitle}${pricePart}`
-          : `${cleanTitle}${pricePart} — проверенный вариант`;
+          : `${cleanTitle}${pricePart} — в отличном состоянии`;
 
         const details = data.details.trim() ||
           (isService
-            ? 'Выполняю работу аккуратно и в оговорённые сроки. Помогаю подобрать подходящее решение под задачу.'
-            : 'Актуальное состояние, аккуратное обращение, готовы ответить на вопросы и показать детали по запросу.');
+            ? 'Выполняю работу аккуратно и в согласованные сроки. Помогаю подобрать оптимальное решение под задачу.'
+            : 'Полностью исправно, бережная эксплуатация, готов ответить на вопросы и отправить дополнительные фото.');
 
         const photoLine = data.photoName
-          ? `Приложено фото: ${data.photoName} (убедитесь, что кадры чёткие и без посторонних надписей).`
-          : 'Добавьте чёткие фото с разных ракурсов — это повышает отклики в поиске Авито.';
+          ? `Приложено фото: ${data.photoName} (проверьте, что снимок чёткий и без лишних рамок).`
+          : 'Добавьте 3–5 светлых фотографий с разных ракурсов — такие объявления получают больше просмотров.';
 
         const body = isService
-          ? `Что входит:\n${details}\n\nКак работаем:\n1. Уточняем задачу и объём работ в сообщениях или по звонку.\n2. Согласуем стоимость и удобное время.\n3. Выполняем работу и сдаём результат.\n\n${photoLine}`
-          : `Описание:\n${details}\n\nУсловия сделки:\n• Актуальная цена: ${data.price.trim() || 'уточняйте в сообщениях'}\n• Самовывоз или безопасная доставка Авито по договорённости\n• Напишите в чат — оперативно отвечу на вопросы\n\n${photoLine}`;
+          ? `Что входит в услугу:\n${details}\n\nКак строится работа:\n1. Уточняем задачу и объём работ в чате Авито или по телефону.\n2. Фиксируем стоимость и удобное время выезда/выполнения.\n3. Выполняем работу и проверяем результат.\n\n${photoLine}`
+          : `Описание и состояние:\n${details}\n\nУсловия покупки:\n• Цена: ${data.price.trim() || 'уточняйте в сообщениях'}\n• Самовывоз или Авито Доставка по договорённости\n• Пишите в чат — отвечаю быстро\n\n${photoLine}`;
 
         const checklist = isService
-          ? '• Укажите город/район и готовность к выезду или удалённой работе\n• Добавьте фото выполненных работ или примеров\n• Зафиксируйте ориентир стоимости «от» в описании'
-          : '• Проверьте соответствие цены и состояния на фото\n• Укажите комплектацию и возможные дефекты без утайки\n• Подключите удобные способы связи в профиле Авито';
+          ? '• Укажите город/район и график работы\n• Добавьте реальные фото выполненных работ\n• Закрепите понятный ориентир цены в описании'
+          : '• Сверьте цену и комплектацию с фотографиями\n• Честно отметьте особенности состояния\n• Включите уведомления о сообщениях в профиле Авито';
 
         return { heading, body, checklist };
       }
@@ -1179,11 +1330,11 @@
           return;
         }
 
-        const paid = isPaid();
+        const active = isSubscribed();
         const used = getUsedCount();
 
-        if (!paid && used >= FREE_LIMIT) {
-          setBanner(els.statusBanner, 'warn', '3 бесплатные генерации в этом браузере использованы. Откройте окно оплаты (490 ₽) для продолжения.');
+        if (!active && used >= FREE_LIMIT) {
+          setBanner(els.statusBanner, 'warn', '3 бесплатные генерации в этом браузере использованы. Оформите подписку 490 ₽/мес для безлимитного доступа.');
           openModal(els.payModal);
           return;
         }
@@ -1225,7 +1376,7 @@
           els.outDescription.textContent = result.body;
           els.outChecklist.textContent = result.checklist;
 
-          if (!paid) {
+          if (!active) {
             localStorage.setItem(STORAGE_USED_KEY, String(used + 1));
           }
           syncQuotaUI();
@@ -1234,7 +1385,7 @@
             setBanner(
               els.statusBanner,
               'info',
-              'Карточка сформирована в режиме предпросмотра на neroai.ru. Внешний сценарий Nodul пока не подключён — вы можете настроить его позже без изменения интерфейса.'
+              'Карточка сформирована в режиме предпросмотра на neroai.ru. Внешний сценарий Nodul можно подключить позже без изменения интерфейса.'
             );
           } else {
             setBanner(els.statusBanner, 'info', 'Карточка успешно сгенерирована.');
@@ -1247,7 +1398,7 @@
           setBanner(
             els.statusBanner,
             'warn',
-            'Внешний обработчик временно не ответил — показан резервный черновик на стороне браузера.'
+            'Внешний обработчик временно не ответил — сформирован резервный черновик на стороне браузера.'
           );
         } finally {
           els.generateBtn.disabled = false;
@@ -1259,7 +1410,7 @@
         els.listingType.value = 'Товар';
         els.priceInput.value = '6 900 ₽';
         els.titleInput.value = 'Кофемашина рожковая DeLonghi Dedica EC685';
-        els.detailsInput.value = 'Отличное рабочее состояние, без протечек, делали декальцинацию. В комплекте рожок, два фильтра, темпер и мерная ложка. Санкт-Петербург, самовывоз или Авито Доставка.';
+        els.detailsInput.value = 'Отличное рабочее состояние, без протечек, делали чистку от накипи. В комплекте рожок, два фильтра, темпер и мерная ложка. Санкт-Петербург, самовывоз или Авито Доставка.';
         clearBanner(els.statusBanner);
         setBanner(els.statusBanner, 'info', 'Подставлен пример товара. Нажмите «Сгенерировать карточку» для проверки.');
       }
@@ -1322,32 +1473,32 @@
 
       const LEGAL_DOCS = {
         offer: {
-          title: 'Публичная оферта — КарточкаPRO (neroai.ru)',
+          title: 'Публичная оферта и правила подписки — КарточкаPRO (neroai.ru)',
           html: `
-            <p>Настоящий документ является официальным предложением сервиса <strong>КарточкаPRO</strong> (размещён по адресу <strong>neroai.ru</strong>, проект <strong>Nero AI</strong>) заключить договор на предоставление доступа к функционалу формирования текстов объявлений.</p>
-            <h4>1. Предмет и стоимость</h4>
-            <p>Пользователю предоставляется стартовый лимит из 3 бесплатных генераций в текущем браузере и возможность оформить расширенный доступ за единоразовый платёж в размере <strong>490 ₽</strong>.</p>
-            <h4>2. Порядок оплаты</h4>
-            <p>Оплата производится безналичным способом через платёжный шлюз ЮKassa в рублях РФ. Автоматические регулярные списания без отдельного согласия пользователя не производятся.</p>
+            <p>Настоящий документ является официальным предложением сервиса <strong>КарточкаPRO</strong> (размещён на домене <strong>neroai.ru</strong>, проект <strong>Nero AI</strong>) заключить договор на предоставление доступа к сервису генерации текстов объявлений по модели ежемесячной подписки.</p>
+            <h4>1. Тариф и условия подписки</h4>
+            <p>Пользователю предоставляется стартовый лимит из 3 бесплатных генераций в текущем браузере. Полный безлимитный доступ оформляется по ежемесячной подписке стоимостью <strong>490 ₽ в месяц</strong> (расчётный период — 30 календарных дней с даты оплаты).</p>
+            <h4>2. Порядок оплаты и отмены</h4>
+            <p>Оплата производится безналичным способом через платёжный сервис <strong>ЮKassa</strong> в рублях РФ. Пользователь вправе отменить продление подписки на следующий расчётный период в любой момент до даты очередного списания, обратившись в поддержку сервиса с указанием e-mail, использованного при оплате.</p>
           `
         },
         privacy: {
           title: 'Политика обработки персональных данных — neroai.ru',
           html: `
-            <p>Сервис <strong>КарточкаPRO</strong> на домене <strong>neroai.ru</strong> обрабатывает данные, добровольно указанные пользователем при заполнении форм (например, адрес электронной почты для направления сведений об оплате и вводные данные для генерации текста).</p>
+            <p>Сервис <strong>КарточкаPRO</strong> на домене <strong>neroai.ru</strong> обрабатывает данные, добровольно переданные пользователем при использовании сайта (адрес электронной почты для направления кассового чека и уведомлений о подписке, а также вводные данные для генерации текста).</p>
             <h4>1. Цели обработки</h4>
-            <p>Формирование текста объявления, учёт лимита бесплатных генераций/статуса оплаты в локальном хранилище браузера и обратная связь по запросу пользователя.</p>
-            <h4>2. Защита и хранение</h4>
-            <p>Данные используются исключительно для работы сервиса и исполнения обязательств перед пользователем.</p>
+            <p>Исполнение договора подписки, формирование текстов объявлений, учёт бесплатных генераций и активного статуса подписки, а также клиентская поддержка.</p>
+            <h4>2. Защита данных</h4>
+            <p>Данные не передаются третьим лицам, за исключением платёжного провайдера (ЮKassa) в объёме, необходимом для проведения платежа и формирования чека.</p>
           `
         },
         contacts: {
-          title: 'Контакты и реквизиты — КарточкаPRO (neroai.ru)',
+          title: 'Контакты и поддержка — КарточкаPRO (neroai.ru)',
           html: `
             <p><strong>Сервис:</strong> КарточкаPRO (проект Nero AI)</p>
-            <p><strong>Домен:</strong> https://neroai.ru</p>
-            <p><strong>Стоимость доступа:</strong> 490 ₽ (единоразово)</p>
-            <p><strong>Поддержка пользователей:</strong> обратитесь через страницу сервиса <strong>neroai.ru</strong>, указав адрес электронной почты и описание вопроса.</p>
+            <p><strong>Адрес сайта:</strong> https://neroai.ru</p>
+            <p><strong>Тариф:</strong> Подписка «Безлимит» — 490 ₽/мес (период 30 дней)</p>
+            <p><strong>Поддержка и отмена подписки:</strong> обратитесь через форму обратной связи на <strong>neroai.ru</strong>, указав e-mail, введённый при оформлении подписки.</p>
           `
         }
       };
@@ -1396,7 +1547,7 @@
           return;
         }
         if (!els.agreeTerms.checked) {
-          setBanner(els.payStatusBanner, 'warn', 'Подтвердите согласие с офертой и политикой обработки данных.');
+          setBanner(els.payStatusBanner, 'warn', 'Подтвердите согласие с офертой и правилами подписки.');
           return;
         }
 
@@ -1410,7 +1561,7 @@
         setBanner(
           els.payStatusBanner,
           'info',
-          `Заявка на оплату 490 ₽ для ${email} зафиксирована в тестовом режиме интерфейса. Доступ в браузере обновлён.`
+          `Заявка на подписку 490 ₽/мес для ${email} зафиксирована в тестовом режиме интерфейса. Безлимитный доступ в браузере активирован.`
         );
       });
 

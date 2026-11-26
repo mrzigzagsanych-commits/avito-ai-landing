@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>КарточкаPRO — подписка на генератор карточек для Авито (neroai.ru)</title>
-  <meta name="description" content="КарточкаPRO на neroai.ru — умный помощник для продавцов и мастеров на Авито. Подписка 490 ₽/мес и встроенный ИИ-чат." />
+  <meta name="description" content="КарточкаPRO на neroai.ru — умный помощник для продавцов и мастеров на Авито. Подписка 490 ₽/мес и ИИ-ассистент с поддержкой фото." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
@@ -228,7 +228,7 @@
 
     /* Hero */
     .hero {
-      padding: 44px 0 32px;
+      padding: 40px 0 24px;
     }
 
     .hero-grid {
@@ -248,7 +248,7 @@
       background: var(--accent-soft);
       padding: 6px 12px;
       border-radius: 999px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .dot-live {
@@ -271,7 +271,7 @@
     }
 
     .hero-lead {
-      margin: 0 0 22px;
+      margin: 0 0 20px;
       font-size: 16.5px;
       color: var(--ink-muted);
       max-width: 580px;
@@ -281,7 +281,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .hero-trust {
@@ -388,9 +388,135 @@
       margin-top: 2px;
     }
 
+    /* Center Assistant Hub */
+    .assistant-section {
+      padding: 14px 0 26px;
+    }
+
+    .assistant-hub {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .assistant-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .assistant-head h2 {
+      margin: 0 0 4px;
+      font-size: 24px;
+    }
+
+    .assistant-head p {
+      margin: 0;
+      font-size: 14.5px;
+      color: var(--ink-muted);
+    }
+
+    .assistant-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .prompt-box {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .prompt-box h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .steps-mini {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 13.5px;
+      color: var(--ink-muted);
+      display: grid;
+      gap: 6px;
+    }
+
+    .sample-box {
+      background: #fff;
+      border: 1px dashed #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .sample-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .launch-panel {
+      background: linear-gradient(160deg, #eff6ff 0%, #f0fdfa 100%);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .launch-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      align-self: flex-start;
+      background: #fff;
+      color: var(--primary);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .launch-panel h3 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .launch-panel p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    .widget-hint {
+      font-size: 12.5px;
+      color: var(--ink-subtle);
+      min-height: 18px;
+    }
+
     /* Benefits Strip */
     .benefits-section {
-      padding: 16px 0 32px;
+      padding: 10px 0 32px;
     }
 
     .section-title-row {
@@ -655,6 +781,7 @@
 
     @media (max-width: 960px) {
       .hero-grid,
+      .assistant-grid,
       .info-grid {
         grid-template-columns: 1fr;
       }
@@ -674,7 +801,8 @@
       }
 
       .workspace-card,
-      .offer-card {
+      .offer-card,
+      .assistant-hub {
         padding: 18px;
       }
 
@@ -687,7 +815,8 @@
         font-size: 12.5px;
       }
 
-      .hero-cta-row .btn {
+      .hero-cta-row .btn,
+      .launch-panel .btn {
         width: 100%;
       }
     }
@@ -708,6 +837,7 @@
       </a>
 
       <nav class="nav-links" aria-label="Навигация по странице">
+        <a href="#assistant-center">Ассистент</a>
         <a href="#benefits">Преимущества</a>
         <a href="#faq">Условия подписки</a>
       </nav>
@@ -728,11 +858,11 @@
           </div>
           <h1>Объявления для Авито, которые <span>приводят заявки</span> — на neroai.ru</h1>
           <p class="hero-lead">
-            <strong>КарточкаPRO</strong> помогает оформить заголовок, продающее описание и структуру характеристик для товаров и услуг на Авито. Откройте чат в правом нижнем углу — можно отправить фото или описать задачу своими словами.
+            <strong>КарточкаPRO</strong> помогает оформить заголовок, продающее описание и структуру характеристик для товаров и услуг на Авито. Напишите в чат ассистенту, что продаёте или предлагаете, и прикрепите фото.
           </p>
           <div class="hero-cta-row">
-            <button type="button" class="btn btn-primary" id="openPayHeroBtn">Подключить подписку — 490 ₽/мес</button>
-            <a href="#faq" class="btn btn-secondary">Условия и тарифы</a>
+            <a href="#assistant-center" class="btn btn-primary" id="scrollToAssistantBtn">Открыть чат с ассистентом</a>
+            <button type="button" class="btn btn-secondary" id="openPayHeroBtn">Подписка — 490 ₽/мес</button>
           </div>
           <div class="hero-trust">
             <span>✓ Распознавание фото и товаров</span>
@@ -755,7 +885,7 @@
           <ul class="feature-list">
             <li>
               <span class="check">✓</span>
-              <span><strong>Помощь по фото и тексту:</strong> отправьте фотографию или короткое описание — ассистент соберёт заголовок и текст под формат Авито.</span>
+              <span><strong>Помощь по фото и тексту:</strong> прикрепите фото товара или примера работы и напишите детали — ассистент соберёт текст под формат Авито.</span>
             </li>
             <li>
               <span class="check">✓</span>
@@ -773,6 +903,53 @@
       </div>
     </section>
 
+    <!-- Central Assistant Block -->
+    <section class="assistant-section" id="assistant-center">
+      <div class="container">
+        <div class="assistant-hub">
+          <div class="assistant-head">
+            <div>
+              <h2>Ассистент КарточкаPRO: опишите товар или услугу и вставьте фото</h2>
+              <p>Откройте окно ассистента в один клик — отправьте фотографию и коротко напишите важные детали для объявления.</p>
+            </div>
+            <span class="domain-pill">ИИ-ассистент • Фото + текст</span>
+          </div>
+
+          <div class="assistant-grid">
+            <div class="prompt-box">
+              <div>
+                <h3>Что написать ассистенту в чате</h3>
+                <ol class="steps-mini">
+                  <li><strong>Прикрепите фото</strong> товара, техники, запчасти или примера выполненной работы (через скрепку в чате).</li>
+                  <li><strong>Укажите название, цену и состояние</strong> (новый/б/у, дефекты или преимущества).</li>
+                  <li><strong>Добавьте город и условия</strong> (самовывоз, Авито Доставка, выезд мастера или сроки).</li>
+                </ol>
+              </div>
+
+              <div class="sample-box">
+                <span class="sample-label">Пример сообщения для ассистента</span>
+                Мопед Alpha / Sigma, цена 4 200 ₽, почти новый, пробег минимальный, всё работает. Самовывоз в городе, торг у капота. Сделай заголовок и описание для Авито.
+              </div>
+            </div>
+
+            <div class="launch-panel">
+              <span class="launch-badge">● Готов к работе</span>
+              <h3>Запустить диалог с ассистентом</h3>
+              <p>
+                Нажмите кнопку ниже, чтобы открыть окно чата. Внутри можно отправить фото, задать уточнения и попросить доработать заголовок или описание под Авито.
+              </p>
+              <button type="button" class="btn btn-primary" id="launchAgentChatBtn">
+                Открыть окно ассистента
+              </button>
+              <div class="widget-hint" id="widgetStatusHint">
+                Если включена опция «Не показывать иконку», чат откроется по кнопке выше.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="benefits-section" id="benefits">
       <div class="container">
         <div class="section-title-row">
@@ -784,7 +961,7 @@
           <div class="benefit-card">
             <div class="benefit-icon">⚡</div>
             <h3>Быстро и без рутины</h3>
-            <p>Не нужно тратить полчаса на черновик — опишите товар или прикрепите фото и сразу получите готовый текст.</p>
+            <p>Не нужно тратить полчаса на черновик — прикрепите фото, напишите детали и сразу получите готовый текст.</p>
           </div>
           <div class="benefit-card">
             <div class="benefit-icon">🎯</div>
@@ -902,6 +1079,8 @@
       const YOOKASSA_PAYMENT_URL = '';
 
       const els = {
+        launchAgentChatBtn: document.getElementById('launchAgentChatBtn'),
+        widgetStatusHint: document.getElementById('widgetStatusHint'),
         openPayHeaderBtn: document.getElementById('openPayHeaderBtn'),
         openPayHeroBtn: document.getElementById('openPayHeroBtn'),
         openPayCardBtn: document.getElementById('openPayCardBtn'),
@@ -920,6 +1099,36 @@
         modalOfferLink: document.getElementById('modalOfferLink'),
         modalPrivacyLink: document.getElementById('modalPrivacyLink')
       };
+
+      function openAgentWidget(retries) {
+        const left = typeof retries === 'number' ? retries : 8;
+        if (typeof window.twc_agent_open === 'function') {
+          window.twc_agent_open();
+          if (els.widgetStatusHint) {
+            els.widgetStatusHint.textContent = 'Окно ассистента открыто — отправьте сообщение и фото через скрепку.';
+          }
+          return true;
+        }
+        if (left > 0) {
+          if (els.widgetStatusHint) {
+            els.widgetStatusHint.textContent = 'Подключаем ассистента...';
+          }
+          setTimeout(function () {
+            openAgentWidget(left - 1);
+          }, 250);
+          return false;
+        }
+        if (els.widgetStatusHint) {
+          els.widgetStatusHint.textContent = 'Не удалось вызвать чат автоматически. Проверьте, что домен neroai.ru добавлен в настройках виджета Timeweb.';
+        }
+        return false;
+      }
+
+      if (els.launchAgentChatBtn) {
+        els.launchAgentChatBtn.addEventListener('click', function () {
+          openAgentWidget(8);
+        });
+      }
 
       function openModal(modalEl) {
         modalEl.classList.add('open');

@@ -3,1027 +3,906 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>КарточкаPRO — Генератор объявлений для Авито</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>КарточкаPRO — подписка на генератор карточек для Авито (neroai.ru)</title>
+  <meta name="description" content="КарточкаPRO на neroai.ru — умный помощник для продавцов и мастеров на Авито. 3 бесплатные генерации, полный безлимит по подписке за 490 ₽/мес." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f8fafc;
+      --bg: #f6f8fc;
       --surface: #ffffff;
-      --text: #0f172a;
-      --text-secondary: #64748b;
-      --primary: #00aaff;
-      --primary-dark: #0284c7;
-      --violet: #7c3aed;
-      --border: #e2e8f0;
-      --radius: 20px;
-      --shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+      --surface-soft: #eef2f9;
+      --ink: #0f172a;
+      --ink-muted: #475569;
+      --ink-subtle: #64748b;
+      --line: #e2e8f0;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-soft: rgba(37, 99, 235, 0.09);
+      --accent: #0d9488;
+      --accent-soft: rgba(13, 148, 136, 0.11);
+      --warn-bg: #fffbeb;
+      --warn-line: #fde68a;
+      --warn-ink: #92400e;
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 14px 34px -14px rgba(15, 23, 42, 0.11);
+      --shadow-lg: 0 24px 60px -15px rgba(15, 23, 42, 0.18);
     }
 
     * {
       box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
-      background: radial-gradient(circle at top right, #e0f2fe 0%, transparent 45%),
-                  radial-gradient(circle at top left, #ede9fe 0%, transparent 40%),
-                  var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 16px 16px 36px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(900px 420px at 85% -5%, rgba(37, 99, 235, 0.08), transparent 60%),
+        radial-gradient(700px 380px at 10% 0%, rgba(13, 148, 136, 0.07), transparent 55%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .brand-font {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      letter-spacing: -0.025em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
     }
 
     .container {
-      max-width: 560px;
+      width: 100%;
+      max-width: 1140px;
       margin: 0 auto;
+      padding: 0 18px;
     }
 
-    /* Шапка */
-    .navbar {
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(14px);
+      background: rgba(246, 248, 252, 0.88);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+    }
+
+    .header-inner {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
-      padding: 6px 0 18px;
+      min-height: 68px;
     }
 
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 11px;
-      font-weight: 800;
-      font-size: 20px;
-      letter-spacing: -0.025em;
-      white-space: nowrap;
-      cursor: pointer;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
     }
 
-    .brand-icon {
-      width: 36px;
-      height: 36px;
+    .brand-mark {
+      width: 38px;
+      height: 38px;
       border-radius: 11px;
-      background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 16px;
+      flex-shrink: 0;
+      box-shadow: 0 8px 20px -6px rgba(37, 99, 235, 0.45);
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-title {
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: #fff;
-      box-shadow: 0 6px 16px -3px rgba(99, 102, 241, 0.4);
+      flex-wrap: wrap;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .domain-pill {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border: 1px solid rgba(37, 99, 235, 0.18);
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--ink-subtle);
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       flex-shrink: 0;
     }
 
-    .brand-icon svg {
-      width: 20px;
-      height: 20px;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 11px 16px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .brand-accent {
-      background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .btn:active {
+      transform: scale(0.99);
     }
 
-    .quota-badge {
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 10px 24px -10px rgba(37, 99, 235, 0.65);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-muted);
+      padding: 8px 12px;
+    }
+
+    .btn-ghost:hover {
+      background: var(--surface-soft);
+      color: var(--ink);
+    }
+
+    .header-pay-btn {
+      padding: 9px 13px;
+      font-size: 13px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 40px 0 28px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      max-width: 100%;
+    }
+
+    .dot-live {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(29px, 4.3vw, 46px);
+      line-height: 1.13;
+      font-weight: 800;
+    }
+
+    h1 span {
+      color: var(--primary);
+    }
+
+    .hero-lead {
+      margin: 0 0 22px;
+      font-size: 16.5px;
+      color: var(--ink-muted);
+      max-width: 580px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .hero-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 20px;
+      font-size: 13px;
+      color: var(--ink-subtle);
+    }
+
+    .hero-trust span {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      font-size: 12px;
-      font-weight: 700;
-      color: #0f172a;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    /* Subscription Card */
+    .offer-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .offer-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    .offer-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .price-tag {
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1;
       white-space: nowrap;
     }
 
-    .quota-badge.paid {
-      background: #ecfdf5;
-      border-color: #a7f3d0;
-      color: #047857;
+    .price-period {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      white-space: nowrap;
     }
 
-    .quota-badge.empty {
-      background: #fff7ed;
-      border-color: #fed7aa;
-      color: #c2410c;
+    .price-note {
+      font-size: 12.5px;
+      color: var(--ink-subtle);
+      margin-top: 5px;
     }
 
-    .hero {
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      font-size: 24px;
-      font-weight: 800;
-      line-height: 1.2;
-      margin: 0 0 6px;
-      letter-spacing: -0.03em;
-    }
-
-    .hero p {
-      margin: 0;
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.45;
-    }
-
-    .card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 20px;
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      box-shadow: var(--shadow);
-    }
-
-    .segmented {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: #f1f5f9;
-      padding: 4px;
-      border-radius: 14px;
-      margin-bottom: 18px;
-    }
-
-    .seg-btn {
-      border: none;
-      background: transparent;
-      padding: 11px 10px;
-      border-radius: 11px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .seg-btn.active {
-      background: #fff;
-      color: var(--text);
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
-    }
-
-    .field-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .field-hint {
-      font-weight: 500;
-      color: var(--text-secondary);
-      font-size: 12px;
-    }
-
-    .upload-zone {
-      position: relative;
-      border: 2px dashed #cbd5e1;
-      border-radius: 16px;
-      background: #f8fafc;
-      padding: 20px 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      margin-bottom: 18px;
-    }
-
-    .upload-zone:hover {
-      border-color: var(--primary);
-      background: #f0f9ff;
-    }
-
-    .upload-zone input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-    }
-
-    .upload-icon {
-      width: 44px;
-      height: 44px;
-      margin: 0 auto 8px;
-      border-radius: 12px;
-      background: #fff;
+    .trial-badge {
+      background: var(--primary-soft);
       color: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .upload-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
-
-    .upload-sub {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    .preview-box {
-      display: none;
-      position: relative;
-      margin-bottom: 18px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: #0f172a;
-    }
-
-    .preview-box img {
-      width: 100%;
-      max-height: 240px;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .remove-photo {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(6px);
-      color: #fff;
-      border: none;
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 112px;
-      padding: 14px;
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--text);
-      background: #fff;
-      resize: vertical;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-    }
-
-    textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(0, 170, 255, 0.12);
-    }
-
-    .chips {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-      margin-bottom: 18px;
-    }
-
-    .chip {
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      border-radius: 999px;
-      padding: 5px 11px;
-      font-size: 12px;
-      font-weight: 500;
-      color: #475569;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-
-    .chip:hover {
-      background: #e0f2fe;
-      border-color: #bae6fd;
-      color: #0369a1;
-    }
-
-    .cta-btn {
-      width: 100%;
-      padding: 16px;
-      border: none;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #00aaff 0%, #2563eb 100%);
-      color: #fff;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.45);
-      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .cta-btn:active { transform: scale(0.98); }
-    .cta-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
-
-    .status-msg {
-      margin-top: 12px;
-      text-align: center;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      min-height: 18px;
-    }
-
-    .skeleton {
-      display: none;
-      margin-top: 18px;
-      padding: 16px;
-      border-radius: 16px;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-    }
-
-    .sk-line {
-      height: 12px;
-      border-radius: 6px;
-      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.4s infinite;
-      margin-bottom: 10px;
-    }
-
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    .result-wrapper {
-      display: none;
-      margin-top: 20px;
-      border-radius: 16px;
-      border: 1px solid #bae6fd;
-      background: #f0f9ff;
-      overflow: hidden;
-    }
-
-    .result-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 14px;
-      background: #e0f2fe;
       font-size: 12px;
       font-weight: 700;
-      color: #0369a1;
+      padding: 6px 11px;
+      border-radius: 999px;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
     }
 
-    .copy-action {
-      background: #fff;
-      border: 1px solid #bae6fd;
-      color: #0284c7;
-      padding: 6px 12px;
-      border-radius: 8px;
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 18px 0 20px;
+      display: grid;
+      gap: 11px;
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
       font-size: 12px;
       font-weight: 700;
-      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
     }
 
-    .result-content {
-      padding: 16px;
-      white-space: pre-wrap;
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--text);
-      background: #fff;
+    /* Benefits Strip */
+    .benefits-section {
+      padding: 12px 0 26px;
     }
 
-    /* Экран оплаты 490 ₽ после 3 бесплатных попыток */
-    #paywall { display: none; }
-
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #f1f5f9;
-      border: none;
-      color: var(--text);
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
+    .section-title-row {
       margin-bottom: 16px;
     }
 
-    .benefits {
-      list-style: none;
-      padding: 0;
-      margin: 14px 0 20px;
-      display: grid;
-      gap: 8px;
+    .section-title-row h2 {
+      margin: 0 0 4px;
+      font-size: 24px;
     }
 
-    .benefits li {
+    .section-title-row p {
+      margin: 0;
+      font-size: 14.5px;
+      color: var(--ink-subtle);
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .benefit-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .benefit-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .benefit-card h3 {
+      margin: 0 0 6px;
+      font-size: 15.5px;
+    }
+
+    .benefit-card p {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--ink-muted);
+    }
+
+    /* Main Workspace */
+    .workspace {
+      padding: 12px 0 46px;
+    }
+
+    .workspace-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .workspace-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .workspace-head h2 {
+      margin: 0 0 4px;
+      font-size: 23px;
+    }
+
+    .workspace-head p {
+      margin: 0;
       font-size: 14px;
+      color: var(--ink-subtle);
+    }
+
+    .quota-box {
       display: flex;
       align-items: center;
-      gap: 8px;
-      color: #334155;
-    }
-
-    .offer-box {
-      border: 1.5px solid var(--primary);
-      border-radius: 18px;
-      padding: 20px;
-      background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
-      box-shadow: 0 8px 20px -6px rgba(0, 170, 255, 0.25);
-    }
-
-    .offer-row {
-      display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      gap: 14px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+    }
+
+    .quota-num {
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--primary);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .generator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
       margin-bottom: 6px;
     }
 
-    .offer-title { font-size: 17px; font-weight: 700; }
-    .offer-price { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
-    .offer-desc { font-size: 13px; color: var(--text-secondary); margin: 0 0 16px; }
-
-    .pay-btn {
+    .field input[type="text"],
+    .field input[type="email"],
+    .field select,
+    .field textarea {
       width: 100%;
-      text-align: center;
-      border: none;
-      padding: 15px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 16px;
-      background: linear-gradient(135deg, #00aaff 0%, #2563eb 100%);
-      color: #fff;
-      cursor: pointer;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 11px 13px;
+      font-size: 14px;
+      color: var(--ink);
+      background: #fff;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    /* Юридический футер внизу страницы */
-    .site-footer {
-      margin-top: 24px;
-      padding-top: 14px;
+    .field textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+    }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .upload-box {
+      display: block;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 16px;
       text-align: center;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .upload-box:hover {
+      border-color: var(--primary);
+      background: rgba(37, 99, 235, 0.03);
+    }
+
+    .upload-box input[type="file"] {
+      display: none;
+    }
+
+    .photo-preview-wrap {
+      margin-top: 10px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 8px 12px;
+    }
+
+    .photo-preview-wrap.active {
+      display: flex;
+    }
+
+    .photo-preview-wrap img {
+      width: 46px;
+      height: 46px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .photo-meta {
+      text-align: left;
       font-size: 12px;
-      line-height: 1.6;
-      color: #64748b;
+      color: var(--ink-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .status-banner {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      display: none;
+    }
+
+    .status-banner.visible {
+      display: block;
+    }
+
+    .status-banner.info {
+      background: var(--primary-soft);
+      color: #1e3a8a;
+      border: 1px solid rgba(37, 99, 235, 0.2);
+    }
+
+    .status-banner.warn {
+      background: var(--warn-bg);
+      color: var(--warn-ink);
+      border: 1px solid var(--warn-line);
+    }
+
+    .output-panel {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .output-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .output-top h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .result-block {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 13px 14px;
+      margin-bottom: 12px;
+    }
+
+    .result-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--ink-subtle);
+      margin-bottom: 6px;
+    }
+
+    .result-text {
+      font-size: 14px;
+      color: var(--ink);
+      white-space: pre-line;
+      word-break: break-word;
+    }
+
+    .output-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    /* Info Sections */
+    .sections {
+      padding: 8px 0 52px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .info-card h3 {
+      margin: 0 0 8px;
+      font-size: 16.5px;
+    }
+
+    .info-card p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--line);
+      padding: 30px 0;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
     }
 
     .footer-links {
       display: flex;
-      justify-content: center;
-      gap: 14px;
       flex-wrap: wrap;
-      margin-bottom: 6px;
+      gap: 16px;
     }
 
     .footer-links button {
       background: none;
       border: none;
       padding: 0;
-      font-size: 12px;
-      color: #64748b;
+      color: var(--ink-muted);
+      font-size: 13px;
       text-decoration: underline;
       text-underline-offset: 3px;
-      cursor: pointer;
     }
 
     .footer-links button:hover {
-      color: var(--text);
+      color: var(--ink);
     }
 
-    .legal-box {
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(15, 23, 42, 0.54);
+      backdrop-filter: blur(4px);
       display: none;
-      margin-top: 12px;
-      padding: 14px;
-      border-radius: 14px;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 540px;
+      max-height: 88vh;
+      overflow-y: auto;
       background: #fff;
-      border: 1px solid var(--border);
-      text-align: left;
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--line);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .modal-head h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .pay-summary {
+      background: var(--surface-soft);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .pay-sum-title {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .pay-sum-sub {
       font-size: 12px;
-      line-height: 1.55;
-      color: #475569;
+      color: var(--ink-subtle);
+      margin-top: 2px;
+    }
+
+    .pay-sum-price {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .legal-copy {
+      font-size: 13px;
+      color: var(--ink-muted);
+      line-height: 1.65;
+    }
+
+    .legal-copy h4 {
+      margin: 14px 0 6px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .generator-grid,
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .row-2,
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace-card,
+      .offer-card {
+        padding: 18px;
+      }
+
+      .header-actions .btn-secondary {
+        display: none;
+      }
+
+      .brand-sub {
+        display: none;
+      }
+
+      .header-pay-btn {
+        padding: 8px 11px;
+        font-size: 12.5px;
+      }
+
+      .hero-cta-row .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="navbar">
-      <div class="brand" onclick="togglePaywall(false)">
-        <div class="brand-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="16" rx="3" />
-            <path d="M8 9h8" />
-            <path d="M8 13h5" />
-            <path d="M17 15l1.5 1.5L21 14" />
-          </svg>
-        </div>
-        <span>Карточка<span class="brand-accent">PRO</span></span>
-      </div>
-
-      <div id="quotaBadge" class="quota-badge">Осталось: 3 из 3</div>
-    </div>
-
-    <div class="hero" id="heroBlock">
-      <h1>Объявление для Авито за 15 секунд</h1>
-      <p id="heroSubtext">3 бесплатных пробных раза — загрузите фото или опишите товар/услугу, а ИИ соберет текст под поиск Авито.</p>
-    </div>
-
-    <div id="generatorCard" class="card">
-      <div class="segmented">
-        <button type="button" class="seg-btn active" id="modeGoods" onclick="setMode('goods')">
-          <span>📦</span> Продать товар
-        </button>
-        <button type="button" class="seg-btn" id="modeService" onclick="setMode('service')">
-          <span>🛠️</span> Упаковать услугу
-        </button>
-      </div>
-
-      <div class="field-label">
-        <span id="photoLabel">Фотография товара</span>
-        <span class="field-hint">Необязательно · автосжатие</span>
-      </div>
-
-      <div class="upload-zone" id="uploadZone">
-        <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoPreview()" />
-        <div class="upload-icon">📷</div>
-        <div class="upload-title">Нажмите, чтобы выбрать фото</div>
-        <div class="upload-sub">ИИ определит товар и характеристики по снимку</div>
-      </div>
-
-      <div class="preview-box" id="previewBox">
-        <img id="previewImg" alt="Превью" />
-        <button type="button" class="remove-photo" onclick="clearPhoto()">✕ Удалить</button>
-      </div>
-
-      <div class="field-label">
-        <span id="descLabel">Детали, состояние и цена</span>
-        <span class="field-hint">Чем точнее — тем лучше текст</span>
-      </div>
-
-      <textarea id="descInput" placeholder="Например: Перфоратор Bosch GBH 2-26, б/у полгода, в кейсе, работает отлично, цена 5500 ₽"></textarea>
-
-      <div class="chips" id="chipsContainer">
-        <button type="button" class="chip" onclick="fillExample('iPhone 13 128GB, состояние отличное, АКБ 89%, полный комплект с коробкой, 34 000 ₽')">📱 Пример: iPhone</button>
-        <button type="button" class="chip" onclick="fillExample('Зимняя куртка мужская, размер 50 (L), надевал пару раз, без дефектов, 4 500 ₽')">🧥 Пример: Куртка</button>
-        <button type="button" class="chip" onclick="fillExample('Диван угловой раскладной, после химчистки, самовывоз, 14 000 ₽')">🛋️ Пример: Мебель</button>
-      </div>
-
-      <button type="button" class="cta-btn" id="genBtn" onclick="generateAd()">
-        <span>✨</span> <span>Сгенерировать объявление</span>
-      </button>
-
-      <div id="statusLine" class="status-msg"></div>
-
-      <div class="skeleton" id="skeletonBox">
-        <div class="sk-line" style="width: 60%;"></div>
-        <div class="sk-line" style="width: 95%;"></div>
-        <div class="sk-line" style="width: 88%;"></div>
-        <div class="sk-line" style="width: 75%; margin-bottom: 0;"></div>
-      </div>
-
-      <div class="result-wrapper" id="resultWrapper">
-        <div class="result-header">
-          <span>ГОТОВОЕ ОБЪЯВЛЕНИЕ</span>
-          <button type="button" class="copy-action" id="copyBtn" onclick="copyResult()">Скопировать текст</button>
-        </div>
-        <div class="result-content" id="resultBox"></div>
-      </div>
-    </div>
-
-    <!-- Экран оплаты 490 ₽ после 3 бесплатных попыток -->
-    <div id="paywall" class="card">
-      <button type="button" class="back-btn" onclick="togglePaywall(false)">← Назад</button>
-      <h2 style="margin: 0 0 6px; font-size: 22px; font-weight: 800;">3 бесплатные попытки закончились</h2>
-      <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">Оплатите доступ, чтобы продолжить создавать объявления для Авито.</p>
-
-      <ul class="benefits">
-        <li>✅ Генерация объявлений для товаров и услуг</li>
-        <li>✅ Распознавание товаров и деталей по фото</li>
-        <li>✅ Мгновенный доступ после оплаты</li>
-      </ul>
-
-      <div class="offer-box">
-        <div class="offer-row">
-          <span class="offer-title">Доступ к генератору</span>
-          <span class="offer-price">490 ₽</span>
-        </div>
-        <p class="offer-desc">Единоразовый платеж за доступ к сервису</p>
-        <button type="button" class="pay-btn" onclick="startPayment(this)">Оплатить 490 ₽</button>
-      </div>
-    </div>
-
-    <!-- Стандартный блок прав и правовой информации -->
-    <footer class="site-footer">
-      <div class="footer-links">
-        <button type="button" onclick="toggleLegal('privacy')">Политика конфиденциальности</button>
-        <button type="button" onclick="toggleLegal('offer')">Пользовательское соглашение / Оферта</button>
-      </div>
-      <div>© 2026 КарточкаPRO. Все права защищены. Копирование материалов сайта без согласия правообладателя запрещено.</div>
-      <div id="legalBox" class="legal-box"></div>
-    </footer>
-  </div>
-
-  <script>
-    // 1. URL вебхука генерации в Nodul
-    const NODUL_WEBHOOK_URL = "https://ВАШ_ВЕБХУК_ГЕНЕРАЦИИ_В_NODUL";
-    // 2. URL вебхука создания платежа в Nodul
-    const NODUL_PAY_URL = "https://ВАШ_ВЕБХУК_ОПЛАТЫ_В_NODUL";
-    // 3. Опциональный URL вебхука проверки статуса оплаты по user_id (можно оставить пустым, если редирект идет с ?paid=1)
-    const NODUL_CHECK_PAY_URL = "";
-    const AMOUNT_RUB = "490.00";
-
-    const FREE_TRIAL_TOTAL = 3;
-    const MAX_IMAGE_SIDE = 1280;
-    const JPEG_QUALITY = 0.8;
-
-    let mode = "goods";
-    let compressedImageBase64 = null;
-
-    let userId = localStorage.getItem("avito_ai_user_id");
-    if (!userId) {
-      userId = "web_" + Math.random().toString(36).substring(2, 12);
-      localStorage.setItem("avito_ai_user_id", userId);
-    }
-
-    let isPaid = localStorage.getItem("avito_ai_paid") === "1";
-    let localRemaining = Number(localStorage.getItem("avito_ai_remaining"));
-    if (Number.isNaN(localRemaining) || localStorage.getItem("avito_ai_remaining") === null) {
-      localRemaining = FREE_TRIAL_TOTAL;
-      localStorage.setItem("avito_ai_remaining", String(localRemaining));
-    }
-
-    function renderQuotaUI() {
-      const badge = document.getElementById("quotaBadge");
-      const heroSub = document.getElementById("heroSubtext");
-      const statusLine = document.getElementById("statusLine");
-
-      badge.classList.remove("paid", "empty");
-
-      if (isPaid) {
-        badge.classList.add("paid");
-        badge.innerText = "✓ Доступ активен";
-        heroSub.innerText = "Безлимитная генерация активна — загрузите фото или опишите товар/услугу под поиск Авито.";
-        if (!statusLine.innerText || statusLine.innerText.includes("попыток")) {
-          statusLine.innerText = "Доступ к генератору активирован.";
-        }
-        return;
-      }
-
-      const safeRem = Math.max(0, Math.min(FREE_TRIAL_TOTAL, Number(localRemaining) || 0));
-      localRemaining = safeRem;
-      localStorage.setItem("avito_ai_remaining", String(safeRem));
-
-      if (safeRem === 0) {
-        badge.classList.add("empty");
-        badge.innerText = `Осталось: 0 из ${FREE_TRIAL_TOTAL}`;
-        heroSub.innerText = "Бесплатные генерации использованы — откройте доступ за 490 ₽ для продолжения работы.";
-        statusLine.innerText = "Бесплатные попытки закончились. Нажмите «Сгенерировать объявление», чтобы перейти к оплате.";
-      } else {
-        badge.innerText = `Осталось: ${safeRem} из ${FREE_TRIAL_TOTAL}`;
-        heroSub.innerText = `${safeRem} бесплатных пробных ${safeRem === 1 ? "генерация" : safeRem < 5 ? "генерации" : "генераций"} — загрузите фото или опишите товар/услугу под поиск Авито.`;
-        statusLine.innerText = `Доступно бесплатных генераций: ${safeRem} из ${FREE_TRIAL_TOTAL}`;
-      }
-    }
-
-    function syncRemaining(remaining, hasPaid = false) {
-      if (hasPaid) {
-        isPaid = true;
-        localStorage.setItem("avito_ai_paid", "1");
-        renderQuotaUI();
-        return;
-      }
-      const safeRem = Math.max(0, Number(remaining) || 0);
-      localRemaining = safeRem;
-      localStorage.setItem("avito_ai_remaining", String(safeRem));
-      renderQuotaUI();
-    }
-
-    async function handlePaymentReturn() {
-      const params = new URLSearchParams(window.location.search);
-      const queryUserId = params.get("user_id");
-      if (queryUserId && queryUserId.startsWith("web_")) {
-        userId = queryUserId;
-        localStorage.setItem("avito_ai_user_id", userId);
-      }
-
-      const paidFlag = params.get("paid") === "1" || params.get("payment") === "success" || params.get("status") === "succeeded";
-
-      if (paidFlag) {
-        syncRemaining(0, true);
-        togglePaywall(false);
-        document.getElementById("statusLine").innerText = "✅ Оплата прошла успешно! Доступ к генератору открыт.";
-        cleanQueryParams(["paid", "payment", "status", "user_id"]);
-        return;
-      }
-
-      if (!isPaid && NODUL_CHECK_PAY_URL && !NODUL_CHECK_PAY_URL.includes("ВАШ_ВЕБХУК")) {
-        try {
-          const res = await fetch(NODUL_CHECK_PAY_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: userId })
-          });
-          if (res.ok) {
-            const data = await res.json();
-            if (data.paid === true) {
-              syncRemaining(0, true);
-              togglePaywall(false);
-              document.getElementById("statusLine").innerText = "✅ Оплата подтверждена! Доступ к генератору открыт.";
-            }
-          }
-        } catch (_) {
-          // Игнорируем сетевую ошибку проверки при загрузке
-        }
-      }
-
-      if (queryUserId) {
-        cleanQueryParams(["user_id"]);
-      }
-    }
-
-    function cleanQueryParams(keys) {
-      const url = new URL(window.location.href);
-      let changed = false;
-      keys.forEach((k) => {
-        if (url.searchParams.has(k)) {
-          url.searchParams.delete(k);
-          changed = true;
-        }
-      });
-      if (changed) {
-        window.history.replaceState({}, "", url.pathname + (url.search ? url.search : "") + url.hash);
-      }
-    }
-
-    function setMode(newMode) {
-      mode = newMode;
-      document.getElementById("modeGoods").classList.toggle("active", mode === "goods");
-      document.getElementById("modeService").classList.toggle("active", mode === "service");
-
-      const chips = document.getElementById("chipsContainer");
-      if (mode === "goods") {
-        document.getElementById("photoLabel").innerText = "Фотография товара";
-        document.getElementById("descLabel").innerText = "Детали, состояние и цена";
-        document.getElementById("descInput").placeholder = "Например: Перфоратор Bosch GBH 2-26, б/у полгода, в кейсе, работает отлично, цена 5500 ₽";
-        chips.innerHTML = `
-          <button type="button" class="chip" onclick="fillExample('iPhone 13 128GB, состояние отличное, АКБ 89%, полный комплект с коробкой, 34 000 ₽')">📱 Пример: iPhone</button>
-          <button type="button" class="chip" onclick="fillExample('Зимняя куртка мужская, размер 50 (L), надевал пару раз, без дефектов, 4 500 ₽')">🧥 Пример: Куртка</button>
-          <button type="button" class="chip" onclick="fillExample('Диван угловой раскладной, после химчистки, самовывоз, 14 000 ₽')">🛋️ Пример: Мебель</button>
-        `;
-      } else {
-        document.getElementById("photoLabel").innerText = "Фото примера работы или обложки";
-        document.getElementById("descLabel").innerText = "Суть услуги, город, опыт и выгоды";
-        document.getElementById("descInput").placeholder = "Например: Ремонт квартир под ключ в Санкт-Петербурге, опыт 8 лет, работа по договору, бесплатный замер.";
-        chips.innerHTML = `
-          <button type="button" class="chip" onclick="fillExample('Грузоперевозки на Газели по городу и области, аккуратные грузчики, подача за 30 минут, от 1200 ₽/час')">🚚 Пример: Перевозки</button>
-          <button type="button" class="chip" onclick="fillExample('Ремонт стиральных машин на дому, выезд и диагностика бесплатно при ремонте, гарантия 1 год')">🔧 Пример: Ремонт техники</button>
-          <button type="button" class="chip" onclick="fillExample('Маникюр с покрытием гель-лак, стерильный инструмент, центр города, 1 800 ₽')">💅 Пример: Бьюти</button>
-        `;
-      }
-    }
-
-    function fillExample(text) {
-      document.getElementById("descInput").value = text;
-    }
-
-    function togglePaywall(show) {
-      document.getElementById("generatorCard").style.display = show ? "none" : "block";
-      document.getElementById("heroBlock").style.display = show ? "none" : "block";
-      document.getElementById("paywall").style.display = show ? "block" : "none";
-    }
-
-    function toggleLegal(type) {
-      const box = document.getElementById("legalBox");
-      const privacyHtml = "<strong>Политика конфиденциальности</strong><br>Сервис обрабатывает загруженные пользователем описания, изображения и технические идентификаторы сессии исключительно для формирования текстов объявлений и учета лимитов использования. Не передавайте в запросах конфиденциальные персональные данные и платежные реквизиты.";
-      const offerHtml = "<strong>Пользовательское соглашение / Оферта</strong><br>Сервис предоставляет информационно-технический инструмент генерации черновиков объявлений с использованием ИИ. Пользователь самостоятельно проверяет актуальность фактов, цен и соответствие размещаемого текста правилам площадок.";
-      const nextHtml = type === "privacy" ? privacyHtml : offerHtml;
-
-      if (box.style.display === "block" && box.dataset.current === type) {
-        box.style.display = "none";
-        box.dataset.current = "";
-      } else {
-        box.innerHTML = nextHtml;
-        box.dataset.current = type;
-        box.style.display = "block";
-      }
-    }
-
-    function compressImageFile(file, maxSide = MAX_IMAGE_SIDE, quality = JPEG_QUALITY) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.onload = () => {
-            let { width, height } = img;
-            if (width > maxSide || height > maxSide) {
-              if (width >= height) {
-                height = Math.round((height * maxSide) / width);
-                width = maxSide;
-              } else {
-                width = Math.round((width * maxSide) / height);
-                height = maxSide;
-              }
-            }
-            const canvas = document.createElement("canvas");
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL("image/jpeg", quality));
-          };
-          img.onerror = reject;
-          img.src = e.target.result;
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    async function handlePhotoPreview() {
-      const fileInput = document.getElementById("photoInput");
-      const uploadZone = document.getElementById("uploadZone");
-      const previewBox = document.getElementById("previewBox");
-      const img = document.getElementById("previewImg");
-      const statusLine = document.getElementById("statusLine");
-
-      if (fileInput.files && fileInput.files[0]) {
-        statusLine.innerText = "Сжимаем фото перед отправкой...";
-        try {
-          compressedImageBase64 = await compressImageFile(fileInput.files[0]);
-          img.src = compressedImageBase64;
-          uploadZone.style.display = "none";
-          previewBox.style.display = "block";
-          renderQuotaUI();
-        } catch (err) {
-          statusLine.innerText = "Не удалось обработать фото: " + err.message;
-        }
-      }
-    }
-
-    function clearPhoto() {
-      const fileInput = document.getElementById("photoInput");
-      fileInput.value = "";
-      compressedImageBase64 = null;
-      document.getElementById("previewImg").src = "";
-      document.getElementById("previewBox").style.display = "none";
-      document.getElementById("uploadZone").style.display = "block";
-    }
-
-    async function generateAd() {
-      if (localRemaining <= 0 && !isPaid) {
-        togglePaywall(true);
-        return;
-      }
-
-      const text = document.getElementById("descInput").value.trim();
-      const fileInput = document.getElementById("photoInput");
-      const btn = document.getElementById("genBtn");
-      const statusLine = document.getElementById("statusLine");
-      const skeleton = document.getElementById("skeletonBox");
-      const resultWrapper = document.getElementById("resultWrapper");
-      const resultBox = document.getElementById("resultBox");
-
-      if (!text && !compressedImageBase64 && fileInput.files.length === 0) {
-        statusLine.innerText = "⚠️ Загрузите фото или выберите один из примеров выше.";
-        return;
-      }
-
-      if (NODUL_WEBHOOK_URL.includes("ВАШ_ВЕБХУК_ГЕНЕРАЦИИ_В_NODUL")) {
-        statusLine.innerText = "⚠️ Укажите URL вебхука Nodul в коде.";
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerHTML = "<span>⏳</span> <span>Нейросеть пишет текст...</span>";
-      resultWrapper.style.display = "none";
-      skeleton.style.display = "block";
-      statusLine.innerText = "Формируем объявление для Авито...";
-
-      try {
-        let imageToSend = compressedImageBase64;
-        if (!imageToSend && fileInput.files.length > 0) {
-          imageToSend = await compressImageFile(fileInput.files[0]);
-          compressedImageBase64 = imageToSend;
-        }
-
-        const response = await fetch(NODUL_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_id: userId,
-            source: "web",
-            mode: mode,
-            user_text: text,
-            image_base64: imageToSend
-          })
-        });
-
-        const data = await response.json();
-        skeleton.style.display = "none";
-
-        if (data.paywall === true || response.status === 402) {
-          syncRemaining(0, false);
-          togglePaywall(true);
-          return;
-        }
-
-        if (data.paid) {
-          syncRemaining(0, true);
-        } else if (typeof data.remaining === "number") {
-          syncRemaining(data.remaining, false);
-        } else {
-          syncRemaining(localRemaining - 1, false);
-        }
-
-        const adText = data.result || data.text || "";
-        if (adText) {
-          resultBox.innerText = adText;
-          resultWrapper.style.display = "block";
-          renderQuotaUI();
-          resultWrapper.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        } else {
-          statusLine.innerText = "Сервер вернул пустой ответ. Проверьте узел ответа в Nodul.";
-        }
-      } catch (err) {
-        skeleton.style.display = "none";
-        statusLine.innerText = "Ошибка соединения: " + err.message;
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = "<span>✨</span> <span>Сгенерировать объявление</span>";
-      }
-    }
-
-    async function startPayment(btnEl) {
-      if (NODUL_PAY_URL.includes("ВАШ_ВЕБХУК_ОПЛАТЫ_В_NODUL")) {
-        alert("Укажите URL вебхука создания платежа в переменной NODUL_PAY_URL.");
-        return;
-      }
-
-      const originalText = btnEl.innerText;
-      btnEl.disabled = true;
-      btnEl.innerText = "Создаем счет...";
-
-      try {
-        const res = await fetch(NODUL_PAY_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_id: userId,
-            amount: AMOUNT_RUB
-          })
-        });
-        const data = await res.json();
-        if (data.confirmation_url) {
-          window.location.href = data.confirmation_url;
-        } else {
-          alert("Не удалось получить ссылку на оплату.");
-        }
-      } catch (e) {
-        alert("Ошибка соединения: " + e.message);
-      } finally {
-        btnEl.disabled = false;
-        btnEl.innerText = originalText;
-      }
-    }
-
-    async function copyResult() {
-      const text = document.getElementById("resultBox").innerText;
-      const copyBtn = document.getElementById("copyBtn");
-      try {
-        await navigator.clipboard.writeText(text);
-      } catch (_) {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        ta.remove();
-      }
-      copyBtn.innerText = "✓ Скопировано!";
-      setTimeout(() => { copyBtn.innerText = "Скопировать текст"; }, 2000);
-    }
-
-    renderQuotaUI();
-    handlePaymentReturn();
-  </script>
-</body>
-</html>
+  <header>
+    <div class="container header-inner">
+      <a href="#top" class="brand">
+        <div class="brand-mark" aria-hidden="true">КП</div>
+        <div class="brand-text">
+          <span class="brand-title">
+            КарточкаPRO
+            <span class="domain-pill">neroai.ru</span>
+          </span>
+          <span class

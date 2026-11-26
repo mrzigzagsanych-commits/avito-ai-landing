@@ -3,1327 +3,835 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>КарточкаPRO — ИИ-сервис для создания продающих объявлений на Авито</title>
-  <meta name="description" content="Генератор продающих заголовков, описаний и чек-листов для объявлений на Авито по фото и параметрам товара за 15 секунд. 3 бесплатные проверки, далее подписка 490 ₽/мес." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <title>КарточкаPRO — Генератор объявлений для Авито</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f6f8fb;
+      --bg: #f8fafc;
       --surface: #ffffff;
-      --surface-soft: #f0f4fa;
       --text: #0f172a;
-      --text-secondary: #475569;
-      --text-muted: #64748b;
+      --text-secondary: #64748b;
+      --primary: #00aaff;
+      --primary-dark: #0284c7;
+      --violet: #7c3aed;
       --border: #e2e8f0;
-      --primary: #0066ff;
-      --primary-hover: #0052cc;
-      --primary-soft: #e8f1ff;
-      --accent: #00a878;
-      --accent-soft: #e6f7f2;
-      --warning-soft: #fff7ed;
-      --warning-text: #c2410c;
-      --radius-lg: 20px;
-      --radius-md: 14px;
-      --radius-sm: 10px;
-      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
-      --shadow-md: 0 12px 32px rgba(15, 23, 42, 0.08);
+      --radius: 20px;
+      --shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
     }
 
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
+      margin: 0;
+      background: radial-gradient(circle at top right, #e0f2fe 0%, transparent 45%),
+                  radial-gradient(circle at top left, #ede9fe 0%, transparent 40%),
+                  var(--bg);
       color: var(--text);
-      line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
+      min-height: 100vh;
+      padding: 16px 16px 36px;
     }
 
     .container {
-      width: 100%;
-      max-width: 1120px;
+      max-width: 560px;
       margin: 0 auto;
-      padding: 0 20px;
     }
 
-    /* Header */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(246, 248, 251, 0.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .header-inner {
+    /* Шапка */
+    .navbar {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      height: 68px;
-      gap: 16px;
-    }
-
-    .logo {
-      display: inline-flex;
       align-items: center;
       gap: 10px;
-      font-weight: 800;
-      font-size: 19px;
-      letter-spacing: -0.02em;
+      padding: 6px 0 18px;
     }
 
-    .logo-badge {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--primary), #3b82f6);
-      color: #fff;
+    .brand {
       display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.025em;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+      display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 15px;
-      box-shadow: 0 4px 12px rgba(0, 102, 255, 0.28);
+      color: #fff;
+      box-shadow: 0 6px 16px -3px rgba(99, 102, 241, 0.4);
+      flex-shrink: 0;
     }
 
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
+    .brand-icon svg {
+      width: 20px;
+      height: 20px;
     }
 
-    .nav a:hover {
-      color: var(--primary);
+    .brand-accent {
+      background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .trial-pill {
+    .quota-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 13px;
       padding: 7px 12px;
       border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f172a;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
       white-space: nowrap;
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-family: inherit;
-      font-weight: 600;
-      font-size: 15px;
-      padding: 13px 22px;
-      border-radius: var(--radius-sm);
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: all 0.18s ease;
-      text-align: center;
+    .quota-badge.paid {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #047857;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-      box-shadow: 0 6px 18px rgba(0, 102, 255, 0.22);
+    .quota-badge.empty {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: #c2410c;
     }
 
-    .btn-primary:hover {
-      background: var(--primary-hover);
-      transform: translateY(-1px);
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .btn-secondary {
-      background: var(--surface);
-      color: var(--text);
-      border-color: var(--border);
-    }
-
-    .btn-secondary:hover {
-      background: var(--surface-soft);
-    }
-
-    .btn-sm {
-      padding: 9px 15px;
-      font-size: 13.5px;
-    }
-
-    /* Hero */
     .hero {
-      padding: 52px 0 40px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--primary);
-      background: var(--primary-soft);
-      padding: 6px 13px;
-      border-radius: 999px;
       margin-bottom: 18px;
     }
 
-    h1 {
-      font-size: clamp(28px, 4.2vw, 44px);
+    .hero h1 {
+      font-size: 24px;
       font-weight: 800;
-      line-height: 1.14;
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
-    }
-
-    .hero-sub {
-      font-size: 17px;
-      color: var(--text-secondary);
-      margin-bottom: 26px;
-      max-width: 560px;
-    }
-
-    .hero-cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .hero-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      max-width: 540px;
-    }
-
-    .metric-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 14px;
-    }
-
-    .metric-value {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--text);
-      font-variant-numeric: tabular-nums;
       line-height: 1.2;
-      margin-bottom: 4px;
+      margin: 0 0 6px;
+      letter-spacing: -0.03em;
     }
 
-    .metric-label {
-      font-size: 12.5px;
-      color: var(--text-muted);
-      line-height: 1.35;
-    }
-
-    .hero-preview {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 22px;
-      box-shadow: var(--shadow-md);
-    }
-
-    .preview-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding-bottom: 14px;
-      margin-bottom: 14px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .preview-tag {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--accent);
-      background: var(--accent-soft);
-      padding: 4px 10px;
-      border-radius: 999px;
-    }
-
-    .preview-block {
-      background: var(--surface-soft);
-      border-radius: var(--radius-sm);
-      padding: 13px 14px;
-      margin-bottom: 10px;
-      font-size: 13.5px;
-    }
-
-    .preview-block:last-child {
-      margin-bottom: 0;
-    }
-
-    .preview-label {
-      font-size: 11.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    /* Section */
-    .section {
-      padding: 44px 0;
-    }
-
-    .section-head {
-      max-width: 680px;
-      margin-bottom: 28px;
-    }
-
-    .section-head h2 {
-      font-size: clamp(23px, 3vw, 32px);
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      margin-bottom: 8px;
-    }
-
-    .section-head p {
+    .hero p {
+      margin: 0;
+      font-size: 14px;
       color: var(--text-secondary);
-      font-size: 15.5px;
-    }
-
-    /* Generator Workspace */
-    .workspace {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      align-items: start;
+      line-height: 1.45;
     }
 
     .card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow-sm);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: var(--shadow);
     }
 
-    .card-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      font-size: 18px;
-      font-weight: 700;
+    .segmented {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 14px;
       margin-bottom: 18px;
     }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      font-size: 13.5px;
+    .seg-btn {
+      border: none;
+      background: transparent;
+      padding: 11px 10px;
+      border-radius: 11px;
+      font-size: 14px;
       font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
-
-    input[type="text"],
-    select,
-    textarea {
-      width: 100%;
-      font-family: inherit;
-      font-size: 14.5px;
-      color: var(--text);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 11px 13px;
-      outline: none;
-      transition: border-color 0.15s ease, background 0.15s ease;
-    }
-
-    input[type="text"]:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--primary);
-      background: #fff;
-    }
-
-    textarea {
-      min-height: 92px;
-      resize: vertical;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .upload-box {
-      border: 1.5px dashed #cbd5e1;
-      border-radius: var(--radius-md);
-      padding: 16px;
-      text-align: center;
-      background: var(--bg);
-      cursor: pointer;
-      transition: border-color 0.15s ease, background 0.15s ease;
-    }
-
-    .upload-box:hover {
-      border-color: var(--primary);
-      background: var(--primary-soft);
-    }
-
-    .upload-box input {
-      display: none;
-    }
-
-    .upload-hint {
-      font-size: 13px;
       color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .seg-btn.active {
+      background: #fff;
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .field-hint {
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    .upload-zone {
+      position: relative;
+      border: 2px dashed #cbd5e1;
+      border-radius: 16px;
+      background: #f8fafc;
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 18px;
+    }
+
+    .upload-zone:hover {
+      border-color: var(--primary);
+      background: #f0f9ff;
+    }
+
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-icon {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 8px;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .upload-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
     }
 
     .upload-sub {
       font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
+      color: var(--text-secondary);
     }
 
-    .photo-preview-wrap {
+    .preview-box {
       display: none;
-      margin-top: 10px;
-      align-items: center;
-      gap: 10px;
-      text-align: left;
-      background: #fff;
-      padding: 8px 10px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-    }
-
-    .photo-preview-wrap.active {
-      display: flex;
-    }
-
-    .photo-preview-wrap img {
-      width: 48px;
-      height: 48px;
-      object-fit: cover;
-      border-radius: 8px;
-      flex-shrink: 0;
-    }
-
-    .photo-meta {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .photo-name {
-      font-size: 12.5px;
-      font-weight: 600;
-      white-space: nowrap;
+      position: relative;
+      margin-bottom: 18px;
+      border-radius: 16px;
       overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .photo-status {
-      font-size: 11.5px;
-      color: var(--accent);
-    }
-
-    .remove-photo-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-size: 18px;
-      cursor: pointer;
-      padding: 2px 6px;
-      line-height: 1;
-    }
-
-    .remove-photo-btn:hover {
-      color: var(--warning-text);
-    }
-
-    .result-box {
-      background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: var(--radius-md);
+      background: #0f172a;
+    }
+
+    .preview-box img {
+      width: 100%;
+      max-height: 240px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .remove-photo {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 112px;
       padding: 14px;
-      margin-bottom: 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text);
+      background: #fff;
+      resize: vertical;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(0, 170, 255, 0.12);
+    }
+
+    .chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+      margin-bottom: 18px;
+    }
+
+    .chip {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #475569;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .chip:hover {
+      background: #e0f2fe;
+      border-color: #bae6fd;
+      color: #0369a1;
+    }
+
+    .cta-btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #00aaff 0%, #2563eb 100%);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.45);
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .cta-btn:active { transform: scale(0.98); }
+    .cta-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+    .status-msg {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      min-height: 18px;
+    }
+
+    .skeleton {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+
+    .sk-line {
+      height: 12px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .result-wrapper {
+      display: none;
+      margin-top: 20px;
+      border-radius: 16px;
+      border: 1px solid #bae6fd;
+      background: #f0f9ff;
+      overflow: hidden;
     }
 
     .result-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-
-    .result-title {
+      align-items: center;
+      padding: 10px 14px;
+      background: #e0f2fe;
       font-size: 12px;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
+      color: #0369a1;
     }
 
-    .copy-btn {
-      font-family: inherit;
+    .copy-action {
+      background: #fff;
+      border: 1px solid #bae6fd;
+      color: #0284c7;
+      padding: 6px 12px;
+      border-radius: 8px;
       font-size: 12px;
-      font-weight: 600;
-      color: var(--primary);
-      background: var(--primary-soft);
-      border: none;
-      border-radius: 7px;
-      padding: 5px 10px;
+      font-weight: 700;
       cursor: pointer;
-    }
-
-    .copy-btn:hover {
-      background: #dbeafe;
     }
 
     .result-content {
+      padding: 16px;
+      white-space: pre-wrap;
       font-size: 14px;
+      line-height: 1.6;
       color: var(--text);
-      white-space: pre-line;
+      background: #fff;
     }
 
-    .status-banner {
-      display: none;
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      font-size: 13.5px;
-      margin-bottom: 14px;
-    }
+    /* Экран оплаты 490 ₽ после 3 бесплатных попыток */
+    #paywall { display: none; }
 
-    .status-banner.warning {
-      display: block;
-      background: var(--warning-soft);
-      color: var(--warning-text);
-      border: 1px solid #fed7aa;
-    }
-
-    .status-banner.info {
-      display: block;
-      background: var(--primary-soft);
-      color: var(--primary-hover);
-      border: 1px solid #bfdbfe;
-    }
-
-    /* Steps & Features */
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .step-num {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: var(--primary-soft);
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 15px;
+    .back-btn {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 14px;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .card h3 {
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      font-size: 14.5px;
-      color: var(--text-secondary);
-    }
-
-    /* Pricing */
-    .pricing-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    .plan-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .plan-card.featured {
-      border: 2px solid var(--primary);
-      box-shadow: var(--shadow-md);
-    }
-
-    .plan-badge {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 700;
-      color: #fff;
-      background: var(--primary);
-      padding: 4px 11px;
+      gap: 6px;
+      background: #f1f5f9;
+      border: none;
+      color: var(--text);
+      padding: 8px 14px;
       border-radius: 999px;
-      margin-bottom: 12px;
-      width: fit-content;
-    }
-
-    .plan-price {
-      font-size: 34px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      font-variant-numeric: tabular-nums;
-      margin: 8px 0 4px;
-    }
-
-    .plan-price span {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-
-    .plan-period {
-      font-size: 13.5px;
-      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
       margin-bottom: 16px;
     }
 
-    .plan-list {
+    .benefits {
       list-style: none;
-      margin-bottom: 22px;
-    }
-
-    .plan-list li {
-      position: relative;
-      padding-left: 24px;
-      font-size: 14.5px;
-      color: var(--text-secondary);
-      margin-bottom: 10px;
-    }
-
-    .plan-list li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    /* FAQ */
-    .faq-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    details {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 16px 20px;
-    }
-
-    summary {
-      font-weight: 600;
-      font-size: 15.5px;
-      cursor: pointer;
-      list-style: none;
-    }
-
-    summary::-webkit-details-marker {
-      display: none;
-    }
-
-    details p {
-      margin-top: 10px;
-      font-size: 14.5px;
-      color: var(--text-secondary);
-    }
-
-    /* Footer */
-    .footer {
-      margin-top: 32px;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      padding: 36px 0 44px;
-      font-size: 13.5px;
-      color: var(--text-secondary);
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-
-    .footer h4 {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
-
-    .footer-links {
+      padding: 0;
+      margin: 14px 0 20px;
       display: grid;
       gap: 8px;
     }
 
-    .footer-links button,
-    .footer-links a {
+    .benefits li {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #334155;
+    }
+
+    .offer-box {
+      border: 1.5px solid var(--primary);
+      border-radius: 18px;
+      padding: 20px;
+      background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
+      box-shadow: 0 8px 20px -6px rgba(0, 170, 255, 0.25);
+    }
+
+    .offer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .offer-title { font-size: 17px; font-weight: 700; }
+    .offer-price { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+    .offer-desc { font-size: 13px; color: var(--text-secondary); margin: 0 0 16px; }
+
+    .pay-btn {
+      width: 100%;
+      text-align: center;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      background: linear-gradient(135deg, #00aaff 0%, #2563eb 100%);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* Юридический футер внизу страницы */
+    .site-footer {
+      margin-top: 24px;
+      padding-top: 14px;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #64748b;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .footer-links button {
       background: none;
       border: none;
       padding: 0;
-      font: inherit;
-      color: var(--primary);
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .footer-links button:hover,
-    .footer-links a:hover {
+      font-size: 12px;
+      color: #64748b;
       text-decoration: underline;
-    }
-
-    .footer-bottom {
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
-      font-size: 12.5px;
-      color: var(--text-muted);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    /* Modal */
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background: rgba(15, 23, 42, 0.55);
-      padding: 20px;
-      overflow-y: auto;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-    }
-
-    .modal {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      max-width: 680px;
-      width: 100%;
-      max-height: 85vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
-    }
-
-    .modal-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 22px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .modal-head h3 {
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .modal-close {
-      background: var(--surface-soft);
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      font-size: 18px;
+      text-underline-offset: 3px;
       cursor: pointer;
     }
 
-    .modal-body {
-      padding: 20px 22px;
-      overflow-y: auto;
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.65;
-    }
-
-    .modal-body h4 {
+    .footer-links button:hover {
       color: var(--text);
-      margin: 14px 0 6px;
-      font-size: 15px;
     }
 
-    /* Mobile Adaptation */
-    @media (max-width: 900px) {
-      .hero-grid,
-      .workspace,
-      .grid-3,
-      .pricing-wrap,
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .nav {
-        display: none;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .header-inner {
-        height: 62px;
-      }
-
-      .logo {
-        font-size: 17px;
-      }
-
-      .trial-pill {
-        font-size: 12px;
-        padding: 6px 10px;
-      }
-
-      .header-actions .btn-sm {
-        display: none;
-      }
-
-      .hero {
-        padding: 32px 0 28px;
-      }
-
-      .hero-cta .btn {
-        width: 100%;
-      }
-
-      .hero-metrics {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-      }
-
-      .metric-card {
-        padding: 10px 8px;
-      }
-
-      .metric-value {
-        font-size: 17px;
-      }
-
-      .metric-label {
-        font-size: 11px;
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-
-      .card {
-        padding: 18px;
-      }
+    .legal-box {
+      display: none;
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      text-align: left;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #475569;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <div class="navbar">
+      <div class="brand" onclick="togglePaywall(false)">
+        <div class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="16" rx="3" />
+            <path d="M8 9h8" />
+            <path d="M8 13h5" />
+            <path d="M17 15l1.5 1.5L21 14" />
+          </svg>
+        </div>
+        <span>Карточка<span class="brand-accent">PRO</span></span>
+      </div>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="container header-inner">
-      <a href="#" class="logo">
-        <span class="logo-badge">КP</span>
-        <span>КарточкаPRO</span>
-      </a>
+      <div id="quotaBadge" class="quota-badge">Осталось: 3 из 3</div>
+    </div>
 
-      <nav class="nav">
-        <a href="#generator">Генератор</a>
-        <a href="#how">Как работает</a>
-        <a href="#pricing">Подписка</a>
-        <a href="#faq">Вопросы</a>
-      </nav>
+    <div class="hero" id="heroBlock">
+      <h1>Объявление для Авито за 15 секунд</h1>
+      <p id="heroSubtext">3 бесплатных пробных раза — загрузите фото или опишите товар/услугу, а ИИ соберет текст под поиск Авито.</p>
+    </div>
 
-      <div class="header-actions">
-        <span class="trial-pill" id="headerTrialBadge">Бесплатно: 3 из 3</span>
-        <a href="#pricing" class="btn btn-primary btn-sm">Подписка 490 ₽/мес</a>
+    <div id="generatorCard" class="card">
+      <div class="segmented">
+        <button type="button" class="seg-btn active" id="modeGoods" onclick="setMode('goods')">
+          <span>📦</span> Продать товар
+        </button>
+        <button type="button" class="seg-btn" id="modeService" onclick="setMode('service')">
+          <span>🛠️</span> Упаковать услугу
+        </button>
+      </div>
+
+      <div class="field-label">
+        <span id="photoLabel">Фотография товара</span>
+        <span class="field-hint">Необязательно · автосжатие</span>
+      </div>
+
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoPreview()" />
+        <div class="upload-icon">📷</div>
+        <div class="upload-title">Нажмите, чтобы выбрать фото</div>
+        <div class="upload-sub">ИИ определит товар и характеристики по снимку</div>
+      </div>
+
+      <div class="preview-box" id="previewBox">
+        <img id="previewImg" alt="Превью" />
+        <button type="button" class="remove-photo" onclick="clearPhoto()">✕ Удалить</button>
+      </div>
+
+      <div class="field-label">
+        <span id="descLabel">Детали, состояние и цена</span>
+        <span class="field-hint">Чем точнее — тем лучше текст</span>
+      </div>
+
+      <textarea id="descInput" placeholder="Например: Перфоратор Bosch GBH 2-26, б/у полгода, в кейсе, работает отлично, цена 5500 ₽"></textarea>
+
+      <div class="chips" id="chipsContainer">
+        <button type="button" class="chip" onclick="fillExample('iPhone 13 128GB, состояние отличное, АКБ 89%, полный комплект с коробкой, 34 000 ₽')">📱 Пример: iPhone</button>
+        <button type="button" class="chip" onclick="fillExample('Зимняя куртка мужская, размер 50 (L), надевал пару раз, без дефектов, 4 500 ₽')">🧥 Пример: Куртка</button>
+        <button type="button" class="chip" onclick="fillExample('Диван угловой раскладной, после химчистки, самовывоз, 14 000 ₽')">🛋️ Пример: Мебель</button>
+      </div>
+
+      <button type="button" class="cta-btn" id="genBtn" onclick="generateAd()">
+        <span>✨</span> <span>Сгенерировать объявление</span>
+      </button>
+
+      <div id="statusLine" class="status-msg"></div>
+
+      <div class="skeleton" id="skeletonBox">
+        <div class="sk-line" style="width: 60%;"></div>
+        <div class="sk-line" style="width: 95%;"></div>
+        <div class="sk-line" style="width: 88%;"></div>
+        <div class="sk-line" style="width: 75%; margin-bottom: 0;"></div>
+      </div>
+
+      <div class="result-wrapper" id="resultWrapper">
+        <div class="result-header">
+          <span>ГОТОВОЕ ОБЪЯВЛЕНИЕ</span>
+          <button type="button" class="copy-action" id="copyBtn" onclick="copyResult()">Скопировать текст</button>
+        </div>
+        <div class="result-content" id="resultBox"></div>
       </div>
     </div>
-  </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container hero-grid">
-      <div>
-        <div class="eyebrow">ИИ-сервис для продавцов и мастеров на Авито</div>
-        <h1>Продающее объявление для Авито за 15 секунд по фото и параметрам</h1>
-        <p class="hero-sub">
-          Загрузите фото или укажите основные характеристики — сервис распознает товар, соберёт релевантный заголовок под поиск Авито, структурированное описание без воды и чек-лист для роста просмотров.
-        </p>
+    <!-- Экран оплаты 490 ₽ после 3 бесплатных попыток -->
+    <div id="paywall" class="card">
+      <button type="button" class="back-btn" onclick="togglePaywall(false)">← Назад</button>
+      <h2 style="margin: 0 0 6px; font-size: 22px; font-weight: 800;">3 бесплатные попытки закончились</h2>
+      <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">Оплатите доступ, чтобы продолжить создавать объявления для Авито.</p>
 
-        <div class="hero-cta">
-          <a href="#generator" class="btn btn-primary">Создать объявление бесплатно</a>
-          <a href="#pricing" class="btn btn-secondary">Подключить безлимит за 490 ₽/мес</a>
-        </div>
+      <ul class="benefits">
+        <li>✅ Генерация объявлений для товаров и услуг</li>
+        <li>✅ Распознавание товаров и деталей по фото</li>
+        <li>✅ Мгновенный доступ после оплаты</li>
+      </ul>
 
-        <div class="hero-metrics">
-          <div class="metric-card">
-            <div class="metric-value">15 сек</div>
-            <div class="metric-label">на готовую карточку объявления</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-value">3 шт.</div>
-            <div class="metric-label">бесплатно для теста в браузере</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-value">490 ₽</div>
-            <div class="metric-label">подписка на 30 дней без лимитов</div>
-          </div>
+      <div class="offer-box">
+        <div class="offer-row">
+          <span class="offer-title">Доступ к генератору</span>
+          <span class="offer-price">490 ₽</span>
         </div>
-      </div>
-
-      <div class="hero-preview" aria-label="Пример результата генерации">
-        <div class="preview-top">
-          <strong>Пример готовой карточки</strong>
-          <span class="preview-tag">Готово к публикации</span>
-        </div>
-        <div class="preview-block">
-          <div class="preview-label">Заголовок (до 50 символов)</div>
-          <div>Шуруповёрт Makita DF333DWYE 12В + 2 АКБ и кейс</div>
-        </div>
-        <div class="preview-block">
-          <div class="preview-label">Продающее описание</div>
-          <div>
-            Оригинальный аккумуляторный шуруповёрт Makita DF333DWYE в отличном рабочем состоянии. Использовался аккуратно для домашних задач.<br /><br />
-            • Комплектация: шуруповёрт, 2 аккумулятора 12V 1.5 А·ч, зарядное устройство, фирменный кейс.<br />
-            • Проверка на месте перед покупкой. Самовывоз или Авито Доставка в день заказа.
-          </div>
-        </div>
-        <div class="preview-block">
-          <div class="preview-label">Чек-лист перед публикацией</div>
-          <div>1. Добавьте фото шильдика и аккумуляторов крупным планом. 2. Включите Авито Доставку для роста охватов.</div>
-        </div>
+        <p class="offer-desc">Единоразовый платеж за доступ к сервису</p>
+        <button type="button" class="pay-btn" onclick="startPayment(this)">Оплатить 490 ₽</button>
       </div>
     </div>
-  </section>
 
-  <!-- Generator -->
-  <section class="section" id="generator">
-    <div class="container">
-      <div class="section-head">
-        <h2>Попробуйте генератор прямо сейчас</h2>
-        <p>Доступно 3 бесплатные генерации без регистрации. Прикрепите фото товара или заполните форму ниже.</p>
+    <!-- Стандартный блок прав и правовой информации -->
+    <footer class="site-footer">
+      <div class="footer-links">
+        <button type="button" onclick="toggleLegal('privacy')">Политика конфиденциальности</button>
+        <button type="button" onclick="toggleLegal('offer')">Пользовательское соглашение / Оферта</button>
       </div>
-
-      <div class="workspace">
-        <!-- Input Form -->
-        <div class="card">
-          <div class="card-title">
-            <span>Параметры товара или услуги</span>
-            <span class="trial-pill" id="formTrialBadge">Осталось: 3 из 3</span>
-          </div>
-
-          <div id="limitBanner" class="status-banner warning">
-            Бесплатные 3 проверки в этом браузере использованы. Оформите подписку на 30 дней за <strong>490 ₽/мес</strong>, чтобы продолжить работу без ограничений.
-          </div>
-
-          <form id="generatorForm">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="itemType">Формат размещения</label>
-                <select id="itemType">
-                  <option value="Товар">Товар</option>
-                  <option value="Услуга">Услуга</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="itemPrice">Цена (₽)</label>
-                <input type="text" id="itemPrice" placeholder="Например: 4 500 ₽" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="itemTitle">Название товара или услуги (необязательно, если есть фото)</label>
-              <input type="text" id="itemTitle" placeholder="Например: iPhone 13 128GB Midnight или Ремонт стиральных машин" />
-            </div>
-
-            <div class="form-group">
-              <label for="itemDetails">Ключевые детали, состояние, комплектация, город</label>
-              <textarea id="itemDetails" placeholder="Укажите состояние, комплектацию, гарантию, условия доставки или выезда мастера..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>Фотография товара (ИИ определит модель и состояние по снимку)</label>
-              <label class="upload-box" for="itemPhoto">
-                <input type="file" id="itemPhoto" accept="image/*" />
-                <div class="upload-hint">Нажмите, чтобы загрузить фото (JPG, PNG, WEBP)</div>
-                <div class="upload-sub">Фото автоматически сжимается и передаётся в ИИ-анализ</div>
-                <div class="photo-preview-wrap" id="photoPreviewWrap">
-                  <img id="photoPreviewImg" alt="Предпросмотр фото" />
-                  <div class="photo-meta">
-                    <div class="photo-name" id="photoFileName"></div>
-                    <div class="photo-status" id="photoStatusText">Готово к распознаванию</div>
-                  </div>
-                  <button type="button" class="remove-photo-btn" id="removePhotoBtn" title="Удалить фото">×</button>
-                </div>
-              </label>
-            </div>
-
-            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px;">
-              <button type="submit" class="btn btn-primary" id="generateBtn" style="flex: 1;">
-                Сгенерировать объявление
-              </button>
-              <button type="button" class="btn btn-secondary" id="payShortcutBtn" style="display: none;">
-                Оплатить 490 ₽/мес
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <!-- Output Card -->
-        <div class="card">
-          <div class="card-title">
-            <span>Готовый результат для Авито</span>
-            <span style="font-size: 12.5px; color: var(--text-muted); font-weight: 500;" id="modeIndicator">Режим предпросмотра</span>
-          </div>
-
-          <div id="resultInfoBanner" class="status-banner info">
-            Заполните форму или загрузите фото и нажмите «Сгенерировать объявление» — здесь появятся готовый заголовок, текст и чек-лист.
-          </div>
-
-          <div class="result-box">
-            <div class="result-header">
-              <span class="result-title">Заголовок объявления</span>
-              <button type="button" class="copy-btn" data-copy="outTitle">Копировать</button>
-            </div>
-            <div class="result-content" id="outTitle">Шуруповёрт Makita DF333DWYE 12В + 2 АКБ и кейс</div>
-          </div>
-
-          <div class="result-box">
-            <div class="result-header">
-              <span class="result-title">Текст объявления</span>
-              <button type="button" class="copy-btn" data-copy="outDesc">Копировать</button>
-            </div>
-            <div class="result-content" id="outDesc">Продаю оригинальный аккумуляторный шуруповёрт Makita DF333DWYE в отличном рабочем состоянии. Использовался бережно, редуктор и патрон без люфтов, аккумуляторы держат заряд уверенно.
-
-Что входит в комплект:
-• Шуруповёрт Makita DF333D
-• 2 литий-ионных аккумулятора 12V 1.5 А·ч
-• Оригинальное зарядное устройство и пластиковый кейс
-
-Преимущества:
-• Лёгкий и компактный корпус — удобно работать одной рукой
-• 2 скорости вращения и подсветка рабочей зоны
-• Любые проверки при встрече, оперативно отправлю Авито Доставкой
-
-Пишите в чат Авито или звоните — отвечу на вопросы и пришлю дополнительные фото.</div>
-          </div>
-
-          <div class="result-box" style="margin-bottom: 0;">
-            <div class="result-header">
-              <span class="result-title">Чек-лист повышения просмотров</span>
-              <button type="button" class="copy-btn" data-copy="outChecklist">Копировать</button>
-            </div>
-            <div class="result-content" id="outChecklist">• Первое фото сделайте на нейтральном фоне при дневном освещении.
-• Укажите точный артикул или модель в характеристиках категории.
-• Включите Авито Доставку, чтобы объявление показывалось покупателям из других регионов.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="section" id="how">
-    <div class="container">
-      <div class="section-head">
-        <h2>Как работает сервис</h2>
-        <p>Понятный процесс без сложных настроек: от фотографии товара до готового текста для публикации.</p>
-      </div>
-
-      <div class="grid-3">
-        <div class="card">
-          <div class="step-num">1</div>
-          <h3>Загрузите фото или параметры</h3>
-          <p>Прикрепите снимок товара или укажите название, цену и основные особенности. ИИ распознает модель и детали на фото.</p>
-        </div>
-        <div class="card">
-          <div class="step-num">2</div>
-          <h3>Получите структуру под Авито</h3>
-          <p>Алгоритм формирует целевой заголовок под поисковые запросы, выгоды, комплектацию и призыв к действию.</p>
-        </div>
-        <div class="card">
-          <div class="step-num">3</div>
-          <h3>Скопируйте и опубликуйте</h3>
-          <p>Нажмите «Копировать» рядом с каждым блоком, вставьте текст в карточку на Авито и проверьте рекомендации чек-листа.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing -->
-  <section class="section" id="pricing">
-    <div class="container">
-      <div class="section-head">
-        <h2>Прозрачный тариф: 3 теста бесплатно, далее подписка на 30 дней</h2>
-        <p>Оцените качество генерации на своих объявлениях до оплаты. Полный доступ открывается по ежемесячной подписке.</p>
-      </div>
-
-      <div class="pricing-wrap">
-        <div class="card plan-card">
-          <div>
-            <div class="plan-badge" style="background: var(--accent);">Старт для проверки</div>
-            <h3>Пробный доступ</h3>
-            <div class="plan-price">0 ₽ <span>/ 3 генерации</span></div>
-            <div class="plan-period">Доступно сразу в браузере без привязки карты</div>
-            <ul class="plan-list">
-              <li>3 полные генерации карточек (заголовок, описание, чек-лист)</li>
-              <li>Распознавание товара по загруженной фотографии</li>
-              <li>Подходит для товаров и услуг</li>
-              <li>Копирование готовых блоков в один клик</li>
-            </ul>
-          </div>
-          <a href="#generator" class="btn btn-secondary">Протестировать бесплатно</a>
-        </div>
-
-        <div class="card plan-card featured">
-          <div>
-            <div class="plan-badge">Полный доступ</div>
-            <h3>Подписка «КарточкаPRO»</h3>
-            <div class="plan-price">490 ₽ <span>/ мес</span></div>
-            <div class="plan-period">Период действия подписки — 30 календарных дней</div>
-            <ul class="plan-list">
-              <li>Безлимитная генерация объявлений в течение 30 дней</li>
-              <li>Анализ фото и сборка продающей структуры под Авито</li>
-              <li>Индивидуальные чек-листы под каждую нишу</li>
-              <li>Оплата банковской картой, СБП или T-Pay через ЮKassa</li>
-              <li>Отмена продления в любой момент по обращению в поддержку</li>
-            </ul>
-          </div>
-          <button type="button" class="btn btn-primary" id="subscribeBtn">Оформить подписку за 490 ₽/мес</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="section" id="faq">
-    <div class="container">
-      <div class="section-head">
-        <h2>Частые вопросы</h2>
-      </div>
-
-      <div class="faq-list">
-        <details>
-          <summary>Как работают 3 бесплатные проверки?</summary>
-          <p>Сразу после открытия сайта вы можете сгенерировать до 3 объявлений бесплатно в текущем браузере. Счётчик оставшихся попыток отображается в шапке сайта и над кнопкой генерации.</p>
-        </details>
-        <details>
-          <summary>Что входит в подписку за 490 ₽/мес?</summary>
-          <p>Подписка предоставляет полный доступ к генерации заголовков, описаний и чек-листов для объявлений на Авито без ограничения по количеству карточек на период 30 календарных дней с момента оплаты.</p>
-        </details>
-        <details>
-          <summary>Как происходит оплата и отмена подписки?</summary>
-          <p>Оплата принимается онлайн через платёжный сервис ЮKassa (банковские карты РФ, СБП, T-Pay). Вы можете прекратить использование сервиса или отменить следующее списание в любой момент, написав на почту поддержки или в Telegram.</p>
-        </details>
-        <details>
-          <summary>Подходит ли сервис и для товаров, и для услуг?</summary>
-          <p>Да, в форме генератора можно выбрать формат «Товар» или «Услуга» — структура текста и рекомендации адаптируются под выбранный тип размещения.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <h4>КарточкаPRO (neroai.ru)</h4>
-          <p>Онлайн-сервис автоматизированной подготовки текстов и структуры объявлений для Авито на базе технологий искусственного интеллекта.</p>
-        </div>
-
-        <div>
-          <h4>Правовая информация</h4>
-          <div class="footer-links">
-            <button type="button" data-modal="offer">Договор публичной оферты</button>
-            <button type="button" data-modal="privacy">Политика конфиденциальности</button>
-            <button type="button" data-modal="refund">Условия подписки и возврата</button>
-          </div>
-        </div>
-
-        <div>
-          <h4>Контакты и реквизиты</h4>
-          <p>
-            Исполнитель: Емельянов Станислав Александрович<br />
-            Статус: Плательщик НПД (самозанятый)<br />
-            ИНН: 600500789630<br />
-            Email: <a href="mailto:support@neroai.ru" style="color: var(--primary);">support@neroai.ru</a><br />
-            Telegram: <a href="https://t.me/Prompt_Hub" target="_blank" rel="noopener" style="color: var(--primary);">@Prompt_Hub</a>
-          </p>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <span>© 2026 КарточкаPRO · Все права защищены</span>
-        <span>Оплата производится через ЮKassa (СБП, банковские карты, T-Pay)</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Legal Modal -->
-  <div class="modal-backdrop" id="legalModal" role="dialog" aria-modal="true">
-    <div class="modal">
-      <div class="modal-head">
-        <h3 id="modalTitle">Документ</h3>
-        <button type="button" class="modal-close" id="closeModalBtn" aria-label="Закрыть">×</button>
-      </div>
-      <div class="modal-body" id="modalBody"></div>
-    </div>
+      <div>© 2026 КарточкаPRO. Все права защищены. Копирование материалов сайта без согласия правообладателя запрещено.</div>
+      <div id="legalBox" class="legal-box"></div>
+    </footer>
   </div>
 
   <script>
-    // =========================================================================
-    // НАСТРОЙКИ ИНТЕГРАЦИИ (вставьте ваши рабочие URL)
-    // =========================================================================
-    const YOOKASSA_PAYMENT_URL = ''; // Ссылка на оплату подписки 490 ₽/мес из ЮKassa
-    const NODUL_WEBHOOK_URL = '';    // URL триггера Webhook из вашего сценария Nodul
-    // =========================================================================
+    // 1. URL вебхука генерации в Nodul
+    const NODUL_WEBHOOK_URL = "https://ВАШ_ВЕБХУК_ГЕНЕРАЦИИ_В_NODUL";
+    // 2. URL вебхука создания платежа в Nodul
+    const NODUL_PAY_URL = "https://ВАШ_ВЕБХУК_ОПЛАТЫ_В_NODUL";
+    // 3. Опциональный URL вебхука проверки статуса оплаты по user_id (можно оставить пустым, если редирект идет с ?paid=1)
+    const NODUL_CHECK_PAY_URL = "";
+    const AMOUNT_RUB = "490.00";
 
-    const MAX_FREE_TRIALS = 3;
-    const STORAGE_KEY = 'kartochkapro_trials_used_v1';
-    const SUB_KEY = 'kartochkapro_sub_active_v1';
+    const FREE_TRIAL_TOTAL = 3;
+    const MAX_IMAGE_SIDE = 1280;
+    const JPEG_QUALITY = 0.8;
 
-    let uploadedPhotoBase64 = '';
-    let uploadedPhotoName = '';
+    let mode = "goods";
+    let compressedImageBase64 = null;
 
-    const headerTrialBadge = document.getElementById('headerTrialBadge');
-    const formTrialBadge = document.getElementById('formTrialBadge');
-    const limitBanner = document.getElementById('limitBanner');
-    const resultInfoBanner = document.getElementById('resultInfoBanner');
-    const generateBtn = document.getElementById('generateBtn');
-    const payShortcutBtn = document.getElementById('payShortcutBtn');
-    const subscribeBtn = document.getElementById('subscribeBtn');
-    const modeIndicator = document.getElementById('modeIndicator');
-
-    const itemPhotoInput = document.getElementById('itemPhoto');
-    const photoPreviewWrap = document.getElementById('photoPreviewWrap');
-    const photoPreviewImg = document.getElementById('photoPreviewImg');
-    const photoFileName = document.getElementById('photoFileName');
-    const photoStatusText = document.getElementById('photoStatusText');
-    const removePhotoBtn = document.getElementById('removePhotoBtn');
-
-    if (NODUL_WEBHOOK_URL) {
-      modeIndicator.textContent = 'Подключён ИИ-сценарий';
+    let userId = localStorage.getItem("avito_ai_user_id");
+    if (!userId) {
+      userId = "web_" + Math.random().toString(36).substring(2, 12);
+      localStorage.setItem("avito_ai_user_id", userId);
     }
 
-    // Проверка возврата после оплаты (?paid=1)
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('paid') === '1') {
-      const expiresAt = Date.now() + 30 * 24 * 60 * 60 * 1000;
-      localStorage.setItem(SUB_KEY, String(expiresAt));
-      window.history.replaceState({}, document.title, window.location.pathname);
+    let isPaid = localStorage.getItem("avito_ai_paid") === "1";
+    let localRemaining = Number(localStorage.getItem("avito_ai_remaining"));
+    if (Number.isNaN(localRemaining) || localStorage.getItem("avito_ai_remaining") === null) {
+      localRemaining = FREE_TRIAL_TOTAL;
+      localStorage.setItem("avito_ai_remaining", String(localRemaining));
     }
 
-    function hasActiveSubscription() {
-      const exp = Number(localStorage.getItem(SUB_KEY) || 0);
-      return exp > Date.now();
-    }
+    function renderQuotaUI() {
+      const badge = document.getElementById("quotaBadge");
+      const heroSub = document.getElementById("heroSubtext");
+      const statusLine = document.getElementById("statusLine");
 
-    function getTrialsUsed() {
-      return Math.min(MAX_FREE_TRIALS, Math.max(0, Number(localStorage.getItem(STORAGE_KEY) || 0)));
-    }
+      badge.classList.remove("paid", "empty");
 
-    function setTrialsUsed(val) {
-      localStorage.setItem(STORAGE_KEY, String(Math.min(MAX_FREE_TRIALS, Math.max(0, val))));
-    }
-
-    function updateTrialUI() {
-      if (hasActiveSubscription()) {
-        headerTrialBadge.textContent = 'Подписка активна';
-        formTrialBadge.textContent = 'Безлимит на 30 дней';
-        limitBanner.classList.remove('warning');
-        generateBtn.disabled = false;
-        payShortcutBtn.style.display = 'none';
+      if (isPaid) {
+        badge.classList.add("paid");
+        badge.innerText = "✓ Доступ активен";
+        heroSub.innerText = "Безлимитная генерация активна — загрузите фото или опишите товар/услугу под поиск Авито.";
+        if (!statusLine.innerText || statusLine.innerText.includes("попыток")) {
+          statusLine.innerText = "Доступ к генератору активирован.";
+        }
         return;
       }
 
-      const used = getTrialsUsed();
-      const left = Math.max(0, MAX_FREE_TRIALS - used);
-      headerTrialBadge.textContent = `Бесплатно: ${left} из ${MAX_FREE_TRIALS}`;
-      formTrialBadge.textContent = `Осталось: ${left} из ${MAX_FREE_TRIALS}`;
+      const safeRem = Math.max(0, Math.min(FREE_TRIAL_TOTAL, Number(localRemaining) || 0));
+      localRemaining = safeRem;
+      localStorage.setItem("avito_ai_remaining", String(safeRem));
 
-      if (left === 0) {
-        limitBanner.classList.add('warning');
-        generateBtn.disabled = true;
-        payShortcutBtn.style.display = 'inline-flex';
+      if (safeRem === 0) {
+        badge.classList.add("empty");
+        badge.innerText = `Осталось: 0 из ${FREE_TRIAL_TOTAL}`;
+        heroSub.innerText = "Бесплатные генерации использованы — откройте доступ за 490 ₽ для продолжения работы.";
+        statusLine.innerText = "Бесплатные попытки закончились. Нажмите «Сгенерировать объявление», чтобы перейти к оплате.";
       } else {
-        limitBanner.classList.remove('warning');
-        generateBtn.disabled = false;
-        payShortcutBtn.style.display = 'none';
+        badge.innerText = `Осталось: ${safeRem} из ${FREE_TRIAL_TOTAL}`;
+        heroSub.innerText = `${safeRem} бесплатных пробных ${safeRem === 1 ? "генерация" : safeRem < 5 ? "генерации" : "генераций"} — загрузите фото или опишите товар/услугу под поиск Авито.`;
+        statusLine.innerText = `Доступно бесплатных генераций: ${safeRem} из ${FREE_TRIAL_TOTAL}`;
       }
     }
 
-    // Сжатие фото до 1280px JPEG (0.85) перед отправкой в Nodul Webhook
-    function compressImageToBase64(file, maxSide = 1280, quality = 0.85) {
+    function syncRemaining(remaining, hasPaid = false) {
+      if (hasPaid) {
+        isPaid = true;
+        localStorage.setItem("avito_ai_paid", "1");
+        renderQuotaUI();
+        return;
+      }
+      const safeRem = Math.max(0, Number(remaining) || 0);
+      localRemaining = safeRem;
+      localStorage.setItem("avito_ai_remaining", String(safeRem));
+      renderQuotaUI();
+    }
+
+    async function handlePaymentReturn() {
+      const params = new URLSearchParams(window.location.search);
+      const queryUserId = params.get("user_id");
+      if (queryUserId && queryUserId.startsWith("web_")) {
+        userId = queryUserId;
+        localStorage.setItem("avito_ai_user_id", userId);
+      }
+
+      const paidFlag = params.get("paid") === "1" || params.get("payment") === "success" || params.get("status") === "succeeded";
+
+      if (paidFlag) {
+        syncRemaining(0, true);
+        togglePaywall(false);
+        document.getElementById("statusLine").innerText = "✅ Оплата прошла успешно! Доступ к генератору открыт.";
+        cleanQueryParams(["paid", "payment", "status", "user_id"]);
+        return;
+      }
+
+      if (!isPaid && NODUL_CHECK_PAY_URL && !NODUL_CHECK_PAY_URL.includes("ВАШ_ВЕБХУК")) {
+        try {
+          const res = await fetch(NODUL_CHECK_PAY_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: userId })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.paid === true) {
+              syncRemaining(0, true);
+              togglePaywall(false);
+              document.getElementById("statusLine").innerText = "✅ Оплата подтверждена! Доступ к генератору открыт.";
+            }
+          }
+        } catch (_) {
+          // Игнорируем сетевую ошибку проверки при загрузке
+        }
+      }
+
+      if (queryUserId) {
+        cleanQueryParams(["user_id"]);
+      }
+    }
+
+    function cleanQueryParams(keys) {
+      const url = new URL(window.location.href);
+      let changed = false;
+      keys.forEach((k) => {
+        if (url.searchParams.has(k)) {
+          url.searchParams.delete(k);
+          changed = true;
+        }
+      });
+      if (changed) {
+        window.history.replaceState({}, "", url.pathname + (url.search ? url.search : "") + url.hash);
+      }
+    }
+
+    function setMode(newMode) {
+      mode = newMode;
+      document.getElementById("modeGoods").classList.toggle("active", mode === "goods");
+      document.getElementById("modeService").classList.toggle("active", mode === "service");
+
+      const chips = document.getElementById("chipsContainer");
+      if (mode === "goods") {
+        document.getElementById("photoLabel").innerText = "Фотография товара";
+        document.getElementById("descLabel").innerText = "Детали, состояние и цена";
+        document.getElementById("descInput").placeholder = "Например: Перфоратор Bosch GBH 2-26, б/у полгода, в кейсе, работает отлично, цена 5500 ₽";
+        chips.innerHTML = `
+          <button type="button" class="chip" onclick="fillExample('iPhone 13 128GB, состояние отличное, АКБ 89%, полный комплект с коробкой, 34 000 ₽')">📱 Пример: iPhone</button>
+          <button type="button" class="chip" onclick="fillExample('Зимняя куртка мужская, размер 50 (L), надевал пару раз, без дефектов, 4 500 ₽')">🧥 Пример: Куртка</button>
+          <button type="button" class="chip" onclick="fillExample('Диван угловой раскладной, после химчистки, самовывоз, 14 000 ₽')">🛋️ Пример: Мебель</button>
+        `;
+      } else {
+        document.getElementById("photoLabel").innerText = "Фото примера работы или обложки";
+        document.getElementById("descLabel").innerText = "Суть услуги, город, опыт и выгоды";
+        document.getElementById("descInput").placeholder = "Например: Ремонт квартир под ключ в Санкт-Петербурге, опыт 8 лет, работа по договору, бесплатный замер.";
+        chips.innerHTML = `
+          <button type="button" class="chip" onclick="fillExample('Грузоперевозки на Газели по городу и области, аккуратные грузчики, подача за 30 минут, от 1200 ₽/час')">🚚 Пример: Перевозки</button>
+          <button type="button" class="chip" onclick="fillExample('Ремонт стиральных машин на дому, выезд и диагностика бесплатно при ремонте, гарантия 1 год')">🔧 Пример: Ремонт техники</button>
+          <button type="button" class="chip" onclick="fillExample('Маникюр с покрытием гель-лак, стерильный инструмент, центр города, 1 800 ₽')">💅 Пример: Бьюти</button>
+        `;
+      }
+    }
+
+    function fillExample(text) {
+      document.getElementById("descInput").value = text;
+    }
+
+    function togglePaywall(show) {
+      document.getElementById("generatorCard").style.display = show ? "none" : "block";
+      document.getElementById("heroBlock").style.display = show ? "none" : "block";
+      document.getElementById("paywall").style.display = show ? "block" : "none";
+    }
+
+    function toggleLegal(type) {
+      const box = document.getElementById("legalBox");
+      const privacyHtml = "<strong>Политика конфиденциальности</strong><br>Сервис обрабатывает загруженные пользователем описания, изображения и технические идентификаторы сессии исключительно для формирования текстов объявлений и учета лимитов использования. Не передавайте в запросах конфиденциальные персональные данные и платежные реквизиты.";
+      const offerHtml = "<strong>Пользовательское соглашение / Оферта</strong><br>Сервис предоставляет информационно-технический инструмент генерации черновиков объявлений с использованием ИИ. Пользователь самостоятельно проверяет актуальность фактов, цен и соответствие размещаемого текста правилам площадок.";
+      const nextHtml = type === "privacy" ? privacyHtml : offerHtml;
+
+      if (box.style.display === "block" && box.dataset.current === type) {
+        box.style.display = "none";
+        box.dataset.current = "";
+      } else {
+        box.innerHTML = nextHtml;
+        box.dataset.current = type;
+        box.style.display = "block";
+      }
+    }
+
+    function compressImageFile(file, maxSide = MAX_IMAGE_SIDE, quality = JPEG_QUALITY) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onerror = () => reject(new Error('Ошибка чтения файла'));
-        reader.onload = (event) => {
+        reader.onload = (e) => {
           const img = new Image();
-          img.onerror = () => reject(new Error('Не удалось декодировать изображение'));
           img.onload = () => {
             let { width, height } = img;
             if (width > maxSide || height > maxSide) {
@@ -1335,239 +843,187 @@
                 height = maxSide;
               }
             }
-            const canvas = document.createElement('canvas');
+            const canvas = document.createElement("canvas");
             canvas.width = width;
             canvas.height = height;
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL('image/jpeg', quality));
+            resolve(canvas.toDataURL("image/jpeg", quality));
           };
-          img.src = event.target.result;
+          img.onerror = reject;
+          img.src = e.target.result;
         };
+        reader.onerror = reject;
         reader.readAsDataURL(file);
       });
     }
 
-    function clearPhoto() {
-      uploadedPhotoBase64 = '';
-      uploadedPhotoName = '';
-      itemPhotoInput.value = '';
-      photoPreviewImg.removeAttribute('src');
-      photoPreviewWrap.classList.remove('active');
-    }
+    async function handlePhotoPreview() {
+      const fileInput = document.getElementById("photoInput");
+      const uploadZone = document.getElementById("uploadZone");
+      const previewBox = document.getElementById("previewBox");
+      const img = document.getElementById("previewImg");
+      const statusLine = document.getElementById("statusLine");
 
-    itemPhotoInput.addEventListener('change', async (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (!file) {
-        clearPhoto();
-        return;
-      }
-
-      uploadedPhotoName = file.name;
-      photoFileName.textContent = file.name;
-      photoStatusText.textContent = 'Подготовка фото...';
-      photoPreviewWrap.classList.add('active');
-
-      try {
-        const compressedDataUrl = await compressImageToBase64(file);
-        uploadedPhotoBase64 = compressedDataUrl;
-        photoPreviewImg.src = compressedDataUrl;
-        const sizeKb = Math.round((compressedDataUrl.length * 3) / 4 / 1024);
-        photoStatusText.textContent = `Готово к распознаванию (~${sizeKb} КБ)`;
-      } catch (err) {
-        clearPhoto();
-        resultInfoBanner.className = 'status-banner warning';
-        resultInfoBanner.textContent = 'Не удалось обработать выбранное изображение. Попробуйте другой файл JPG или PNG.';
-      }
-    });
-
-    removePhotoBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      clearPhoto();
-    });
-
-    function openPayment() {
-      if (YOOKASSA_PAYMENT_URL) {
-        window.location.href = YOOKASSA_PAYMENT_URL;
-        return;
-      }
-      resultInfoBanner.className = 'status-banner info';
-      resultInfoBanner.textContent = 'Платёжный шлюз ЮKassa (ShopID 1536197) подключён. Укажите готовую платёжную ссылку в YOOKASSA_PAYMENT_URL в index.html для автоматического перехода на оплату 490 ₽/мес.';
-      document.getElementById('generator').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    subscribeBtn.addEventListener('click', openPayment);
-    payShortcutBtn.addEventListener('click', openPayment);
-
-    // Генерация объявления (через Nodul Webhook + Timeweb AI или локальный предпросмотр)
-    document.getElementById('generatorForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      if (!hasActiveSubscription() && getTrialsUsed() >= MAX_FREE_TRIALS) {
-        updateTrialUI();
-        return;
-      }
-
-      const type = document.getElementById('itemType').value;
-      const price = document.getElementById('itemPrice').value.trim();
-      const title = document.getElementById('itemTitle').value.trim();
-      const details = document.getElementById('itemDetails').value.trim();
-
-      if (!title && !uploadedPhotoBase64) {
-        resultInfoBanner.className = 'status-banner warning';
-        resultInfoBanner.textContent = 'Загрузите фотографию товара или укажите название в поле формы.';
-        return;
-      }
-
-      generateBtn.disabled = true;
-      const originalBtnText = generateBtn.textContent;
-      generateBtn.textContent = uploadedPhotoBase64 ? 'Анализируем фото и пишем текст...' : 'Формируем объявление...';
-
-      try {
-        if (NODUL_WEBHOOK_URL) {
-          const response = await fetch(NODUL_WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              type,
-              price,
-              title,
-              details,
-              photoBase64: uploadedPhotoBase64,
-              photoName: uploadedPhotoName,
-              domain: 'neroai.ru'
-            })
-          });
-
-          if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status}`);
-          }
-
-          const data = await response.json();
-          document.getElementById('outTitle').textContent = data.title || data.heading || title || 'Готовое объявление';
-          document.getElementById('outDesc').textContent = data.description || data.body || '';
-          document.getElementById('outChecklist').textContent = data.checklist || '';
-        } else {
-          await new Promise((r) => setTimeout(r, 450));
-          const displayTitle = title || (uploadedPhotoName ? `Товар по фото (${uploadedPhotoName.replace(/\.[^.]+$/, '')})` : 'Товар в отличном состоянии');
-          const shortTitle = displayTitle.length > 50 ? displayTitle.slice(0, 47) + '...' : displayTitle;
-          const priceLine = price ? `\nЦена: ${price}.` : '';
-          const detailsLine = details
-            ? details
-            : 'Полностью исправное состояние, проверено перед размещением. Готов ответить на вопросы в чате и отправить дополнительные фото.';
-
-          document.getElementById('outTitle').textContent = shortTitle;
-          document.getElementById('outDesc').textContent =
-            `${displayTitle} — актуальное предложение.${priceLine}\n\n` +
-            `Описание и особенности:\n• ${detailsLine}\n` +
-            (uploadedPhotoBase64 ? `• Фотография «${uploadedPhotoName}» готова к передаче в сценарий распознавания Nodul\n\n` : '\n') +
-            (type === 'Услуга'
-              ? 'Условия работы:\n• Согласование объёма и стоимости до начала работ\n• Аккуратное выполнение в оговорённый срок\n\nПишите в чат Авито или звоните — проконсультирую и подберу удобное время.'
-              : 'Условия сделки:\n• Любые проверки при встрече\n• Быстрая отправка Авито Доставкой в день заказа\n\nПишите в чат Авито — отвечаю быстро.');
-
-          document.getElementById('outChecklist').textContent =
-            `• Добавьте 4–6 чётких фотографий при дневном свете без лишних предметов в кадре.\n` +
-            `• Заполните все обязательные параметры в категории «${type}» на Авито.\n` +
-            `• Подключите NODUL_WEBHOOK_URL в index.html для автоматического распознавания товара по фото через вашего ИИ-агента.`;
-        }
-
-        if (!hasActiveSubscription()) {
-          setTrialsUsed(getTrialsUsed() + 1);
-        }
-
-        resultInfoBanner.className = 'status-banner info';
-        resultInfoBanner.textContent = 'Готово! Скопируйте заголовок и описание в карточку объявления на Авито.';
-      } catch (err) {
-        resultInfoBanner.className = 'status-banner warning';
-        resultInfoBanner.textContent = 'Не удалось получить ответ от сценария генерации. Проверьте URL вебхука Nodul и настройки CORS.';
-      } finally {
-        generateBtn.textContent = originalBtnText;
-        updateTrialUI();
-      }
-    });
-
-    // Copy buttons
-    document.querySelectorAll('.copy-btn').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        const targetId = btn.getAttribute('data-copy');
-        const text = document.getElementById(targetId).textContent;
+      if (fileInput.files && fileInput.files[0]) {
+        statusLine.innerText = "Сжимаем фото перед отправкой...";
         try {
-          await navigator.clipboard.writeText(text);
-          const prev = btn.textContent;
-          btn.textContent = 'Скопировано';
-          setTimeout(() => { btn.textContent = prev; }, 1500);
+          compressedImageBase64 = await compressImageFile(fileInput.files[0]);
+          img.src = compressedImageBase64;
+          uploadZone.style.display = "none";
+          previewBox.style.display = "block";
+          renderQuotaUI();
         } catch (err) {
-          btn.textContent = 'Выделите вручную';
+          statusLine.innerText = "Не удалось обработать фото: " + err.message;
         }
-      });
-    });
-
-    // Legal Modals
-    const LEGAL_DOCS = {
-      offer: {
-        title: 'Договор публичной оферты',
-        html: `
-          <p>Настоящий документ является официальным предложением (публичной офертой) Емельянова Станислава Александровича (ИНН 600500789630, плательщик налога на профессиональный доход) заключить договор на предоставление доступа к онлайн-сервису «КарточкаPRO» (https://neroai.ru).</p>
-          <h4>1. Предмет договора</h4>
-          <p>Исполнитель предоставляет Пользователю доступ к функционалу автоматизированной генерации текстов и структуры объявлений на условиях ежемесячной подписки.</p>
-          <h4>2. Стоимость и порядок расчётов</h4>
-          <p>До оплаты Пользователю предоставляются 3 (три) бесплатные пробные генерации. Стоимость подписки составляет <strong>490 ₽ (четыреста девяносто рублей) за 30 календарных дней</strong>. Оплата производится через сервис ЮKassa.</p>
-          <h4>3. Порядок оказания услуг</h4>
-          <p>Доступ к расширенному функционалу предоставляется автоматически после подтверждения платежа сроком на 30 календарных дней.</p>
-        `
-      },
-      privacy: {
-        title: 'Политика конфиденциальности',
-        html: `
-          <p>Настоящая Политика определяет порядок обработки и защиты информации пользователей сервиса «КарточкаPRO» (neroai.ru).</p>
-          <h4>1. Какие данные обрабатываются</h4>
-          <p>Сервис обрабатывает введённые пользователем параметры объявлений, загружаемые изображения товаров для генерации текста, а также технические данные браузера (localStorage) для учёта бесплатных пробных генераций и статуса подписки.</p>
-          <h4>2. Платёжные данные</h4>
-          <p>Реквизиты банковских карт и платёжных средств вводятся на защищённой странице платёжного провайдера ЮKassa и не хранятся на серверах сервиса.</p>
-          <h4>3. Контакты оператора</h4>
-          <p>По вопросам обработки данных: support@neroai.ru.</p>
-        `
-      },
-      refund: {
-        title: 'Условия подписки и возврата',
-        html: `
-          <h4>1. Период действия подписки</h4>
-          <p>Подписка «КарточкаPRO» оформляется на период 30 календарных дней по тарифу 490 ₽/мес.</p>
-          <h4>2. Отмена подписки</h4>
-          <p>Пользователь вправе отказаться от продления подписки на следующий период в любое время, направив обращение на электронную почту support@neroai.ru или в Telegram @Prompt_Hub.</p>
-          <h4>3. Возврат средств</h4>
-          <p>В случае технических сбоев, по которым доступ к оплаченному периоду не был предоставлен, возврат денежных средств осуществляется в полном объёме тем же способом, которым была произведена оплата, в течение 3–10 рабочих дней.</p>
-        `
       }
-    };
+    }
 
-    const modalBackdrop = document.getElementById('legalModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
+    function clearPhoto() {
+      const fileInput = document.getElementById("photoInput");
+      fileInput.value = "";
+      compressedImageBase64 = null;
+      document.getElementById("previewImg").src = "";
+      document.getElementById("previewBox").style.display = "none";
+      document.getElementById("uploadZone").style.display = "block";
+    }
 
-    document.querySelectorAll('[data-modal]').forEach((trigger) => {
-      trigger.addEventListener('click', () => {
-        const key = trigger.getAttribute('data-modal');
-        const doc = LEGAL_DOCS[key];
-        if (!doc) return;
-        modalTitle.textContent = doc.title;
-        modalBody.innerHTML = doc.html;
-        modalBackdrop.classList.add('open');
-      });
-    });
-
-    document.getElementById('closeModalBtn').addEventListener('click', () => {
-      modalBackdrop.classList.remove('open');
-    });
-
-    modalBackdrop.addEventListener('click', (e) => {
-      if (e.target === modalBackdrop) {
-        modalBackdrop.classList.remove('open');
+    async function generateAd() {
+      if (localRemaining <= 0 && !isPaid) {
+        togglePaywall(true);
+        return;
       }
-    });
 
-    updateTrialUI();
+      const text = document.getElementById("descInput").value.trim();
+      const fileInput = document.getElementById("photoInput");
+      const btn = document.getElementById("genBtn");
+      const statusLine = document.getElementById("statusLine");
+      const skeleton = document.getElementById("skeletonBox");
+      const resultWrapper = document.getElementById("resultWrapper");
+      const resultBox = document.getElementById("resultBox");
+
+      if (!text && !compressedImageBase64 && fileInput.files.length === 0) {
+        statusLine.innerText = "⚠️ Загрузите фото или выберите один из примеров выше.";
+        return;
+      }
+
+      if (NODUL_WEBHOOK_URL.includes("ВАШ_ВЕБХУК_ГЕНЕРАЦИИ_В_NODUL")) {
+        statusLine.innerText = "⚠️ Укажите URL вебхука Nodul в коде.";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = "<span>⏳</span> <span>Нейросеть пишет текст...</span>";
+      resultWrapper.style.display = "none";
+      skeleton.style.display = "block";
+      statusLine.innerText = "Формируем объявление для Авито...";
+
+      try {
+        let imageToSend = compressedImageBase64;
+        if (!imageToSend && fileInput.files.length > 0) {
+          imageToSend = await compressImageFile(fileInput.files[0]);
+          compressedImageBase64 = imageToSend;
+        }
+
+        const response = await fetch(NODUL_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: userId,
+            source: "web",
+            mode: mode,
+            user_text: text,
+            image_base64: imageToSend
+          })
+        });
+
+        const data = await response.json();
+        skeleton.style.display = "none";
+
+        if (data.paywall === true || response.status === 402) {
+          syncRemaining(0, false);
+          togglePaywall(true);
+          return;
+        }
+
+        if (data.paid) {
+          syncRemaining(0, true);
+        } else if (typeof data.remaining === "number") {
+          syncRemaining(data.remaining, false);
+        } else {
+          syncRemaining(localRemaining - 1, false);
+        }
+
+        const adText = data.result || data.text || "";
+        if (adText) {
+          resultBox.innerText = adText;
+          resultWrapper.style.display = "block";
+          renderQuotaUI();
+          resultWrapper.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } else {
+          statusLine.innerText = "Сервер вернул пустой ответ. Проверьте узел ответа в Nodul.";
+        }
+      } catch (err) {
+        skeleton.style.display = "none";
+        statusLine.innerText = "Ошибка соединения: " + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = "<span>✨</span> <span>Сгенерировать объявление</span>";
+      }
+    }
+
+    async function startPayment(btnEl) {
+      if (NODUL_PAY_URL.includes("ВАШ_ВЕБХУК_ОПЛАТЫ_В_NODUL")) {
+        alert("Укажите URL вебхука создания платежа в переменной NODUL_PAY_URL.");
+        return;
+      }
+
+      const originalText = btnEl.innerText;
+      btnEl.disabled = true;
+      btnEl.innerText = "Создаем счет...";
+
+      try {
+        const res = await fetch(NODUL_PAY_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: userId,
+            amount: AMOUNT_RUB
+          })
+        });
+        const data = await res.json();
+        if (data.confirmation_url) {
+          window.location.href = data.confirmation_url;
+        } else {
+          alert("Не удалось получить ссылку на оплату.");
+        }
+      } catch (e) {
+        alert("Ошибка соединения: " + e.message);
+      } finally {
+        btnEl.disabled = false;
+        btnEl.innerText = originalText;
+      }
+    }
+
+    async function copyResult() {
+      const text = document.getElementById("resultBox").innerText;
+      const copyBtn = document.getElementById("copyBtn");
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (_) {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+      }
+      copyBtn.innerText = "✓ Скопировано!";
+      setTimeout(() => { copyBtn.innerText = "Скопировать текст"; }, 2000);
+    }
+
+    renderQuotaUI();
+    handlePaymentReturn();
   </script>
 </body>
 </html>

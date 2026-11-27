@@ -813,6 +813,7 @@
 
   <!-- Виджет текстового ИИ-ассистента Timeweb Cloud -->
   <script
+    id="twcAgentEmbedScript"
     async
     src="https://agent.timeweb.cloud/js/embed.js"
     data-agent-id="01c938ab-e5e3-4a46-92ec-3503fd89357e"
@@ -820,8 +821,8 @@
 
   <script>
     (function () {
-      // Перед продакшеном проверьте актуальный URL сценария Nodul (например, /prod/ вместо /dev/)
-      const NODUL_CHECK_WEBHOOK_URL = "https://webhook.nodul.ru/24175/dev/neroai-access";
+      const AGENT_ID = "01c938ab-e5e3-4a46-92ec-3503fd89357e";
+      const NODUL_CHECK_WEBHOOK_URL = "https://webhook.nodul.ru/24175/prod/neroai-access";
 
       const STORAGE_KEYS = {
         userKey: "neroai_user_key",
@@ -938,6 +939,37 @@
         payModal.classList.remove("open");
       }
 
+      function findWidgetTriggerInRoot(root) {
+        if (!root || typeof root.querySelectorAll !== "function") return null;
+
+        const candidates = root.querySelectorAll(
+          "[data-agent-id='" + AGENT_ID + "'] button, " +
+          "[data-twc-agent-button], " +
+          ".twc-agent-button, " +
+          "#twc-chat-widget button, " +
+          "[id*='twc'] button, " +
+          "[class*='twc'] button, " +
+          "[class*='agent-widget'] button, " +
+          "[class*='chat-widget'] button"
+        );
+
+        for (const el of candidates) {
+          if (el && el.id !== "launchAgentChatBtn" && typeof el.click === "function") {
+            return el;
+          }
+        }
+
+        const allNodes = root.querySelectorAll("*");
+        for (const node of allNodes) {
+          if (node.shadowRoot) {
+            const foundInShadow = findWidgetTriggerInRoot(node.shadowRoot);
+            if (foundInShadow) return foundInShadow;
+          }
+        }
+
+        return null;
+      }
+
       function tryTriggerTimewebWidget() {
         if (typeof window.twc_agent_open === "function") {
           window.twc_agent_open();
@@ -947,25 +979,25 @@
           window.twcAgent.open();
           return true;
         }
-        const selectors = [
-          "[data-twc-agent-button]",
-          ".twc-agent-button",
-          "#twc-chat-widget button",
-          "[class*='twc-widget'] button",
-          "[class*='twc'] button"
-        ];
-        for (const sel of selectors) {
-          const el = document.querySelector(sel);
-          if (el && typeof el.click === "function") {
-            el.click();
-            return true;
-          }
+        if (window.TWC && typeof window.TWC.open === "function") {
+          window.TWC.open();
+          return true;
         }
+
+        const trigger = findWidgetTriggerInRoot(document);
+        if (trigger) {
+          try {
+            trigger.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          } catch (_) {}
+          trigger.click();
+          return true;
+        }
+
         return false;
       }
 
       function openTimewebWidget(retries) {
-        const left = typeof retries === "number" ? retries : 16;
+        const left = typeof retries === "number" ? retries : 20;
         if (tryTriggerTimewebWidget()) {
           return true;
         }
@@ -975,7 +1007,7 @@
           }, 250);
           return false;
         }
-        statusText.textContent = "Чат готов — нажмите на иконку ассистента в углу экрана.";
+        statusText.textContent = "Чат готов — нажмите на иконку ассистента на экране.";
         return false;
       }
 
@@ -991,7 +1023,13 @@
         if (!response.ok) {
           throw new Error("HTTP " + response.status);
         }
-        return await response.json();
+
+        const text = await response.text();
+        try {
+          return JSON.parse(text);
+        } catch (_) {
+          throw new Error("Invalid JSON response");
+        }
       }
 
       launchBtn.addEventListener("click", async function () {
@@ -999,7 +1037,6 @@
         const savedEmail = localStorage.getItem(STORAGE_KEYS.email) || "";
         const cached = loadAccessState();
 
-        // Если по кэшу бесплатный лимит уже 0 и подписка не активна — сразу предлагаем оплату или вход по e-mail
         if (cached && !cached.is_paid && Number(cached.free_left) <= 0 && !savedEmail) {
           const msg = "Бесплатные 3 генерации закончились. Оформите доступ на 30 дней или проверьте статус по e-mail.";
           statusText.textContent = msg;
@@ -1033,7 +1070,7 @@
             } else {
               statusText.textContent = "Доступ разрешён. Осталось бесплатных генераций: " + freeLeft + " из 3.";
             }
-            openTimewebWidget(16);
+            openTimewebWidget(20);
           } else {
             const msg = (data && data.message)
               ? data.message
@@ -1045,9 +1082,11 @@
           console.error("Nodul check error:", err);
           if (cached && cached.allow) {
             statusText.textContent = "Сервер проверки недоступен — открываем чат по сохранённому статусу.";
-            openTimewebWidget(16);
+            openTimewebWidget(20);
           } else {
-            statusText.textContent = "Не удалось проверить доступ. Попробуйте ещё раз или откройте окно оплаты/восстановления.";
+            const fallbackMsg = "Не удалось проверить доступ автоматически. Укажите e-mail для проверки или оформите доступ на 30 дней.";
+            statusText.textContent = fallbackMsg;
+            openPayModal(fallbackMsg);
           }
         } finally {
           launchBtn.disabled = false;
@@ -1097,7 +1136,7 @@
               ? "Подписка найдена для " + email + ". Открываем чат..."
               : "Доступ проверен для " + email + ". Осталось бесплатных генераций: " + freeLeft + " из 3.";
             closePayModal();
-            openTimewebWidget(16);
+            openTimewebWidget(20);
           } else {
             payModalError.textContent = (data && data.message)
               ? data.message
@@ -1212,7 +1251,6 @@
         }
       });
 
-      // Инициализация ключа и UI при загрузке страницы
       getOrCreateUserKey();
       syncUiFromState();
     })();

@@ -811,14 +811,6 @@
     </div>
   </div>
 
-  <!-- Виджет текстового ИИ-ассистента Timeweb Cloud -->
-  <script
-    id="twcAgentEmbedScript"
-    async
-    src="https://agent.timeweb.cloud/js/embed.js"
-    data-agent-id="01c938ab-e5e3-4a46-92ec-3503fd89357e"
-  ></script>
-
   <script>
     (function () {
       const AGENT_ID = "01c938ab-e5e3-4a46-92ec-3503fd89357e";
@@ -949,8 +941,11 @@
           "#twc-chat-widget button, " +
           "[id*='twc'] button, " +
           "[class*='twc'] button, " +
+          "[id*='cloud-ai'] button, " +
+          "[class*='cloud-ai'] button, " +
           "[class*='agent-widget'] button, " +
-          "[class*='chat-widget'] button"
+          "[class*='chat-widget'] button, " +
+          "button[aria-label*='чат' i], button[aria-label*='chat' i], button[aria-label*='ассистент' i]"
         );
 
         for (const el of candidates) {
@@ -1255,5 +1250,8 @@
       syncUiFromState();
     })();
   </script>
+
+  <!-- Виджет текстового ИИ-ассистента Timeweb Cloud -->
+  <script async src="https://timeweb.cloud/api/v1/cloud-ai/agents/01c938ab-e5e3-4a46-92ec-3503fd89357e/embed.js?collapsed=true"></script>
 </body>
 </html>

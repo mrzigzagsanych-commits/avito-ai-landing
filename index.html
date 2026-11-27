@@ -3,386 +3,565 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>КарточкаPRO — ИИ-ассистент для продающих объявлений на Авито</title>
-  <meta name="description" content="Создавайте сильные заголовки, продающие описания и ответы покупателям для Авито за 30 секунд. Попробуйте бесплатно — 3 генерации без привязки карты." />
+  <title>КарточкаPRO — помощник для объявлений на Авито (neroai.ru)</title>
+  <meta name="description" content="КарточкаPRO на neroai.ru — умный помощник для продавцов и мастеров на Авито. Попробуйте бесплатно — 3 генерации без привязки карты." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0b0f19;
-      --surface: #131a2a;
-      --surface-2: #1a2338;
-      --border: rgba(255, 255, 255, 0.09);
-      --text: #f3f6fc;
-      --muted: #9aa7c0;
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
-      --green: #10b981;
-      --green-bg: rgba(16, 185, 129, 0.14);
-      --radius: 16px;
+      --bg: #f6f8fc;
+      --surface: #ffffff;
+      --surface-soft: #eef2f9;
+      --ink: #0f172a;
+      --ink-muted: #475569;
+      --ink-subtle: #64748b;
+      --line: #e2e8f0;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-soft: rgba(37, 99, 235, 0.09);
+      --accent: #0d9488;
+      --accent-soft: rgba(13, 148, 136, 0.11);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 14px 34px -14px rgba(15, 23, 42, 0.11);
+      --shadow-lg: 0 24px 60px -15px rgba(15, 23, 42, 0.18);
     }
 
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
-      background: radial-gradient(circle at top center, #14203b 0%, var(--bg) 55%);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(900px 420px at 85% -5%, rgba(37, 99, 235, 0.08), transparent 60%),
+        radial-gradient(700px 380px at 10% 0%, rgba(13, 148, 136, 0.07), transparent 55%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .brand-font {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      letter-spacing: -0.025em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
     }
 
     .container {
       width: 100%;
-      max-width: 1040px;
+      max-width: 1140px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 18px;
     }
 
-    /* Header (без ценников) */
+    /* Header */
     header {
-      padding: 22px 0;
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(14px);
+      background: rgba(246, 248, 252, 0.88);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.85);
     }
 
     .header-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
+      min-height: 68px;
     }
 
-    .logo {
-      display: flex;
+    .brand {
+      display: inline-flex;
       align-items: center;
       gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
       font-weight: 800;
-      font-size: 20px;
-      letter-spacing: -0.3px;
-      color: var(--text);
-      text-decoration: none;
+      font-size: 17px;
+      line-height: 1.2;
     }
 
-    .logo-badge {
-      background: linear-gradient(135deg, #3b82f6, #06b6d4);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 6px;
-      text-transform: uppercase;
-    }
-
-    .header-tag {
-      font-size: 13px;
-      color: var(--green);
-      background: var(--green-bg);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 6px 12px;
-      border-radius: 999px;
+    .domain-pill {
+      font-size: 11px;
       font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border: 1px solid rgba(37, 99, 235, 0.18);
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .free-pill {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid rgba(13, 148, 136, 0.24);
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--ink-subtle);
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 11px 18px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.99);
+    }
+
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 10px 24px -10px rgba(37, 99, 235, 0.65);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-muted);
+      padding: 8px 12px;
+    }
+
+    .btn-ghost:hover {
+      background: var(--surface-soft);
+      color: var(--ink);
     }
 
     /* Hero */
     .hero {
-      padding: 56px 0 36px;
-      text-align: center;
+      padding: 40px 0 20px;
     }
 
-    .free-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--green-bg);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      color: #6ee7b7;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 7px 16px;
-      border-radius: 999px;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 {
-      font-size: clamp(28px, 4.5vw, 46px);
-      line-height: 1.15;
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(29px, 4.3vw, 46px);
+      line-height: 1.13;
       font-weight: 800;
-      letter-spacing: -0.02em;
       max-width: 820px;
-      margin: 0 auto 18px;
     }
 
-    .hero h1 span {
-      background: linear-gradient(90deg, #60a5fa, #34d399);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    h1 span {
+      color: var(--primary);
     }
 
-    .hero p {
-      font-size: 18px;
-      color: var(--muted);
-      max-width: 660px;
-      margin: 0 auto;
+    .hero-lead {
+      margin: 0 0 20px;
+      font-size: 16.5px;
+      color: var(--ink-muted);
+      max-width: 680px;
     }
 
-    /* Section common */
-    section {
-      padding: 36px 0;
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .section-title {
-      font-size: clamp(22px, 3vw, 30px);
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 10px;
+    /* 1. Benefits */
+    .benefits-section {
+      padding: 18px 0 28px;
     }
 
-    .section-subtitle {
-      text-align: center;
-      color: var(--muted);
-      font-size: 16px;
-      max-width: 620px;
-      margin: 0 auto 30px;
+    .section-title-row {
+      margin-bottom: 16px;
     }
 
-    /* 1. Блок преимуществ */
+    .section-title-row h2 {
+      margin: 0 0 4px;
+      font-size: 24px;
+    }
+
+    .section-title-row p {
+      margin: 0;
+      font-size: 14.5px;
+      color: var(--ink-subtle);
+    }
+
     .benefits-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
     }
 
     .benefit-card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .benefit-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(96, 165, 250, 0.35);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
     }
 
     .benefit-icon {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border-radius: 10px;
-      background: rgba(59, 130, 246, 0.15);
-      color: #60a5fa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      margin-bottom: 14px;
-    }
-
-    .benefit-card h3 {
-      font-size: 17px;
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-
-    .benefit-card p {
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    /* 2. Блок чата с ассистентом */
-    .assistant-box {
-      background: linear-gradient(180deg, var(--surface) 0%, #101726 100%);
-      border: 1px solid rgba(59, 130, 246, 0.35);
-      border-radius: 22px;
-      padding: 36px 24px;
-      text-align: center;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-    }
-
-    .assistant-badge {
-      display: inline-block;
-      background: rgba(59, 130, 246, 0.16);
-      color: #93c5fd;
-      border: 1px solid rgba(59, 130, 246, 0.35);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 5px 14px;
-      border-radius: 999px;
-      margin-bottom: 14px;
-    }
-
-    .assistant-box h2 {
-      font-size: clamp(22px, 3.2vw, 32px);
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 16px;
       margin-bottom: 12px;
     }
 
-    .assistant-box p {
-      color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto 24px;
+    .benefit-card h3 {
+      margin: 0 0 6px;
+      font-size: 15.5px;
+    }
+
+    .benefit-card p {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--ink-muted);
+    }
+
+    /* 2. Center Assistant Block */
+    .assistant-section {
+      padding: 8px 0 28px;
+    }
+
+    .assistant-hub {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .assistant-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .assistant-head h2 {
+      margin: 0 0 4px;
+      font-size: 24px;
+    }
+
+    .assistant-head p {
+      margin: 0;
+      font-size: 14.5px;
+      color: var(--ink-muted);
+    }
+
+    .assistant-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .prompt-box {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .prompt-box h3 {
+      margin: 0 0 8px;
       font-size: 16px;
     }
 
-    .steps-row {
+    .steps-mini {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 13.5px;
+      color: var(--ink-muted);
+      display: grid;
+      gap: 8px;
+    }
+
+    .launch-panel {
+      background: linear-gradient(160deg, #eff6ff 0%, #f0fdfa 100%);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 22px;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 28px;
+      gap: 14px;
     }
 
-    .step-chip {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-size: 13px;
-      color: #dbeafe;
-    }
-
-    .btn-primary {
+    .launch-badge {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #2563eb, #10b981);
-      color: #fff;
-      font-size: 17px;
-      font-weight: 700;
-      padding: 16px 32px;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      box-shadow: 0 10px 28px rgba(37, 99, 235, 0.35);
-      transition: transform 0.15s ease, opacity 0.2s ease;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      opacity: 0.96;
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.65;
-      cursor: wait;
-    }
-
-    .btn-hint {
-      margin-top: 12px;
-      font-size: 13px;
-      color: #6ee7b7;
-      font-weight: 500;
-    }
-
-    .status-text {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #93c5fd;
-      min-height: 20px;
-    }
-
-    /* 3. Блок подписки (единственное место с ценой) */
-    .billing-card {
-      max-width: 540px;
-      margin: 0 auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 32px 28px;
-      text-align: center;
-    }
-
-    .billing-trial-note {
-      display: inline-block;
-      background: var(--green-bg);
-      color: #6ee7b7;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 5px 12px;
+      gap: 6px;
+      align-self: flex-start;
+      background: #fff;
+      color: var(--accent);
+      border: 1px solid rgba(13, 148, 136, 0.28);
       border-radius: 999px;
-      margin-bottom: 14px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .launch-panel h3 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .launch-panel p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    .widget-hint {
+      font-size: 12.5px;
+      color: var(--ink-subtle);
+      min-height: 18px;
+    }
+
+    /* 3. Subscription & Payment Section */
+    .billing-section {
+      padding: 8px 0 56px;
+    }
+
+    .billing-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .billing-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    .billing-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 18px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--line);
     }
 
     .price-row {
       display: flex;
       align-items: baseline;
-      justify-content: center;
       gap: 6px;
-      margin: 10px 0 16px;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
     }
 
-    .price-value {
-      font-size: 42px;
+    .price-tag {
+      font-size: 32px;
       font-weight: 800;
-      letter-spacing: -0.02em;
+      color: var(--ink);
+      line-height: 1;
     }
 
     .price-period {
-      font-size: 16px;
-      color: var(--muted);
-    }
-
-    .billing-list {
-      list-style: none;
-      text-align: left;
-      max-width: 380px;
-      margin: 0 auto 24px;
-      display: grid;
-      gap: 10px;
       font-size: 15px;
-      color: #e2e8f0;
-    }
-
-    .billing-list li::before {
-      content: "✓";
-      color: var(--green);
       font-weight: 700;
-      margin-right: 10px;
+      color: var(--ink-muted);
     }
 
-    .btn-secondary {
-      width: 100%;
-      max-width: 340px;
-      background: var(--surface-2);
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      padding: 14px 24px;
-      border-radius: 12px;
+    .trial-badge {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 11px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .info-card {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .info-card h3 {
+      margin: 0 0 8px;
       font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s ease, border-color 0.2s ease;
     }
 
-    .btn-secondary:hover {
-      background: #232f49;
-      border-color: rgba(96, 165, 250, 0.5);
+    .info-card p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--ink-muted);
     }
 
+    /* Footer */
     footer {
-      padding: 32px 0 42px;
-      text-align: center;
+      background: var(--surface);
+      border-top: 1px solid var(--line);
+      padding: 32px 0;
       font-size: 13px;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      margin-top: 24px;
+      color: var(--ink-muted);
     }
 
-    /* Модальное окно оплаты ЮKassa */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .footer-meta {
+      display: grid;
+      gap: 5px;
+    }
+
+    .footer-support {
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .footer-links button {
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--ink-muted);
+      font-size: 13px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-align: left;
+    }
+
+    .footer-links button:hover {
+      color: var(--ink);
+    }
+
+    /* Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(5, 8, 17, 0.78);
-      backdrop-filter: blur(6px);
+      z-index: 60;
+      background: rgba(15, 23, 42, 0.54);
+      backdrop-filter: blur(4px);
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      z-index: 9999;
+      padding: 16px;
     }
 
     .modal-backdrop.open {
@@ -390,354 +569,667 @@
     }
 
     .modal-card {
-      background: var(--surface);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 20px;
-      max-width: 440px;
       width: 100%;
-      padding: 28px 24px;
-      position: relative;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+      max-width: 540px;
+      max-height: 88vh;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--line);
     }
 
-    .modal-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      font-size: 22px;
-      cursor: pointer;
-      line-height: 1;
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--line);
     }
 
-    .modal-card h3 {
-      font-size: 22px;
-      margin-bottom: 8px;
+    .modal-head h3 {
+      margin: 0;
+      font-size: 18px;
     }
 
-    .modal-card p {
+    .pay-summary {
+      background: var(--surface-soft);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .pay-sum-title {
+      font-weight: 700;
       font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 18px;
     }
 
-    .field-label {
+    .pay-sum-sub {
+      font-size: 12px;
+      color: var(--ink-subtle);
+      margin-top: 2px;
+    }
+
+    .pay-sum-price {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    .field label {
       display: block;
       font-size: 13px;
-      color: #cbd5e1;
+      font-weight: 600;
+      color: var(--ink);
       margin-bottom: 6px;
     }
 
-    .field-input {
+    .field input[type="email"] {
       width: 100%;
-      background: var(--bg);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 10px;
-      padding: 12px 14px;
-      color: var(--text);
-      font-size: 15px;
-      margin-bottom: 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 11px 13px;
+      font-size: 14px;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .field input[type="email"]:focus {
       outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
     }
 
-    .field-input:focus {
-      border-color: var(--accent);
-    }
-
-    .modal-error {
-      color: #f87171;
+    .status-banner {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
       font-size: 13px;
-      margin-bottom: 12px;
-      min-height: 18px;
+      display: none;
+    }
+
+    .status-banner.visible {
+      display: block;
+    }
+
+    .status-banner.info {
+      background: var(--primary-soft);
+      color: #1e3a8a;
+      border: 1px solid rgba(37, 99, 235, 0.2);
+    }
+
+    .legal-copy {
+      font-size: 13px;
+      color: var(--ink-muted);
+      line-height: 1.65;
+    }
+
+    .legal-copy h4 {
+      margin: 14px 0 6px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    @media (max-width: 960px) {
+      .assistant-grid,
+      .info-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .billing-card,
+      .assistant-hub {
+        padding: 18px;
+      }
+
+      .brand-sub {
+        display: none;
+      }
+
+      .hero-cta-row .btn,
+      .launch-panel .btn,
+      .billing-cta-btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-
   <header>
     <div class="container header-inner">
-      <a href="#" class="logo">
-        Карточка<span class="logo-badge">PRO</span>
+      <a href="#top" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">
+            КарточкаPRO
+            <span class="domain-pill">neroai.ru</span>
+            <span class="free-pill">3 генерации бесплатно</span>
+          </span>
+          <span class="brand-sub">Умный помощник для объявлений на Авито</span>
+        </div>
       </a>
-      <span class="header-tag">3 генерации бесплатно</span>
+
+      <nav class="nav-links" aria-label="Навигация по странице">
+        <a href="#benefits">Преимущества</a>
+        <a href="#assistant-center">Ассистент</a>
+        <a href="#subscription">Тариф</a>
+        <a href="#footer">Support</a>
+      </nav>
     </div>
   </header>
 
-  <main>
-    <!-- Hero -->
-    <div class="container hero">
-      <div class="free-pill">🎁 Попробуйте бесплатно — первые 3 генерации без карты</div>
-      <h1>Продающие объявления для Авито <span>за 30 секунд в текстовом чате</span></h1>
-      <p>Напишите пару слов о товаре или услуге — ИИ-ассистент соберёт цепляющий заголовок, структурированное описание под алгоритмы Авито и ответы на частые вопросы покупателей.</p>
-    </div>
-
-    <!-- 1. Преимущества -->
-    <section id="benefits">
+  <main id="top">
+    <section class="hero">
       <div class="container">
-        <h2 class="section-title">Почему продавцы выбирают КарточкаPRO</h2>
-        <p class="section-subtitle">Протестируйте сервис в деле прямо сейчас — первые 3 объявления доступны бесплатно</p>
+        <h1>Объявления для Авито, которые <span>приводят заявки</span> — на neroai.ru</h1>
+        <p class="hero-lead">
+          <strong>КарточкаPRO</strong> помогает оформить понятный заголовок, продающее описание и структуру характеристик для товаров и услуг на Авито. Попробуйте бесплатно — первые <strong>3 генерации</strong> без привязки карты.
+        </p>
+        <div class="hero-cta-row">
+          <a href="#assistant-center" class="btn btn-primary">Попробовать бесплатно (3 генерации)</a>
+          <a href="#benefits" class="btn btn-secondary">Преимущества сервиса</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Benefits First -->
+    <section class="benefits-section" id="benefits">
+      <div class="container">
+        <div class="section-title-row">
+          <h2>Почему продавцы и мастера выбирают КарточкаPRO</h2>
+          <p>Быстрый старт объявления без долгой ручной верстки — первые 3 генерации бесплатно.</p>
+        </div>
 
         <div class="benefits-grid">
           <div class="benefit-card">
             <div class="benefit-icon">⚡</div>
-            <h3>Готовый текст за 30 секунд</h3>
-            <p>Не нужно ломать голову над формулировками: просто опишите товар своими словами, а остальное сделает ИИ.</p>
+            <h3>Быстро и без рутины</h3>
+            <p>Не нужно тратить полчаса на черновик — опишите позицию своими словами и получите структурированный вариант.</p>
           </div>
-
-          <div class="benefit-card">
-            <div class="benefit-icon">📈</div>
-            <h3>Больше просмотров и заявок</h3>
-            <p>Заголовки с ключевыми запросами и понятные выгоды удерживают внимание покупателя и повышают конверсию в сообщения.</p>
-          </div>
-
           <div class="benefit-card">
             <div class="benefit-icon">🎯</div>
-            <h3>Для товаров и любых услуг</h3>
-            <p>Подходит для автозапчастей, техники, мебели, стройматериалов, ремонта и частных мастеров на Авито.</p>
+            <h3>По делу для покупателя</h3>
+            <p>Акцент на важных деталях: состояние, комплектация, сроки, доставка или условия оказания услуги.</p>
           </div>
-
           <div class="benefit-card">
             <div class="benefit-icon">🎁</div>
             <h3>3 генерации бесплатно</h3>
-            <p>Оцените качество текстов на своих реальных позициях до оформления подписки — без регистрации и ввода карты.</p>
+            <p>Протестируйте ассистента на своих задачах до покупки подписки — без регистрации и ввода карты.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">✍️</div>
+            <h3>Удобная доработка в чате</h3>
+            <p>Можно попросить переписать в другом стиле, сократить под требования площадки или выделить ключевые плюсы.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. Чат с ассистентом -->
-    <section id="assistant">
+    <!-- 2. Central Assistant Block -->
+    <section class="assistant-section" id="assistant-center">
       <div class="container">
-        <div class="assistant-box">
-          <div class="assistant-badge">Бесплатный тест: 3 генерации включены</div>
-          <h2>Запустите ИИ-ассистента КарточкаPRO</h2>
-          <p>Откройте текстовый чат, укажите название товара или услуги, состояние, характеристики и город — получите готовый шаблон объявления для копирования на Авито.</p>
-
-          <div class="steps-row">
-            <div class="step-chip">1. Нажмите кнопку запуска</div>
-            <div class="step-chip">2. Опишите товар текстом</div>
-            <div class="step-chip">3. Скопируйте готовое объявление</div>
+        <div class="assistant-hub">
+          <div class="assistant-head">
+            <div>
+              <h2>Ассистент КарточкаPRO: опишите товар или услугу</h2>
+              <p>Откройте текстовый чат и коротко напишите важные детали для объявления. Доступны 3 бесплатные генерации.</p>
+            </div>
+            <span class="free-pill">3 генерации бесплатно</span>
           </div>
 
-          <button id="launchAgentChatBtn" class="btn-primary" type="button">
-            Попробовать бесплатно (3 генерации)
-          </button>
-          <div class="btn-hint">Без привязки карты • Остаток попыток проверяется автоматически</div>
-          <div id="accessStatusText" class="status-text"></div>
+          <div class="assistant-grid">
+            <div class="prompt-box">
+              <div>
+                <h3>Что написать ассистенту в чате</h3>
+                <ol class="steps-mini">
+                  <li><strong>Укажите название, цену и состояние</strong> (новый/б/у, особенности или преимущества).</li>
+                  <li><strong>Перечислите комплектацию и детали</strong> (характеристики, размер, год или что входит в услугу).</li>
+                  <li><strong>Добавьте город и условия</strong> (самовывоз, Авито Доставка, выезд мастера или сроки).</li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="launch-panel">
+              <span class="launch-badge">● Бесплатный старт: 3 генерации</span>
+              <h3>Запустить диалог с ассистентом</h3>
+              <p>
+                Нажмите кнопку ниже, чтобы проверить доступ и открыть окно чата. Первые 3 генерации — бесплатно.
+              </p>
+              <button type="button" class="btn btn-primary" id="launchAgentChatBtn">
+                Попробовать бесплатно (3 генерации)
+              </button>
+              <div class="widget-hint" id="widgetStatusHint">
+                Без привязки карты • Чат откроется поверх страницы по кнопке выше.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 3. Подписка (единственное место с ценой) -->
-    <section id="billing">
+    <!-- 3. Subscription & Payment Section -->
+    <section class="billing-section" id="subscription">
       <div class="container">
-        <h2 class="section-title">Тариф после бесплатных попыток</h2>
-        <p class="section-subtitle">Сначала используйте 3 бесплатные генерации, а если понравится — подключите полный доступ</p>
-
         <div class="billing-card">
-          <div class="billing-trial-note">Старт бесплатно — 3 генерации в подарок</div>
-          <h3>Безлимитный доступ на 30 дней</h3>
-          <div class="price-row">
-            <span class="price-value">490 ₽</span>
-            <span class="price-period">/ месяц</span>
+          <div class="billing-top">
+            <div>
+              <h2 style="margin: 0 0 4px; font-size: 24px;">Подписка и оплата</h2>
+              <p style="margin: 0; font-size: 14px; color: var(--ink-subtle);">Сначала 3 бесплатные генерации, затем — 30 календарных дней доступа через ЮKassa</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <div class="price-row">
+                <span class="price-tag">490 ₽</span>
+                <span class="price-period">/ месяц</span>
+              </div>
+              <span class="trial-badge">3 генерации бесплатно до оплаты</span>
+            </div>
           </div>
 
-          <ul class="billing-list">
-            <li>Первые 3 генерации — бесплатно для проверки</li>
-            <li>Неограниченное создание заголовков и описаний</li>
-            <li>Тексты для товаров, услуг и массового постинга</li>
-            <li>Доступ на 30 дней без автосписаний</li>
-          </ul>
+          <div class="info-grid">
+            <div class="info-card">
+              <h3>Бесплатный старт и тариф</h3>
+              <p>Первые 3 генерации доступны бесплатно. Далее — ежемесячная подписка 490 ₽/мес на 30 дней с момента оплаты.</p>
+            </div>
+            <div class="info-card">
+              <h3>Продление и отмена</h3>
+              <p>Платёж проходит в рублях через ЮKassa. Отменить продление на следующий период можно до даты списания.</p>
+            </div>
+            <div class="info-card">
+              <h3>Чек и поддержка</h3>
+              <p>Квитанция отправляется на указанный e-mail, вопросы и отмена подписки — через раздел Support в подвале.</p>
+            </div>
+          </div>
 
-          <button id="openPayModalBtn" class="btn-secondary" type="button">
-            Оформить подписку
+          <button type="button" class="btn btn-primary billing-cta-btn" id="openPayBtn">
+            Оформить подписку — 490 ₽/мес
           </button>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container">
-      КарточкаPRO • neroai.ru — текстовый ИИ-помощник для создания объявлений на Авито
+  <footer id="footer">
+    <div class="container footer-grid">
+      <div class="footer-meta">
+        <div style="font-weight: 700; color: var(--ink); font-size: 14px;">КарточкаPRO • neroai.ru</div>
+        <div>Сервис формирования текстов объявлений для Авито (проект Nero AI).</div>
+        <div>3 генерации бесплатно, далее тариф 490 ₽/мес (расчётный период 30 дней, оплата через ЮKassa).</div>
+        <div class="footer-support">Support: support@neroai.ru (укажите e-mail оплаты при обращении).</div>
+      </div>
+
+      <div class="footer-links">
+        <button type="button" data-legal="offer">Публичная оферта и правила подписки</button>
+        <button type="button" data-legal="privacy">Политика обработки персональных данных</button>
+        <button type="button" data-legal="refund">Порядок отмены подписки и возвратов</button>
+        <button type="button" data-legal="contacts">Контакты и реквизиты поддержки</button>
+      </div>
     </div>
   </footer>
 
-  <!-- Модальное окно оплаты (ЮKassa ShopID: 1536197) -->
-  <div id="payModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="payModalTitle">
+  <!-- Payment Modal -->
+  <div class="modal-backdrop" id="payModal" role="dialog" aria-modal="true" aria-labelledby="payModalTitle">
     <div class="modal-card">
-      <button id="closePayModalBtn" class="modal-close" type="button" aria-label="Закрыть">×</button>
-      <h3 id="payModalTitle">Доступ к КарточкаPRO на 30 дней</h3>
-      <p id="payModalSubtitle">Бесплатные 3 генерации израсходованы или вы хотите активировать полный доступ заранее. Укажите e-mail для привязки подписки.</p>
+      <div class="modal-head">
+        <h3 id="payModalTitle">Оформление подписки КарточкаPRO</h3>
+        <button type="button" class="btn btn-ghost" id="closePayModalBtn" aria-label="Закрыть окно оплаты">✕</button>
+      </div>
 
-      <label class="field-label" for="subscriberEmailInput">Ваш E-mail</label>
-      <input
-        id="subscriberEmailInput"
-        class="field-input"
-        type="email"
-        placeholder="name@example.ru"
-        autocomplete="email"
-      />
+      <div class="pay-summary">
+        <div>
+          <div class="pay-sum-title">Подписка «КарточкаPRO Безлимит» (neroai.ru)</div>
+          <div class="pay-sum-sub">Доступ на 30 дней • Оплата через ЮKassa</div>
+        </div>
+        <div class="pay-sum-price">490 ₽/мес</div>
+      </div>
 
-      <div id="payModalError" class="modal-error"></div>
-
-      <!-- Форма оплаты ЮKassa -->
-      <form id="yookassaPayForm" action="https://yookassa.ru/integration/simplepay/payment" method="post" target="_blank">
+      <form id="payForm" action="https://yookassa.ru/integration/simplepay/payment" method="post" target="_blank">
         <input type="hidden" name="shopId" value="1536197" />
         <input type="hidden" name="sum" value="490" />
         <input type="hidden" name="customerNumber" id="ykCustomerNumber" value="" />
         <input type="hidden" name="cps_email" id="ykCpsEmail" value="" />
         <input type="hidden" name="orderDetails" value="Подписка КарточкаPRO на 30 дней (neroai.ru)" />
-        <button id="confirmPayBtn" class="btn-primary" style="width: 100%;" type="submit">
-          Перейти к оплате 490 ₽
-        </button>
+
+        <div class="field">
+          <label for="payerEmail">E-mail для чека, привязки подписки и обращений в Support</label>
+          <input type="email" id="payerEmail" placeholder="name@example.ru" required />
+        </div>
+
+        <div class="field">
+          <label style="display: flex; align-items: flex-start; gap: 8px; font-weight: 400; color: var(--ink-muted); cursor: pointer;">
+            <input type="checkbox" id="agreeTerms" checked required style="margin-top: 3px;" />
+            <span>Принимаю условия <a href="#footer" id="modalOfferLink" style="color: var(--primary); text-decoration: underline;">публичной оферты</a> и <a href="#footer" id="modalPrivacyLink" style="color: var(--primary); text-decoration: underline;">политики обработки персональных данных</a> на neroai.ru.</span>
+          </label>
+        </div>
+
+        <div class="status-banner" id="payStatusBanner"></div>
+
+        <div style="display: flex; gap: 10px; margin-top: 16px;">
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Перейти к оплате — 490 ₽/мес</button>
+          <button type="button" class="btn btn-secondary" id="cancelPayBtn">Отмена</button>
+        </div>
       </form>
     </div>
   </div>
 
-  <!-- Виджет текстового ИИ-ассистента Timeweb Cloud -->
-  <script
-    async
-    src="https://agent.timeweb.cloud/js/embed.js"
-    data-agent-id="01c938ab-e5e3-4a46-92ec-3503fd89357e"
-  ></script>
+  <!-- Legal Modal -->
+  <div class="modal-backdrop" id="legalModal" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="legalModalTitle">Правовая информация</h3>
+        <button type="button" class="btn btn-ghost" id="closeLegalModalBtn" aria-label="Закрыть документ">✕</button>
+      </div>
+      <div class="legal-copy" id="legalModalBody"></div>
+      <div style="margin-top: 18px; text-align: right;">
+        <button type="button" class="btn btn-primary" id="okLegalModalBtn">Понятно</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     (function () {
-      const NODUL_CHECK_WEBHOOK_URL = "https://webhook.nodul.ru/24175/dev/neroai-access";
-      const USER_KEY_STORAGE = "neroai_user_key";
-      const USER_EMAIL_STORAGE = "neroai_user_email";
+      const NODUL_CHECK_WEBHOOK_URL = 'https://webhook.nodul.ru/24175/dev/neroai-access';
+      const STORAGE_USER_KEY = 'neroai_user_key';
+      const STORAGE_EMAIL_KEY = 'neroai_user_email';
 
-      const launchBtn = document.getElementById("launchAgentChatBtn");
-      const statusText = document.getElementById("accessStatusText");
-      const openPayModalBtn = document.getElementById("openPayModalBtn");
-      const payModal = document.getElementById("payModal");
-      const closePayModalBtn = document.getElementById("closePayModalBtn");
-      const emailInput = document.getElementById("subscriberEmailInput");
-      const payModalError = document.getElementById("payModalError");
-      const payModalSubtitle = document.getElementById("payModalSubtitle");
-      const yookassaPayForm = document.getElementById("yookassaPayForm");
-      const ykCustomerNumber = document.getElementById("ykCustomerNumber");
-      const ykCpsEmail = document.getElementById("ykCpsEmail");
+      const els = {
+        launchAgentChatBtn: document.getElementById('launchAgentChatBtn'),
+        widgetStatusHint: document.getElementById('widgetStatusHint'),
+        openPayBtn: document.getElementById('openPayBtn'),
+        payModal: document.getElementById('payModal'),
+        closePayModalBtn: document.getElementById('closePayModalBtn'),
+        cancelPayBtn: document.getElementById('cancelPayBtn'),
+        payForm: document.getElementById('payForm'),
+        payerEmail: document.getElementById('payerEmail'),
+        agreeTerms: document.getElementById('agreeTerms'),
+        payStatusBanner: document.getElementById('payStatusBanner'),
+        ykCustomerNumber: document.getElementById('ykCustomerNumber'),
+        ykCpsEmail: document.getElementById('ykCpsEmail'),
+        legalModal: document.getElementById('legalModal'),
+        legalModalTitle: document.getElementById('legalModalTitle'),
+        legalModalBody: document.getElementById('legalModalBody'),
+        closeLegalModalBtn: document.getElementById('closeLegalModalBtn'),
+        okLegalModalBtn: document.getElementById('okLegalModalBtn'),
+        modalOfferLink: document.getElementById('modalOfferLink'),
+        modalPrivacyLink: document.getElementById('modalPrivacyLink')
+      };
 
-      function getOrCreateUserKey() {
-        let key = localStorage.getItem(USER_KEY_STORAGE);
+      function getUserKey() {
+        let key = localStorage.getItem(STORAGE_USER_KEY);
         if (!key) {
-          key = "user_" + Date.now() + "_" + Math.random().toString(36).slice(2, 10);
-          localStorage.setItem(USER_KEY_STORAGE, key);
+          key = 'usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+          localStorage.setItem(STORAGE_USER_KEY, key);
         }
         return key;
       }
 
-      function openPayModal(customMessage) {
-        if (customMessage) {
-          payModalSubtitle.textContent = customMessage;
-        }
-        const savedEmail = localStorage.getItem(USER_EMAIL_STORAGE) || "";
-        if (savedEmail && !emailInput.value) {
-          emailInput.value = savedEmail;
-        }
-        payModalError.textContent = "";
-        payModal.classList.add("open");
-      }
-
-      function closePayModal() {
-        payModal.classList.remove("open");
-      }
-
-      function openTimewebWidget() {
-        if (typeof window.twc_agent_open === "function") {
+      function tryTriggerAgentNow() {
+        if (typeof window.twc_agent_open === 'function') {
           window.twc_agent_open();
-          return;
+          return true;
         }
-        const widgetBtn = document.querySelector("[data-twc-agent-button], .twc-agent-button, iframe[src*='agent.timeweb.cloud']");
-        if (widgetBtn && typeof widgetBtn.click === "function") {
+        const widgetBtn = document.querySelector(
+          "[data-twc-agent-button], .twc-agent-button, #twc-chat-widget button, [class*='twc'] button"
+        );
+        if (widgetBtn && typeof widgetBtn.click === 'function') {
           widgetBtn.click();
-          return;
+          return true;
         }
-        statusText.textContent = "Чат готов: нажмите на иконку ассистента в правом нижнем углу экрана.";
+        return false;
       }
 
-      launchBtn.addEventListener("click", async function () {
-        const userKey = getOrCreateUserKey();
-        const savedEmail = localStorage.getItem(USER_EMAIL_STORAGE) || "";
+      function openAgentWidget(retries) {
+        const left = typeof retries === 'number' ? retries : 12;
+        if (tryTriggerAgentNow()) {
+          return true;
+        }
+        if (left > 0) {
+          setTimeout(function () {
+            openAgentWidget(left - 1);
+          }, 250);
+          return false;
+        }
+        if (els.widgetStatusHint) {
+          els.widgetStatusHint.textContent = 'Чат загружен — нажмите на значок ассистента в углу экрана или отключите VPN.';
+        }
+        return false;
+      }
 
-        launchBtn.disabled = true;
-        statusText.textContent = "Проверяем доступ и остаток бесплатных генераций...";
+      function openModal(modalEl) {
+        modalEl.classList.add('open');
+      }
+
+      function closeModal(modalEl) {
+        modalEl.classList.remove('open');
+      }
+
+      function openSubscriptionModal(message) {
+        if (els.payerEmail) {
+          const savedEmail = localStorage.getItem(STORAGE_EMAIL_KEY);
+          if (savedEmail && !els.payerEmail.value) {
+            els.payerEmail.value = savedEmail;
+          }
+        }
+        if (els.payStatusBanner) {
+          if (message) {
+            els.payStatusBanner.className = 'status-banner visible info';
+            els.payStatusBanner.textContent = message;
+          } else {
+            els.payStatusBanner.className = 'status-banner';
+            els.payStatusBanner.textContent = '';
+          }
+        }
+        openModal(els.payModal);
+      }
+
+      async function handleOpenAssistantClick() {
+        const btn = els.launchAgentChatBtn;
+        if (!btn) return;
+
+        const originalText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Проверяем доступ...';
+
+        if (els.widgetStatusHint) {
+          els.widgetStatusHint.textContent = 'Проверяем доступ и остаток бесплатных генераций (из 3)...';
+        }
 
         try {
+          const payload = {
+            action: 'check',
+            user_key: getUserKey(),
+            email: (els.payerEmail && els.payerEmail.value.trim()) || localStorage.getItem(STORAGE_EMAIL_KEY) || '',
+            domain: window.location.hostname || 'neroai.ru'
+          };
+
           const response = await fetch(NODUL_CHECK_WEBHOOK_URL, {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json"
+              'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-              action: "check",
-              user_key: userKey,
-              email: savedEmail,
-              domain: "neroai.ru"
-            })
+            body: JSON.stringify(payload)
           });
 
           if (!response.ok) {
-            throw new Error("HTTP " + response.status);
+            throw new Error('HTTP ' + response.status);
           }
 
           const data = await response.json();
 
-          if (data && data.allow) {
-            if (data.is_paid) {
-              statusText.textContent = "Подписка активна. Открываем чат ассистента...";
-            } else {
-              const left = typeof data.free_left === "number" ? data.free_left : 0;
-              statusText.textContent = "Доступ разрешён! Осталось бесплатных генераций: " + left + ".";
+          if (data && data.allow === true) {
+            if (els.widgetStatusHint) {
+              if (data.is_paid) {
+                els.widgetStatusHint.textContent = 'Подписка активна. Открываем чат ассистента...';
+              } else if (typeof data.free_left === 'number') {
+                els.widgetStatusHint.textContent = 'Доступ разрешён! Осталось бесплатных генераций: ' + data.free_left + '.';
+              } else {
+                els.widgetStatusHint.textContent = 'Доступ разрешён. Открываем чат ассистента...';
+              }
             }
-            openTimewebWidget();
+            openAgentWidget(12);
           } else {
-            const msg = (data && data.message)
+            const denyText = (data && data.message)
               ? data.message
-              : "Бесплатные 3 генерации закончились. Оформите подписку на 30 дней для продолжения работы.";
-            statusText.textContent = msg;
-            openPayModal(msg);
+              : 'Бесплатные 3 генерации закончились. Оформите подписку 490 ₽/мес для продолжения.';
+
+            if (els.widgetStatusHint) {
+              els.widgetStatusHint.textContent = denyText;
+            }
+            openSubscriptionModal(denyText);
           }
         } catch (err) {
-          statusText.textContent = "Не удалось проверить лимит. Попробуйте ещё раз через пару секунд.";
-          console.error("Nodul check error:", err);
+          if (els.widgetStatusHint) {
+            els.widgetStatusHint.textContent = 'Не удалось проверить лимит. Проверьте сценарий в Nodul или попробуйте ещё раз.';
+          }
         } finally {
-          launchBtn.disabled = false;
+          btn.disabled = false;
+          btn.textContent = originalText;
         }
-      });
+      }
 
-      openPayModalBtn.addEventListener("click", function () {
-        openPayModal("Оформите доступ на 30 дней без ограничений по количеству объявлений. Укажите e-mail для привязки подписки.");
-      });
+      if (els.launchAgentChatBtn) {
+        els.launchAgentChatBtn.addEventListener('click', handleOpenAssistantClick);
+      }
 
-      closePayModalBtn.addEventListener("click", closePayModal);
-
-      payModal.addEventListener("click", function (e) {
-        if (e.target === payModal) {
-          closePayModal();
+      const LEGAL_DOCS = {
+        offer: {
+          title: 'Публичная оферта и правила подписки — КарточкаPRO (neroai.ru)',
+          html: `
+            <p>Настоящий документ является предложением сервиса <strong>КарточкаPRO</strong> (размещён на домене <strong>neroai.ru</strong>, проект <strong>Nero AI</strong>) заключить договор на предоставление доступа к сервису.</p>
+            <h4>1. Бесплатный старт, тариф и период действия</h4>
+            <p>Новым пользователям доступно <strong>3 бесплатные генерации</strong>. Стоимость подписки составляет <strong>490 ₽ в месяц</strong>, расчётный период — 30 календарных дней с даты оплаты.</p>
+            <h4>2. Порядок расчётов</h4>
+            <p>Оплата проводится в рублях РФ через платёжный сервис <strong>ЮKassa</strong>. Отменить продление на следующий расчётный период можно до даты очередного списания через Support.</p>
+          `
+        },
+        privacy: {
+          title: 'Политика обработки персональных данных — neroai.ru',
+          html: `
+            <p>Сервис <strong>КарточкаPRO</strong> на домене <strong>neroai.ru</strong> обрабатывает данные, переданные пользователем при обращении и оплате (e-mail для чека и связи со Support, а также сообщения в чате).</p>
+            <h4>1. Цели обработки</h4>
+            <p>Предоставление бесплатных попыток и доступа по подписке, формирование текстов объявлений и клиентская поддержка.</p>
+            <h4>2. Передача данных</h4>
+            <p>Данные не передаются третьим лицам, кроме платёжного сервиса ЮKassa для проведения платежа и формирования чека в соответствии с законодательством РФ.</p>
+          `
+        },
+        refund: {
+          title: 'Порядок отмены подписки и возвратов — neroai.ru',
+          html: `
+            <p>Вы можете отменить продление подписки на следующий 30-дневный период в любое время до даты следующего списания, написав в <strong>Support</strong> (support@neroai.ru) с адреса электронной почты, указанного при оплате.</p>
+            <p>Вопросы по спорным списаниям и возвратам рассматриваются в индивидуальном порядке в соответствии с законодательством РФ и правилами платёжного провайдера ЮKassa.</p>
+          `
+        },
+        contacts: {
+          title: 'Контакты и реквизиты поддержки — КарточкаPRO (neroai.ru)',
+          html: `
+            <p><strong>Сервис:</strong> КарточкаPRO (проект Nero AI)</p>
+            <p><strong>Сайт:</strong> https://neroai.ru</p>
+            <p><strong>Support:</strong> support@neroai.ru</p>
+          `
         }
+      };
+
+      function openLegalDoc(key) {
+        const doc = LEGAL_DOCS[key] || LEGAL_DOCS.offer;
+        els.legalModalTitle.textContent = doc.title;
+        els.legalModalBody.innerHTML = doc.html;
+        openModal(els.legalModal);
+      }
+
+      if (els.openPayBtn) {
+        els.openPayBtn.addEventListener('click', function () {
+          openSubscriptionModal('');
+        });
+      }
+
+      els.closePayModalBtn.addEventListener('click', function () {
+        closeModal(els.payModal);
+      });
+      els.cancelPayBtn.addEventListener('click', function () {
+        closeModal(els.payModal);
       });
 
-      yookassaPayForm.addEventListener("submit", function (e) {
-        const email = emailInput.value.trim();
-        if (!email || !email.includes("@")) {
+      els.payForm.addEventListener('submit', function (e) {
+        const email = els.payerEmail.value.trim();
+        if (!email || !els.agreeTerms.checked) {
           e.preventDefault();
-          payModalError.textContent = "Введите корректный e-mail, чтобы мы привязали оплату к вашему доступу.";
           return;
         }
 
-        payModalError.textContent = "";
-        localStorage.setItem(USER_EMAIL_STORAGE, email);
+        const userKey = getUserKey();
+        localStorage.setItem(STORAGE_EMAIL_KEY, email);
+        els.ykCpsEmail.value = email;
+        els.ykCustomerNumber.value = email + '|' + userKey;
 
-        const userKey = getOrCreateUserKey();
-        ykCpsEmail.value = email;
-        ykCustomerNumber.value = email + "|" + userKey;
+        els.payStatusBanner.className = 'status-banner visible info';
+        els.payStatusBanner.textContent = 'Переходим на страницу оплаты ЮKassa для ' + email + '...';
+      });
+
+      document.querySelectorAll('[data-legal]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          openLegalDoc(btn.getAttribute('data-legal'));
+        });
+      });
+
+      els.modalOfferLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        openLegalDoc('offer');
+      });
+
+      els.modalPrivacyLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        openLegalDoc('privacy');
+      });
+
+      els.closeLegalModalBtn.addEventListener('click', function () {
+        closeModal(els.legalModal);
+      });
+      els.okLegalModalBtn.addEventListener('click', function () {
+        closeModal(els.legalModal);
+      });
+
+      [els.payModal, els.legalModal].forEach(function (backdrop) {
+        backdrop.addEventListener('click', function (e) {
+          if (e.target === backdrop) {
+            closeModal(backdrop);
+          }
+        });
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          closeModal(els.payModal);
+          closeModal(els.legalModal);
+        }
       });
     })();
   </script>
+
+  <script async src="https://timeweb.cloud/api/v1/cloud-ai/agents/01c938ab-e5e3-4a46-92ec-3503fd89357e/embed.js?collapsed=true"></script>
 </body>
 </html>

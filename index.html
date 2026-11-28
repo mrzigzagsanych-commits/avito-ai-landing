@@ -994,9 +994,6 @@
       async function requestAccessCheck(payload) {
         const response = await fetch(NODUL_CHECK_WEBHOOK_URL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
           body: JSON.stringify(payload)
         });
 
@@ -1008,7 +1005,7 @@
         try {
           return JSON.parse(text);
         } catch (_) {
-          throw new Error("Invalid JSON response");
+          throw new Error("Некорректный JSON от сервера: " + text.slice(0, 120));
         }
       }
 
@@ -1060,11 +1057,12 @@
           }
         } catch (err) {
           console.error("Nodul check error:", err);
+          const detail = err && err.message ? " (" + err.message + ")" : "";
           if (cached && cached.allow) {
-            statusText.textContent = "Сервер проверки недоступен — открываем чат по сохранённому статусу.";
+            statusText.textContent = "Сервер проверки недоступен" + detail + " — открываем чат по сохранённому статусу.";
             openTimewebWidget(20);
           } else {
-            const fallbackMsg = "Не удалось проверить доступ автоматически. Укажите e-mail для проверки или оформите доступ на 30 дней.";
+            const fallbackMsg = "Не удалось проверить доступ автоматически" + detail + ". Укажите e-mail для проверки или оформите доступ на 30 дней.";
             statusText.textContent = fallbackMsg;
             openPayModal(fallbackMsg);
           }
@@ -1124,7 +1122,8 @@
           }
         } catch (err) {
           console.error("Restore by email error:", err);
-          payModalError.textContent = "Ошибка проверки на сервере. Попробуйте позже или напишите в support@neroai.ru.";
+          const detail = err && err.message ? " (" + err.message + ")" : "";
+          payModalError.textContent = "Ошибка проверки на сервере" + detail + ". Попробуйте позже или напишите в support@neroai.ru.";
         } finally {
           checkEmailAccessBtn.disabled = false;
           checkEmailAccessBtn.textContent = "Проверить доступ по e-mail";

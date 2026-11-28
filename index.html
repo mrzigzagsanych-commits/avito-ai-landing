@@ -935,17 +935,15 @@
         if (!root || typeof root.querySelectorAll !== "function") return null;
 
         const candidates = root.querySelectorAll(
+          "agent-chat-widget button.floating-button, " +
+          ".agent-chat-widget button.floating-button, " +
+          "button.floating-button, " +
+          "button[aria-label='Открыть чат'], " +
+          "button[title='Открыть чат с агентом'], " +
           "[data-agent-id='" + AGENT_ID + "'] button, " +
+          "[data-agent-access-id='" + AGENT_ID + "'] button, " +
           "[data-twc-agent-button], " +
-          ".twc-agent-button, " +
-          "#twc-chat-widget button, " +
-          "[id*='twc'] button, " +
-          "[class*='twc'] button, " +
-          "[id*='cloud-ai'] button, " +
-          "[class*='cloud-ai'] button, " +
-          "[class*='agent-widget'] button, " +
-          "[class*='chat-widget'] button, " +
-          "button[aria-label*='чат' i], button[aria-label*='chat' i], button[aria-label*='ассистент' i]"
+          ".twc-agent-button"
         );
 
         for (const el of candidates) {
@@ -966,19 +964,6 @@
       }
 
       function tryTriggerTimewebWidget() {
-        if (typeof window.twc_agent_open === "function") {
-          window.twc_agent_open();
-          return true;
-        }
-        if (window.twcAgent && typeof window.twcAgent.open === "function") {
-          window.twcAgent.open();
-          return true;
-        }
-        if (window.TWC && typeof window.TWC.open === "function") {
-          window.TWC.open();
-          return true;
-        }
-
         const trigger = findWidgetTriggerInRoot(document);
         if (trigger) {
           try {
